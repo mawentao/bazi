@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>四柱八字命理预测</title>
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/jquery-ui/jquery-ui.min.css">
+  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.5/mwt.min.css">
+  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/style/pc.css">
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwtcalendar.js"></script>
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/requirejs/2.1.9/require.js"></script>
+</head>
+<body>
+
+  <div class="frame-container">
+      <div id="frame-body"></div>
+  </div>
+
+<script>
+var dz = {
+	// 基础信息
+	controller: '{$controller}',
+	siteurl  : '$_G['siteurl']',
+	pluginpath : '$_G['siteurl']/source/plugin/bazi',
+	ajaxapi : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=',
+	seccodeurl : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=seccode',
+	logouturl : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=uc&action=logout',
+	// 用户信息
+	uid : $_G[uid],
+	groupid : $_G[groupid],
+	username : '$_G['username']',
+	avatar : '{avatar($_G['uid'],'',true)}',
+
+	// 是否mobile设备
+	is_mobile: false
+};
+console.log(dz); 
+
+var ajax,log;
+var conf = {
+	// 日志级别 0:关闭;>=1:WARN;>=2:INFO;>=3DEBUG;
+	loglevel: 3
+};
+jQuery(document).ready(function($) {
+	require.config({
+		baseUrl: "{$_G['siteurl']}/source/plugin/bazi/template/src/",
+    	packages: [
+			{name:'jquery', location:'../libs/jquery/1.11.2', main:'jquery.min'},
+			{name:'jquery-ui', location:'../libs/jquery-ui', main:'jquery-ui.min'},
+			{name:'mwt', location:'../libs/mwt/3.5', main:'mwt.min'},
+			{name:'echarts', location:'../libs/echarts/3.1.6', main:'echarts.min'},
+			{name:'er', location:'../libs/er/3.0.3', main:'main'}
+    	]
+	});
+	require(['jappengine','core/log','core/ajax','mwt'],function(jappengine,corelog,coreajax,mwt){
+		log = corelog;
+		ajax = coreajax;
+		jappengine.start();
+	});
+});
+</script>
+</body>
+</html>

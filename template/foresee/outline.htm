@@ -1,0 +1,10 @@
+<h1>总论</h1>
+
+<div><!--{$foresee[outline]}--></div>
+
+<h2>【神煞】</h2>
+<!--{loop $foresee[shensha] $k $shalist}-->
+  <!--{loop $shalist $m $im}-->
+	<p>{$im[position]}: <span class="{$k}">{$im[name]}</span><span class="shajue">{$im[jue]}</span></p>
+  <!--{/loop}-->
+<!--{/loop}-->

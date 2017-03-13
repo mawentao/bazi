@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>四柱八字命理预测</title>
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/jquery-ui/jquery-ui.min.css">
+  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.5/mwt.min.css">
+  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/style/pc.css">
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwtcalendar.js"></script>
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/requirejs/2.1.9/require.js"></script>
+</head>
+<body style="background:url({$plugin_path}/template/static/bg.png);">
+  <div id="frame-left">
+    <table class="mz-tab">
+	  <tr>
+		<td>
+		  <!--{if $bazi[gender]=='男'}-->
+			<span class="mingzi" style="background:#065679;"><!--{$bazi[name]}--></span>
+			<span class="xingbie yang"><!--{$bazi[gender]}--></span>
+		  <!--{else}-->
+			<span class="mingzi" style="background:#730800;"><!--{$bazi[name]}--></span>
+			<span class="xingbie yin"><!--{$bazi[gender]}--></span>
+		  <!--{/if}-->
+		</td>
+		<td rowspan="3" class="shengxiao">
+		  <p>生肖</p><span><!--{$bazi[shengxiao]}--></p>
+		</td>
+	  </tr>
+	  <tr><td>公历生日：{$bazi[solar_calendar]} </td></tr>
+	  <tr><td>农历生日：{$bazi[lunar_calendar]} {$bazi[hour_zhi]}时</td></tr>
+    </table>
+	<!--{subtemplate bazi:foresee/mingpan}-->
+  </div>
+  <div id="frame-center">
+    <div id="frame-bar">
+      <ul class="typeul">
+	    <li><span name="navim"><i class="fa fa-connectdevelop"></i>总论</span></li>
+	    <li><span name="navim"><i class="fa fa-male"></i>心性</span></li>
+		<li><span name="navim"><i class="fa fa-venus-mars"></i>婚姻</span></li>
+		<li><span name="navim"><i class="fa fa-cny border"></i>事业</span></li>
+		<li><span name="navim"><i class="fa fa-heartbeat"></i>健康</span></li>
+	  </ul>
+    </div>
+    <div id="frame-main">
+	  <div id="panel-0" class="panel-div"><!--{subtemplate bazi:foresee/outline}--></div>
+	  <div id="panel-1" class="panel-div">心性</div>
+	  <div id="panel-2" class="panel-div">婚姻</div>
+	  <div id="panel-3" class="panel-div">事业</div>
+	  <div id="panel-4" class="panel-div">健康</div>
+    </div>
+  </div>
+<script>
+var dz={
+	siteurl  : '$_G['siteurl']',
+	pluginpath : '$_G['siteurl']/source/plugin/bazi',
+	ajaxapi : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module='
+};
+var log,ajax;
+jQuery(document).ready(function($) {
+	require.config({
+		baseUrl: "{$_G['siteurl']}/source/plugin/bazi/template/src/",
+    	packages: [
+			{name:'jquery', location:'../libs/jquery/1.11.2', main:'jquery.min'},
+			{name:'jquery-ui', location:'../libs/jquery-ui', main:'jquery-ui.min'},
+			{name:'mwt', location:'../libs/mwt/3.5', main:'mwt.min'},
+			{name:'echarts', location:'../libs/echarts/3.1.6', main:'echarts.min'},
+			{name:'er', location:'../libs/er/3.0.3', main:'main'}
+    	]
+	});
+	require(['view/pc/foresee/page','core/log','core/ajax','mwt'],function(page,corelog,coreajax,mwt){
+		log = corelog;
+		ajax = coreajax;
+		page.execute();
+	});
+});
+</script>
+</body>
+</html>

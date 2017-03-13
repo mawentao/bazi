@@ -1,0 +1,129 @@
+/* pc.css, (c) 2017 mawentao */
+* {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -icab-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    font-smoothing:antialiased;
+
+	font-family: '微软雅黑','MicrosoftYaHei','sans-serif';
+	color: #eee;
+}
+body {padding:0;margin:0;background:#333;}
+
+#frame-container {position:absolute;top:0;left:0;right:0;bottom:0;overflow:auto;}
+#frame-body {width:980px;margin:auto;}
+
+/* 命例提交Form */
+.mainform {
+	width:100%;
+}
+.mainform td {
+	padding: 10px;
+}
+
+/* 生辰选择器 */
+select.shengchen {
+	margin-right: 5px;
+	display: inline-block;
+    height: 26px;
+    padding: 0;
+    font-size: 13px;
+    line-height: 26px;
+    color: #000;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+	border-radius: 4px;
+}
+select.shengchen option {color:#000;}
+
+
+/* 命理预测页面 */
+.yin  {color:#E6886B;}
+.yang {color:#6EC1E6;}
+#frame-left {position:absolute;top:0;left:0;width:48%;bottom:0;overflow:auto;padding:10px 20px;}
+#frame-center {position:absolute;top:0;left:48%;right:0;bottom:0;}
+#frame-bar {position:absolute;top:0;left:0;width:30px;bottom:0;overflow:hidden;border-left:solid 1px #fff;border-right:solid 1px #fff;}
+#frame-main {position:absolute;top:0;left:30px;right:0;bottom:0;overflow:auto;}
+
+/* 命主信息 */
+.mz-tab {width:90%;}
+.mz-tab td {font-size:16px;font-family:KaiTi,SimSun,'microsoft yahei';}
+.mz-tab .mingzi {font-family:KaiTi,SimSun,'microsoft yahei';font-size:22px;display:inline-block;background:darkred;border-radius:50%;
+	padding: 5px 10px;
+}
+.mz-tab .xingbie {margin-left:5px;vertical-align:text-bottom;font-family:KaiTi,SimSun,'microsoft yahei';font-size:16px;}
+.mz-tab .shengxiao {text-align:center;vertical-align:middle;position:relative;width:100px;}
+.mz-tab .shengxiao p {display:block;position:absolute;top:0;left:0;font-size:13px;margin:0;font-family:KaiTi,SimSun,'microsoft yahei';}
+.mz-tab .shengxiao span {font-family:KaiTi,SimSun,'microsoft yahei';font-size:30px;font-weight:bold;}
+
+/* 导航菜单栏 */
+.typeul {margin:0;padding:0;}
+.typeul li {margin:0;padding:0;}
+.typeul li span {display:inline-block;text-align:center;padding:10px 0;cursor:pointer;}
+.typeul li span:hover,.typeul li span:hover i,
+.typeul li span.active,.typeul li span.active i {color:gold;border-color:gold !important;}
+.typeul li span i {display:inline-block;width:20px;height:20px;}
+.typeul li span i.border {border:solid 1px #fff;border-radius:300px;line-height:20px;}
+
+
+/* 命盘样式 */
+.mingpan-tab {width:100%;border-collapse:collapse;}
+.mingpan-tab td {border:none;text-align:center;vertical-align:middle;font-size:14px;position:relative;line-height:22px;white-space:nowrap;}
+.mingpan-tab td.zhuming {color:#666;font-size:13px;padding-bottom:8px;}
+.mingpan-tab td.title {text-align:left;color:#666;font-size:13px;}
+.mingpan-tab .gray {color:#666;}
+.mingpan-tab .ganzhi {
+	display:inline-block;width:30px;height:30px;line-height:27px;
+    font-family:KaiTi,SimSun,'microsoft yahei';font-size:18px;font-weight:bold;
+}
+.mingpan-tab .riyuan {border:solid 1px #E6D297;border-radius:300px;}
+.mingpan-tab .wuxing {font-size:13px;position:absolute;bottom:0;font-family:KaiTi,SimSun,'microsoft yahei';}
+.mingpan-tab .yy {font-size:12px;position:absolute;top:0;}
+
+.mingpan-tab .shishen {font-family:KaiTi,SimSun,'microsoft yahei';font-size:18px;}
+.mingpan-tab .yuqi {color:#999;font-size:16px;}
+.mingpan-tab .shiling {width:30px;display:inline-block;padding-left:17px;}
+
+.mingpan-tab td.yunsui {line-height:15px;}
+.mingpan-tab .liunian{padding:5px;cursor:pointer;border:solid 1px rgba(255,255,255,0);border-radius:4px;text-decoration:none;display:block;}
+.mingpan-tab .liunian:hover {border:solid 1px #94936A;}
+.mingpan-tab .jinnian {border:solid 1px #94936A;background:#000;}
+.mingpan-tab td.yunsui span {font-family:KaiTi,SimSun,'microsoft yahei';font-size:16px;}
+.mingpan-tab td.yunsui .sub {font-size:12px;}
+
+/* 论断样式 */
+.panel-div {display:none;padding:10px;}
+.panel-div h1,.panel-div h2,.panel-div div,.panel-div p,.panel-div span,.panel-div strong,.panel-div em{
+	font-family: KaiTi,SimSun,'microsoft yahei';font-size:16px; color:#fff;
+}
+.panel-div h1 {padding:0;margin:0 0 10px;font-size:20px;padding:5px 10px;border-radius:50%;background:#0D2E56;display:inline-block;}
+.panel-div h2 {padding:0;margin:20px 0 5px;font-size:16px;color:#ECDAA1;}
+.panel-div hr {border:none;border-bottom:solid 1px #eee;}
+.panel-div em {font-style: normal;color:gold;}
+.panel-div p {padding:0;margin:0;}
+
+.panel-div .jisha {color:#20DC20;}
+.panel-div .zhongsha {color:orange;}
+.panel-div .xiongsha {color:red;}
+.panel-div .shajue {display:block;padding-left:48px;color:#aaa;}
+.panel-div .shajue:before {content:'（'}
+.panel-div .shajue:after {content:'）'}
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>万年历</title>
+  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/libs/jquery-ui/jquery-ui.min.css">
+  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.3/mwt.min.css">
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.3/mwt.min.js"></script>
+  <style>
+	.calendar-tab {border-collapse:collapse;}
+	.calendar-tab td {text-align:center;border:solid 1px #ccc;font-size:12px;}
+	.calendar-tab tr.odd td {background:#f2f2f2;}
+	.calendar-tab tr.even td {background:#fff;}
+  </style>
+</head>
+<body>
+  <div><span id="title-h1"></span>
+    <div class='mwt-btn-group-radius'>
+      <button id="left-btn" class='mwt-btn mwt-btn-default mwt-btn-sm'><i class="fa fa-arrow-left"></i></button>
+      <button id="right-btn" class='mwt-btn mwt-btn-default mwt-btn-sm'><i class="fa fa-arrow-right"></i></button>
+    </div>
+  </div>
+  <div id="maindiv" style="padding:10px;overflow:auto;"></div>
+
+<script>
+var year = parseInt('{$_GET[year]}');
+if (!year || year<1910 || year>2100) year=parseInt(date('Y'));
+
+
+var mwtcalendar = {
+	// 判断是否闰年
+	isLeapYear: function(year) {
+		if (year%400==0) return true;
+		if (year%4==0 && year%100!=0) return true;
+		return false;
+	}
+};
+
+jQuery(document).ready(function($) { 
+	jQuery('#title-h1').html("公历 "+year+" 年");
+	init_page();
+	jQuery('#left-btn').click(function(){
+		var url = "$_G['siteurl']plugin.php?id=bazi:calendar&year="+(year-1);
+		window.location=url;
+	});
+	jQuery('#right-btn').click(function(){
+		var url = "$_G['siteurl']plugin.php?id=bazi:calendar&year="+(year+1);
+		window.location=url;
+	});
+
+	var data = {year:year};
+	var api = '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=calendar&action=fetchall_in_year';
+	jQuery.ajax({
+        url: api,
+		type: 'POST',
+		dataType: "json",
+		data: data,
+		async: false,
+		complete: function(res) {
+        },
+        success: function(res) {
+			showlist(res.data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            var errmsg = "Error("+XMLHttpRequest.readyState+") : "+textStatus;
+            //alert(errmsg);
+        }
+    });
+});
+
+function init_page()
+{
+	var wd = '200'; //100/31;
+	var mondays = [31,28,31,30,31,30,31,31,30,31,30,31];
+	var monstrs = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+
+	var code = '<table class="calendar-tab">';
+	for (var i=0;i<12;++i) {
+		var cls = i%2==1 ? 'odd' : 'even';
+		if (i!=0) code += '<tr><td colspan="32" class="gap"></td></tr>';
+		code += "<tr class='"+cls+"'><td width='80' rowspan='2'>"+monstrs[i]+"</td>";
+		var maxday = mondays[i];
+		if (i==1 && mwtcalendar.isLeapYear(year)) maxday=29;
+		for (var d=1;d<=31;++d) {
+			if (d>maxday) {
+				code += '<td width="'+wd+'" rowspan="2"></td>';
+			} else {
+				code += '<td width="'+wd+'">'+d+'</td>';
+			}
+		}
+		code += '</tr><tr class="'+cls+'">';
+		for (var d=1;d<=31;++d) {
+			if (d<=maxday) {
+				var id = "cell-"+(i+1)+"-"+d;
+				code += '<td id="'+id+'"></td>';
+			}
+		}
+		
+		code += '</tr>';
+	}
+	code += '</table>';
+	jQuery('#maindiv').html(code);
+}
+
+function showlist(list)
+{
+	for(var i=0;i<list.length;++i) {
+		var im = list[i];
+		var tm = strtotime(im.solar_calendar);
+		var id = "cell-"+parseInt(date("m",tm))+'-'+parseInt(date("d",tm));
+		var code = im.lunar_month+""+im.lunar_day+'<br>'+
+			im.gz_year+" 年<br>"+
+			im.gz_month+" 月<br>"+
+			im.gz_day+" 日<br>"+
+			"";
+		jQuery('#'+id).html(code);
+	}
+}
+
+</script>
+</body>
+</html>
