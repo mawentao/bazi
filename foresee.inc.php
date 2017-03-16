@@ -13,6 +13,10 @@ if (empty($bazi)) {
 	die("命例不存在或已删除");
 }
 
+//echo json_encode($bazi); die(0);
+
+
+
 // 论断
 $foresee = C::m('#bazi#bazi_foresee')->foresee($bazi);
 

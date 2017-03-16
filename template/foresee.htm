@@ -53,6 +53,7 @@
     </div>
   </div>
 <script>
+var bazi_graph = <!--{echo json_encode($foresee[wuxing_graph]);}-->;
 var dz={
 	siteurl  : '$_G['siteurl']',
 	pluginpath : '$_G['siteurl']/source/plugin/bazi',
@@ -66,7 +67,7 @@ jQuery(document).ready(function($) {
 			{name:'jquery', location:'../libs/jquery/1.11.2', main:'jquery.min'},
 			{name:'jquery-ui', location:'../libs/jquery-ui', main:'jquery-ui.min'},
 			{name:'mwt', location:'../libs/mwt/3.5', main:'mwt.min'},
-			{name:'echarts', location:'../libs/echarts/3.1.6', main:'echarts.min'},
+			{name:'echarts', location:'../libs/echarts/3.3.2', main:'echarts.min'},
 			{name:'er', location:'../libs/er/3.0.3', main:'main'}
     	]
 	});

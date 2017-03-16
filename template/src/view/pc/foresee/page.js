@@ -8,6 +8,32 @@ define(function(require){
 		jQuery('[name=navim]:eq('+idx+')').addClass("active");
 	}
 
+	function show_bazi_graph()
+	{
+		var data = { 
+			nodes: [
+				{name:'丁',wuxing:'火',role:'年干'},
+				{name:'卯',wuxing:'木',role:'年支'},
+				{name:'丙',wuxing:'火',role:'月干'},
+				{name:'午',wuxing:'火',role:'月支'},
+				{name:'戊',wuxing:'土',role:'日干'},
+				{name:'申',wuxing:'金',role:'日支'},
+				{name:'戊',wuxing:'土',role:'时干'},
+				{name:'午',wuxing:'火',role:'时支'},
+			],
+			links: {
+				'gan_he': [
+					['年干','日干','木'],
+					['时干','日干','木']
+				]
+			}
+		};
+		//require('common/bazi_graph').show('outline-char-div',data);
+		require('common/bazi_graph').show('outline-char-div',bazi_graph);
+
+	}
+
+
     var o={};
 
 	o.execute=function(){
@@ -16,6 +42,7 @@ define(function(require){
 			select_nav(idx);
 		});
 		select_nav(0);
+		show_bazi_graph();
 	};
 
 	return o;

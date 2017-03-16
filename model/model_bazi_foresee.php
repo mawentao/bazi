@@ -13,6 +13,7 @@ class model_bazi_foresee
 		$foresee = array(
 			'outline' => $this->foresee_outline($bazi),
 			'shensha' => C::m('#bazi#bazi_shensha')->check_all($bazi),
+			'wuxing_graph' => $this->wuxing_graph($bazi),
 		);
 		return $foresee;
 	}
@@ -36,6 +37,35 @@ class model_bazi_foresee
 
 //die($str);
 		return $str;
+	}
+
+	// 五行生克关系分析
+	private function wuxing_graph(&$bazi)
+	{
+		$res = array (
+			'nodes' => array(
+				array('name'=>$bazi['nian_gan'],'wuxing'=>$bazi['nian_gan_info']['wuxing'],'role'=>'年干'),
+				array('name'=>$bazi['nian_zhi'],'wuxing'=>$bazi['nian_zhi_info']['wuxing'],'role'=>'年支'),
+				array('name'=>$bazi['yue_gan'],'wuxing'=>$bazi['yue_gan_info']['wuxing'],'role'=>'月干'),
+				array('name'=>$bazi['yue_zhi'],'wuxing'=>$bazi['yue_zhi_info']['wuxing'],'role'=>'月支'),
+				array('name'=>$bazi['ri_gan'],'wuxing'=>$bazi['ri_gan_info']['wuxing'],'role'=>'日干'),
+				array('name'=>$bazi['ri_zhi'],'wuxing'=>$bazi['ri_zhi_info']['wuxing'],'role'=>'日支'),
+				array('name'=>$bazi['hour_gan'],'wuxing'=>$bazi['hour_gan_info']['wuxing'],'role'=>'时干'),
+				array('name'=>$bazi['hour_zhi'],'wuxing'=>$bazi['hour_zhi_info']['wuxing'],'role'=>'时支'),
+			),
+			'links' => array(
+				'gan_he'     => array(),   //!< 天干合
+				'gan_chong'  => array(),   //!< 天干冲
+				'zhi_hui'    => array(),   //!< 地支相会
+				'zhi_san_he' => array(),   //!< 地支三合
+			),
+		);
+
+		$relation = C::m('#bazi#bazi_relation');
+		$res['links']['gan_he'] = $relation->gan_he($res['nodes']);
+//print_r($res['linkmap']);
+//die(0);
+		return $res;
 	}
 }
 // vim600: sw=4 ts=4 fdm=marker syn=php
