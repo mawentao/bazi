@@ -56,14 +56,26 @@ class model_bazi_foresee
 			'links' => array(
 				'gan_he'     => array(),   //!< 天干合
 				'gan_chong'  => array(),   //!< 天干冲
-				'zhi_hui'    => array(),   //!< 地支相会
-				'zhi_san_he' => array(),   //!< 地支三合
+				//'zhi_hui'    => array(),   //!< 地支相会
+				//'zhi_san_he' => array(),   //!< 地支三合
 			),
 		);
-
 		$relation = C::m('#bazi#bazi_relation');
-		$res['links']['gan_he'] = $relation->gan_he($res['nodes']);
-//print_r($res['linkmap']);
+		// 天干合冲关系
+		$gan_he_chong = $relation->gan_he_chong($res['nodes']);		
+		$res['links']['gan_he'] = $gan_he_chong['he'];
+		$res['links']['gan_chong'] = $gan_he_chong['chong'];
+		// 同柱干支关系
+		$nodemap = array();
+		foreach ($res['nodes'] as $nd) {
+			$nodemap[$nd['role']] = $nd;
+		}
+		$gan_zhi_tongzhu = $relation->gan_zhi_tongzhu($nodemap);
+		$res['links']['sheng'] = $gan_zhi_tongzhu['sheng'];
+		$res['links']['ke'] = $gan_zhi_tongzhu['ke'];
+		
+
+//print_r($res['links']);
 //die(0);
 		return $res;
 	}

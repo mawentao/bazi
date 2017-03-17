@@ -44,7 +44,8 @@ define(function(require){
     o.show = function(domid,data,title,clickfun,color) {
 		var dom = document.getElementById(domid);
         chart = echarts.init(dom, 'dark');
-		chart._theme.graph.color = ['#005d00','#900','orange','lightslategray','#444','#999'];
+		//chart._theme.graph.color = ['#005d00','#900','orange','lightslategray','#444','#999'];
+		chart._theme.graph.color = ['#73a373','#ea7e53','#aa9967','#7289ab','#333','#999'];
 
 		// 节点
 		var nodes = [];
@@ -85,11 +86,35 @@ define(function(require){
 		}
 		// 边
 		var links = [];
-		if (data.links.gan_he && data.links.gan_he.length>0) {
-			for (var i=0;i<data.links.gan_he.length;++i) {
-				var im = data.links.gan_he[i];
-				links.push(get_gan_he_link(im[0],im[1],im[2]));
-				//links.push({source:im[0],target:im[1],label:{normal:{show:true,formatter:im[2]}}});
+		{
+			// 天干五合
+			if (data.links.gan_he && data.links.gan_he.length>0) {
+				for (var i=0;i<data.links.gan_he.length;++i) {
+					var im = data.links.gan_he[i];
+					links.push(get_gan_he_link(im[0],im[1],im[2]));
+					//links.push({source:im[0],target:im[1],label:{normal:{show:true,formatter:im[2]}}});
+				}
+			}
+			// 天干相冲
+			if (data.links.gan_chong && data.links.gan_chong.length>0) {
+				for (var i=0;i<data.links.gan_chong.length;++i) {
+					var im = data.links.gan_chong[i];
+					links.push(get_gan_chong_link(im[0],im[1],im[2]));
+				}
+			}
+			// 同柱五行相生
+			if (data.links.sheng && data.links.sheng.length>0) {
+				for (var i=0;i<data.links.sheng.length;++i) {
+					var im = data.links.sheng[i];
+					links.push(get_sheng_ke_link(im[0],im[1],im[2]));
+				}
+			}
+			// 同柱五行相克
+			if (data.links.ke && data.links.ke.length>0) {
+				for (var i=0;i<data.links.ke.length;++i) {
+					var im = data.links.ke[i];
+					links.push(get_sheng_ke_link(im[0],im[1],im[2]));
+				}
 			}
 		}
 		// 绘图
@@ -152,13 +177,13 @@ define(function(require){
 
 
 	// 天干相合边
+	var seq = {'年干':0,'月干':1,'日干':2,'时干':3,'大运天干':4,'流年天干':5};
 	function get_gan_he_link(g1,g2,wuxing)
 	{
-		var seq = {'年干':0,'月干':1,'日干':2,'时干':3,'大运天干':4,'流年天干':5};
 		var link = {
 			source: g1,
 			target: g2,
-			label: {normal:{show:true,formatter:wuxing}},
+			label: {normal:{show:true,formatter:wuxing,textStyle:{color:'#E6886B'}}},
 			lineStyle: {normal:{curveness:0.5,color:'#E6886B'}},
 			symbol: ['circle','circle']
 		};
@@ -166,6 +191,36 @@ define(function(require){
 			link.source = g2;
 			link.target = g1;
 		}
+		return link;
+	}
+	// 天干相冲边
+	function get_gan_chong_link(g1,g2,label) 
+	{
+		var link = {
+			source: g1,
+			target: g2,
+			label: {normal:{show:true,formatter:label,textStyle:{color:'#f00'}}},
+			lineStyle: {normal:{curveness:0.3,color:'#f00'}},
+			symbol: ['circle','arrow']
+		};
+		if (seq[g1]>seq[g2]) {
+			link.source = g2;
+			link.target = g1;
+			link.symbol = ['arrow','circle'];
+		}
+		return link;
+	}
+	// 五行生克边
+	function get_sheng_ke_link(g1,g2,label) 
+	{
+		var color = label=='生' ? '#0f0' : '#f00';
+		var link = {
+			source: g1,
+			target: g2,
+			label: {normal:{show:true,formatter:label,textStyle:{color:color}}},
+			lineStyle: {normal:{curveness:0,color:color}},
+			symbol: ['circle','arrow']
+		};
 		return link;
 	}
 
