@@ -34,11 +34,14 @@ define(function(require){
 
 	// 宫位坐标
 	var x1=70,x2=140,x3=210,x4=280,x5=350,x6=420;
-	var y1=50,y2=100,y3=150;
+	var y1=50,y2=100,y3=150,y4=200;
 	var gongwei = {
 		'nian_zhu':[x1,y1], 'yue_zhu':[x2,y1], 'ri_zhu':[x3,y1], 'shi_zhu':[x4,y1], 'yun_zhu':[x5,y1], 'liunian_zhu':[x6,y1],
 		'年干':[x1,y2], '月干':[x2,y2], '日干':[x3,y2], '时干':[x4,y2], '大运天干':[x5,y2], '流年天干':[x6,y2],
-		'年支':[x1,y3], '月支':[x2,y3], '日支':[x3,y3], '时支':[x4,y3], '大运地支':[x5,y3], '流年地支':[x6,y3]
+		'年支':[x1,y3], '月支':[x2,y3], '日支':[x3,y3], '时支':[x4,y3], '大运地支':[x5,y3], '流年地支':[x6,y3],
+		'年底':[x1,y4], '月底':[x2,y4], '日底':[x3,y4], '时底':[x4,y4], '大运地底':[x5,y4], '流年地底':[x6,y4],
+
+		'无恩之刑':[x1+34,y4], '恃势之刑':[x2+35,y4], '无礼之刑':[x3+35,y4], '自刑':[x4+35,y4]
 	};
 
     o.show = function(domid,data,title,clickfun,color) {
@@ -49,6 +52,7 @@ define(function(require){
 
 		// 节点
 		var nodes = [];
+		var nodemap = {};
 		var symbolStyle = {normal:{color:'rgba(128, 128, 128, 0)'}};
 		var textStyle = {normal:{textStyle:{fontSize:18}}}
 		var textStyleR = {normal:{textStyle:{fontSize:18,color:'#FF5722'}}}
@@ -102,18 +106,76 @@ define(function(require){
 					links.push(get_gan_chong_link(im[0],im[1],im[2]));
 				}
 			}
-			// 同柱五行相生
-			if (data.links.sheng && data.links.sheng.length>0) {
-				for (var i=0;i<data.links.sheng.length;++i) {
-					var im = data.links.sheng[i];
-					links.push(get_sheng_ke_link(im[0],im[1],im[2]));
+			// 同柱干支关系（生、克、自合）
+			var ks = ['sheng','ke','zihe'];
+			for (var m=0; m<ks.length; ++m) {
+				var k = ks[m];
+				if (data.links[k] && data.links[k].length>0) {
+					for (var i=0;i<data.links[k].length;++i) {
+						var im = data.links[k][i];
+						links.push(get_sheng_ke_link(im[0],im[1],im[2]));
+					}
 				}
 			}
-			// 同柱五行相克
-			if (data.links.ke && data.links.ke.length>0) {
-				for (var i=0;i<data.links.ke.length;++i) {
-					var im = data.links.ke[i];
-					links.push(get_sheng_ke_link(im[0],im[1],im[2]));
+			// 地支三会三合
+			var ks = ['zhi_hui','zhi_sanhe'];
+			for (var m=0; m<ks.length; ++m) {
+				var k = ks[m];
+				if (data.links[k] && data.links[k].length>0) {
+					for (var i=0;i<data.links[k].length;++i) {
+						var im = data.links[k][i];
+						var name = im[1].substr(0,1)+'底';
+						if (!isset(nodemap[name])) {
+							var gw = gongwei[name];
+							var hh = (k=='zhi_hui') ? '三会' : '三合';
+							nodes.push({ name:name,value:im[3],category:im[3],x:gw[0],y:gw[1],label:{normal:{formatter:hh+'{c}'}},
+								symbolSize:[70,30]
+							});
+							nodemap[name] = 1;
+						}
+						links.push(get_zhi_hui_link(im[0],name));
+						links.push(get_zhi_hui_link(im[1],name));
+						links.push(get_zhi_hui_link(im[2],name));
+					}
+				}
+			}
+			// 地支六合、半合、暗合
+			var ks = ['zhi_liuhe','zhi_banhe','zhi_anhe'];
+			for (var m=0; m<ks.length; ++m) {
+				var k = ks[m];
+				if (data.links[k] && data.links[k].length>0) {
+					for (var i=0;i<data.links[k].length;++i) {
+						var im = data.links[k][i];
+						var h = k=='zhi_liuhe' ? '合'+im[2] : '半合'+im[2];
+						if (k=='zhi_anhe') h = '暗合';
+						links.push(get_zhi_he_link(im[0],im[1],h));
+					}
+				}
+			}
+			// 地支相刑
+			/*
+			if (data.links.zhi_xing && data.links.zhi_xing.length>0) {
+				for (var i=0;i<data.links.zhi_xing.length;++i) {
+					var im = data.links.zhi_xing[i];
+					var name = im[2];
+					if (!isset(nodemap[name])) {
+						var gw = gongwei[name];
+						nodes.push({ name:name,value:name,category:5,x:gw[0],y:gw[1],symbolSize:[70,30],symbol:'roundRect'});
+						nodemap[name] = 1;
+					}
+					links.push(get_zhi_xing_link(im[0],name));
+					links.push(get_zhi_xing_link(im[1],name));
+				}
+			}*/
+			// 地支相冲、害、破
+			var ks = ['zhi_chong','zhi_hai','zhi_po'];
+			for (var m=0; m<ks.length; ++m) {
+				var k = ks[m];
+				if (data.links[k] && data.links[k].length>0) {
+					for (var i=0;i<data.links[k].length;++i) {
+						var im = data.links[k][i];
+						links.push(get_zhi_chong_link(im[0],im[1],im[2]));
+					}
 				}
 			}
 		}
@@ -201,23 +263,87 @@ define(function(require){
 			target: g2,
 			label: {normal:{show:true,formatter:label,textStyle:{color:'#f00'}}},
 			lineStyle: {normal:{curveness:0.3,color:'#f00'}},
-			symbol: ['circle','arrow']
+			symbol: ['arrow','arrow']
 		};
 		if (seq[g1]>seq[g2]) {
 			link.source = g2;
 			link.target = g1;
-			link.symbol = ['arrow','circle'];
+			link.symbol = ['arrow','arrow'];
 		}
 		return link;
 	}
-	// 五行生克边
+	// 同柱生、克、自合边
 	function get_sheng_ke_link(g1,g2,label) 
 	{
-		var color = label=='生' ? '#0f0' : '#f00';
+		var color = '#0f0';
+		var symbol = ['circle','arrow'];
+		if (label=='生') {
+			color = '#0f0';
+		} else if (label=='克') {
+			color = '#f00';
+		} else {
+			color = '#E6886B';
+			symbol = ['circle','circle'];
+		}
 		var link = {
 			source: g1,
 			target: g2,
 			label: {normal:{show:true,formatter:label,textStyle:{color:color}}},
+			lineStyle: {normal:{curveness:0,color:color}},
+			symbol: symbol
+		};
+		return link;
+	}
+	// 地支三会三合边
+	function get_zhi_hui_link(g1,g2)
+	{
+		var link = {
+			source: g1,
+			target: g2,
+			//label: {normal:{show:true,formatter:label,textStyle:{color:'#0f0'}}},
+			lineStyle: {normal:{curveness:0,color:'#0f0'}},
+			symbol: ['circle','circle']
+		};
+		return link
+	}
+	// 地支相合边
+	function get_zhi_he_link(g1,g2,label)
+	{
+		var color = '#E6886B';
+		var link = {
+			source: g1,
+			target: g2,
+			label: {normal:{show:true,formatter:label,textStyle:{color:color}}},
+			lineStyle: {normal:{curveness:0,color:color}},
+			symbol: ['circle','circle']
+		};
+		return link;
+	}
+	// 地支相冲、破、害边
+	function get_zhi_chong_link(g1,g2,label)
+	{
+		var color = label=='冲' ? '#f00' : '#999';
+		var link = {
+			source: g1,
+			target: g2,
+			label: {normal:{show:true,formatter:label,textStyle:{color:color}}},
+			lineStyle: {normal:{curveness:0.5,color:color}},
+			symbol: ['arrow','arrow']
+		};
+		var seq = {'年支':0,'月支':1,'日支':2,'时支':3,'大运地支':4,'流年地支':5};
+		if (seq[g1]<seq[g2]) {
+			link.source = g2;
+			link.target = g1;
+		}
+		return link;
+	}
+	// 地支相刑边
+	function get_zhi_xing_link(g1,g2)
+	{
+		var color = '#999';
+		var link = {
+			source: g1,
+			target: g2,
 			lineStyle: {normal:{curveness:0,color:color}},
 			symbol: ['circle','arrow']
 		};

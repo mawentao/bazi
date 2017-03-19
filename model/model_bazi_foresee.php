@@ -73,10 +73,30 @@ class model_bazi_foresee
 		$gan_zhi_tongzhu = $relation->gan_zhi_tongzhu($nodemap);
 		$res['links']['sheng'] = $gan_zhi_tongzhu['sheng'];
 		$res['links']['ke'] = $gan_zhi_tongzhu['ke'];
-		
+		$res['links']['zihe'] = $gan_zhi_tongzhu['zihe'];
+		// 地支三会三合关系
+		$zhihui_relation = $relation->zhi_hui_he($nodemap);
+		$res['links']['zhi_hui'] = $zhihui_relation['zhi_hui'];
+		$res['links']['zhi_sanhe'] = $zhihui_relation['zhi_sanhe'];
+		// 地支半合六合暗合
+		$ra = $relation->zhi_liuhe($nodemap);
+		$res['links']['zhi_liuhe'] = $ra['zhi_liuhe'];
+		$res['links']['zhi_anhe'] = $ra['zhi_anhe'];
+		if (empty($res['links']['zhi_sanhe'])) {
+			// 如果没有地址三合才论半合
+			$res['links']['zhi_banhe'] = $ra['zhi_banhe'];
+		}
+		// 地支相刑
+		$ra = $relation->zhi_xing($nodemap);
+		$res['links']['zhi_xing'] = $ra['zhi_xing'];
 
-//print_r($res['links']);
-//die(0);
+		// 地支相冲、害、破关系
+		$zhichong_relation = $relation->zhi_chong($nodemap);
+		$res['links']['zhi_chong'] = $zhichong_relation['zhi_chong'];
+		$res['links']['zhi_hai'] = $zhichong_relation['zhi_hai'];
+		$res['links']['zhi_po'] = $zhichong_relation['zhi_po'];    
+
+//print_r($res['links']['zhi_xing']); die(0);
 		return $res;
 	}
 }
