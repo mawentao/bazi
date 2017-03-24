@@ -9,6 +9,19 @@ class bazi_env
 {
     private static $_log_obj = null;
 
+	// 获取class目录下的类实例
+	private static $_objs = array();
+    public static function c($name)
+    {   
+        if (!isset($_objs[$name])) {
+            list($type) = explode('_',$name);
+            $classfile = $type.'/'.$name.".class.php";
+            require_once($classfile);
+            $_objs[$name] = new $name();
+        }   
+        return $_objs[$name];
+    }
+
 	// get discuz site's url(discuz root)
     public static function get_siteurl()
     {/*{{{*/

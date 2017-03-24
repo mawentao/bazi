@@ -153,11 +153,11 @@ define(function(require){
 				}
 			}
 			// 地支相刑
-			/*
 			if (data.links.zhi_xing && data.links.zhi_xing.length>0) {
 				for (var i=0;i<data.links.zhi_xing.length;++i) {
 					var im = data.links.zhi_xing[i];
 					var name = im[2];
+					if (name=='自刑') continue;     //!< 自刑不显示
 					if (!isset(nodemap[name])) {
 						var gw = gongwei[name];
 						nodes.push({ name:name,value:name,category:5,x:gw[0],y:gw[1],symbolSize:[70,30],symbol:'roundRect'});
@@ -166,7 +166,7 @@ define(function(require){
 					links.push(get_zhi_xing_link(im[0],name));
 					links.push(get_zhi_xing_link(im[1],name));
 				}
-			}*/
+			}
 			// 地支相冲、害、破
 			var ks = ['zhi_chong','zhi_hai','zhi_po'];
 			for (var m=0; m<ks.length; ++m) {

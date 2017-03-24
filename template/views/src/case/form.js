@@ -21,6 +21,12 @@ define(function(require){
             errmsg  : '请选择性别',
             empty   : false
         }));
+		form.addField('desc', new MWT.TextField({
+            render  : 'desc-div',
+            value   : '',
+            empty   : true,
+            errmsg  : "请输入备注"
+        }));
 	}
 
 	function init() {
@@ -36,6 +42,7 @@ define(function(require){
 				'<tr><td width="40">姓名:</td><td id="name-div"></td><td width="40" class="tips">*</td></tr>'+
 				'<tr><td>性别:</td><td id="gender-div"></td><td class="tips">*</td></tr>'+
 				'<tr><td>生辰:</td><td id="birthday-div"></td><td class="tips">*</td></tr>'+
+				'<tr><td>备注:</td><td id="desc-div"></td><td width="40" class="tips"></td></tr>'+
 			  '</table>',
             buttons: [
                 {"label":"提交",cls:'mwt-btn-primary',handler:submit},
@@ -48,6 +55,9 @@ define(function(require){
 			form.set(data);
 			var title=data.caseid==0 ? '添加命例' : '编辑命例';
 			dialog.setTitle(title);
+			if (data.caseid!=0) {
+				shengchensel.set(data.solar_calendar,data.hour);
+			}
 		});
 	}
 
@@ -58,6 +68,7 @@ define(function(require){
 		var sc = shengchensel.get();
 		for (var k in sc) params[k] = sc[k];
 		params.caseid = data.caseid;
+		params.gender = get_radio_value('gender-divrdo');
 		//print_r(params); return;
 		ajax.post('case&action=save',params,function(res){
 			if (res.retcode!=0) {

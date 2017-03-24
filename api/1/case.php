@@ -15,6 +15,7 @@ require_once BAZI_PLUGIN_PATH."/class/env.class.php";
 $actionlist = array(
 	'query_all' => array(1),   //!< 命例管理
 	'save' => array(),   //!< 保存命例
+	'del' => array(),    //!< 删除命例
 );
 ////////////////////////////////////
 $uid = $_G['uid'];
@@ -41,6 +42,13 @@ function query_all() { return C::t('#bazi#bazi_case')->query_all(); }
 
 // 保存命例
 function save() { return C::t('#bazi#bazi_case')->save(); }
+
+// 删除命例
+function del()
+{
+    $caseid = bazi_validate::getNCParameter('caseid','caseid','integer');
+    return C::t('#bazi#bazi_case')->update($caseid,array('isdel'=>1));
+}
 
 // vim600: sw=4 ts=4 fdm=marker syn=php
 ?>

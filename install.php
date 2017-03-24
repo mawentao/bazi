@@ -43,9 +43,32 @@ while (!feof($fi)) {
 	list($solar_calendar,$lunar_calendar,$week,$nian_gan,$nian_zhi,$yue_gan,$yue_zhi,$ri_gan,$ri_zhi,$term,$festival) = explode("\t",$line);
 	$sql = "INSERT IGNORE INTO ".DB::table('bazi_calendar')." VALUES ".
 		   "('$solar_calendar','$lunar_calendar','$week','$nian_gan','$nian_zhi','$yue_gan','$yue_zhi','$ri_gan','$ri_zhi','$term','$festival')";
+	//DB::query($sql);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// 八字提要表
+$sql = "CREATE TABLE IF NOT EXISTS `".DB::table('bazi_tiyao')."` ".<<<EOF
+(
+`tk` char(3) NOT NULL DEFAULT '' COMMENT '八字提要ID(日月时)',
+`tv` text NOT NULL DEFAULT '' COMMENT '八字提要内容',
+PRIMARY KEY (`tk`)
+) ENGINE=MyISAM COMMENT '八字提要表《千里命稿》'
+EOF;
+runquery($sql);
+$dbfile = dirname(__FILE__)."/data/bazi_tiyao.db";
+$fi = fopen($dbfile, "r");
+if (!$fi) { die("读取文件失败: $dbfile"); }
+while (!feof($fi)) {
+	$line = trim(fgets($fi));
+	if($line == ""){continue;}
+	list($tk,$tv) = explode("\t",$line);
+	$sql = "INSERT IGNORE INTO ".DB::table('bazi_tiyao')." VALUES ".
+		   "('$tk','$tv')";
 	DB::query($sql);
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
 // 八字表
 $sql = "CREATE TABLE IF NOT EXISTS `".DB::table('bazi_birth')."` ".<<<EOF
 (
@@ -71,6 +94,7 @@ $sql = "CREATE TABLE IF NOT EXISTS `".DB::table('bazi_case')."` ".<<<EOF
 `caseid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '命例ID(自增主键)',
 `bid` char(10) NOT NULL DEFAULT '' COMMENT '八字ID',
 `name` varchar(64) NOT NULL DEFAULT '' comment '姓名',
+`desc` varchar(256) NOT NULL DEFAULT '' comment '备注',
 `ctime` datetime NOT NULL DEFAULT "0000-00-00 00:00:00" comment '创建日期',
 `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 `isdel` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '删除标志(0:未删,1:已删)',
@@ -81,7 +105,7 @@ KEY `idx_name_isdel` (`name`,`isdel`)
 EOF;
 runquery($sql);
 $sql="INSERT IGNORE INTO ".DB::table('bazi_case')." VALUES ".
-     "('1','19870628午y','马文涛','$addtime','$addtime',0)";
+     "('1','19870628午y','马文涛','','$addtime','$addtime',0)";
 runquery($sql);
 
 

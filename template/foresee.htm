@@ -24,6 +24,7 @@
 			<span class="mingzi" style="background:#730800;"><!--{$bazi[name]}--></span>
 			<span class="xingbie yin"><!--{$bazi[gender]}--></span>
 		  <!--{/if}-->
+			<span class="xingbie" style="color:#ECDAA1"><!--{$bazi[age]}-->岁</span>
 		</td>
 		<td rowspan="3" class="shengxiao">
 		  <p>生肖</p><span><!--{$bazi[shengxiao]}--></p>
@@ -39,7 +40,7 @@
       <ul class="typeul">
 	    <li><span name="navim"><i class="fa fa-connectdevelop"></i>总论</span></li>
 	    <li><span name="navim"><i class="fa fa-male"></i>心性</span></li>
-		<li><span name="navim"><i class="fa fa-venus-mars"></i>婚姻</span></li>
+		<li><span name="navim"><i class="fa fa-venus-mars"></i>婚恋</span></li>
 		<li><span name="navim"><i class="fa fa-cny border"></i>事业</span></li>
 		<li><span name="navim"><i class="fa fa-heartbeat"></i>健康</span></li>
 	  </ul>
@@ -47,13 +48,14 @@
     <div id="frame-main">
 	  <div id="panel-0" class="panel-div"><!--{subtemplate bazi:foresee/outline}--></div>
 	  <div id="panel-1" class="panel-div">心性</div>
-	  <div id="panel-2" class="panel-div">婚姻</div>
+	  <div id="panel-2" class="panel-div"><!--{subtemplate bazi:foresee/hunlian}--></div>
 	  <div id="panel-3" class="panel-div">事业</div>
 	  <div id="panel-4" class="panel-div">健康</div>
     </div>
   </div>
 <script>
-var bazi_graph = <!--{echo json_encode($foresee[wuxing_graph]);}-->;
+var bazi_graph = <!--{echo json_encode($bazi[wuxing_graph]);}-->;
+var nav_idx = '{$nav}';
 var dz={
 	siteurl  : '$_G['siteurl']',
 	pluginpath : '$_G['siteurl']/source/plugin/bazi',

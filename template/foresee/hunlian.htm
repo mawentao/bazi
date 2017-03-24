@@ -1,0 +1,17 @@
+<h1>婚恋</h1>
+<!--{eval $hunlian=&$bazi['hunlian'];}-->
+
+<!--干支关系图-->
+<div id="hunlian-mingpan-div" style="border:solid 1px #065679;height:300px;padding:5px;">
+</div>
+
+<h2>【婚恋总论】</h2>
+<div>{$hunlian[spouse_name]}：{$hunlian[spouse_star][正]} {$hunlian[spouse_star][偏]}</div>
+
+<h2>【婚恋诀】</h2>
+<!--{loop $hunlian[spouse_juemap] $k $juelist}-->
+  <!--{loop $juelist $m $im}-->
+	<p><span class="{$k}sha">{$im[name]}</span><span class="shajue" style="padding-left:28px;">{$im[jue]}</span></p>
+  <!--{/loop}-->
+<!--{/loop}-->
+

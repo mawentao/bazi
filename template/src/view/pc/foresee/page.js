@@ -2,13 +2,23 @@
 define(function(require){
 
 	function select_nav(idx) {
+		var idx = parseInt(idx);
 		jQuery('.panel-div').hide();
 		jQuery('#panel-'+idx).show();
 		jQuery('[name=navim]').removeClass("active");
 		jQuery('[name=navim]:eq('+idx+')').addClass("active");
+		switch (idx) {
+			case 2: // 婚恋命盘
+				require('common/bazi_graph').show('hunlian-mingpan-div',bazi_graph);
+				break;
+			default: // 先天命盘
+				require('common/bazi_graph').show('outline-char-div',bazi_graph);
+				break;
+		}
 	}
 
-	function show_bazi_graph()
+	/*
+	function show_bazi_graph(domid)
 	{
 		var data = { 
 			nodes: [
@@ -30,9 +40,7 @@ define(function(require){
 		};
 		//require('common/bazi_graph').show('outline-char-div',data);
 		require('common/bazi_graph').show('outline-char-div',bazi_graph);
-
-	}
-
+	}*/
 
     var o={};
 
@@ -41,8 +49,7 @@ define(function(require){
 			var idx = jQuery(this).index("[name=navim]");
 			select_nav(idx);
 		});
-		select_nav(0);
-		show_bazi_graph();
+		select_nav(nav_idx);
 	};
 
 	return o;

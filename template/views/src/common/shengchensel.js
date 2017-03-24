@@ -116,5 +116,18 @@ define(function(require){
 		};
 	};
 
+	o.set = function(day,hour) {
+        var tm = strtotime(day);
+        var year = date('Y',tm);
+        var month = parseInt(date('m',tm));
+        var day = parseInt(date('d',tm));
+        //alert(year+month+day+" "+hour);
+        set_select_value(year_sel_id,year);
+        set_select_value(month_sel_id,month);
+        syncdate();
+        set_select_value(date_sel_id,day);
+        set_select_value(hour_sel_id,hour);
+    };
+
 	return o;
 });
