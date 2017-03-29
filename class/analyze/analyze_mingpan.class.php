@@ -27,6 +27,7 @@ class analyze_mingpan
 			$bazi[$z."_zhi_info"] = $this->get_zhi_info($zhi,$rigan);	   //!< 地支信息(包括地支藏干及藏干十神信息)
 			// 调整主气藏干顺序
 			$zhi_info = &$bazi[$z."_zhi_info"];
+			$zhi_info['shishen'] = $zhi_info['canggan'][0]['shishen'];
 			$zhi_info['canggan'][0]['is_zhuqi'] = 1;
 			if (count($zhi_info['canggan'])>2) {
 				$tmp = $zhi_info['canggan'][0];
@@ -150,21 +151,24 @@ class analyze_mingpan
 		$bazi['dayun']=C::m('#bazi#bazi_theory')->get_ganzhi_seq($yue_gan,$yue_zhi,$sort,9);
 		$i = 0;
 		$rigan = $bazi["ri_gan"]; //!< 日元
-		$theory = C::m('#bazi#bazi_theory');
 		foreach ($bazi['dayun'] as &$row) {
-			$row['nian'] = $qiyun_nian + $i*10;  //!< 10年换运
+			$row['nian'] = $qiyun_nian + $i*10;        //!< 10年换运
 			$row['age'] = $bazi['qiyun_sui'] + $i*10;  //!< 岁数
 			$row['gan_info'] = $this->get_gan_info($row['gan'], $rigan);
 			$row['zhi_info'] = $this->get_zhi_info($row['zhi'], $rigan);
+			$row['liunian'] = array();
+			for ($offset=0;$offset<10;++$offset) {
+				$row['liunian'][] = $row['nian']+$offset;
+			}
 			++$i;
 		}
-		//print_r($bazi['dayun']);
+		//die(json_encode($bazi['dayun']));
 	}/*}}}*/
 
 	// 排流年
 	public function pai_liunian(&$bazi)
 	{/*{{{*/
-		$liunian = array();
+		$liunian = array();		//!< 流年map,key为年份，如2000
 		$qiyun_nian = $bazi['qiyun_nian'];  //!< 起运年(从起运年开始排)
 		$qiyun_sui = $bazi['qiyun_sui'];    //!< 起运岁
 		$rigan = $bazi["ri_gan"];           //!< 日元
@@ -175,21 +179,38 @@ class analyze_mingpan
 		$gan = $sheng_nian_gan_zhi['gan'];	//!< 出生那年的天干（不一定是八字中的年干）
 		$zhi = $sheng_nian_gan_zhi['zhi'];  //!< 出生那边的地支（不一定是八字中的年支）
 
-		// 每10年一柱
+		// 流年干支关系
+		$relation = C::m('#bazi#bazi_relation');
+
+		// 从起大运年开始排，直到大运排完
 		for ($i=0;$i<10;++$i) {
-			$rownian = array();
 			$k=0;
 			foreach ($bazi['dayun'] as $row) {
 				$idx = $qiyun_sui + $i + ($k*10);
+				$nian = $row['nian'] + $i;
+				// 流年信息
 				$ganzhi = $theory->get_gan_zhi($gan,$zhi,$idx);
-				$ganzhi['nian'] = $row['nian'] + $i;
+				$ganzhi['nian'] = $nian;
+				$ganzhi['age'] = $nian-$bazi['sheng_nian'];      //!< 岁数
 				$ganzhi['gan_info'] = $this->get_gan_info($ganzhi['gan'], $rigan);
 				$ganzhi['zhi_info'] = $this->get_zhi_info($ganzhi['zhi'], $rigan);
-				$rownian[] = $ganzhi;
+				$ganzhi['dayun_idx'] = $i;			//!< 大运索引
+
+				// 流年干支生克关系
+				$gz = $ganzhi['gan_info']['wuxing'].$ganzhi['zhi_info']['wuxing'];
+				$zg = $ganzhi['zhi_info']['wuxing'].$ganzhi['gan_info']['wuxing'];
+				if ($relation->wuxing_sheng[$gz]) { $ganzhi['sheng']='gz'; }
+				if ($relation->wuxing_sheng[$zg]) { $ganzhi['sheng']='zg'; }
+				if ($relation->wuxing_ke[$gz]) { $ganzhi['ke']='gz'; }
+				if ($relation->wuxing_ke[$zg]) { $ganzhi['ke']='zg'; };
+				//
+
+
+				$liunian[$nian] = $ganzhi;
 				++$k;
 			}
-			$liunian[] = $rownian;
 		}
+
 		$bazi['liunian'] = $liunian;
 	}/*}}}*/
 

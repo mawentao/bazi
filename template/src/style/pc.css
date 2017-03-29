@@ -112,7 +112,7 @@ select.shengchen option {color:#000;}
 /* 论断样式 */
 .panel-div {display:none;padding:10px;}
 .panel-div h1,.panel-div h2,.panel-div div,.panel-div p,.panel-div span,.panel-div strong,.panel-div em{
-	font-family: KaiTi,SimSun,'microsoft yahei';font-size:16px; color:#fff;
+	font-family: KaiTi,SimSun,'microsoft yahei';font-size:16px;
 }
 .panel-div h1 {padding:0;margin:0 0 10px;font-size:20px;padding:5px 10px;border-radius:50%;background:#0D2E56;display:inline-block;}
 .panel-div h2 {padding:0;margin:20px 0 5px;font-size:16px;color:#ECDAA1;}
@@ -126,4 +126,10 @@ select.shengchen option {color:#000;}
 .panel-div .shajue {display:block;padding-left:48px;color:#aaa;}
 .panel-div .shajue:before {content:'（'}
 .panel-div .shajue:after {content:'）'}
+
+
+.badge {height:20px;display:inline-block;line-height:30px;margin:0 4px;letter-spacing:-2px;}
+.badge.ji {color:#e694a1;}
+.badge.xiong {color:#e00;}
+
 

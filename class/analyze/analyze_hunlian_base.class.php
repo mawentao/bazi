@@ -10,32 +10,31 @@ class analyze_hunlian_base
 {
     public function analyze(&$bazi)
     {
-		$hunlian = array();
-		// 男命
-		if ($bazi['gender']=='男') {
-			$hunlian = array(
-				'spouse_name' => '妻星',
-				'spouse_star' => $this->see_spouse($bazi),   //!< 配偶星
-				'spouse_juemap' => $this->see_jue($bazi,array(
-					'fuqigong_chong',   //!< 夫妻宫被冲
-					'tiangan',			//!< 看天干
-				)),
-//				'hunlian_liunian' => $this->see_hunlian_liunian($bazi), //!< 看婚恋流年
-			);
-		} 
-		// 女命 
-		else {
-			$hunlian = array(
-				'spouse_name' => '夫星',
-				'spouse_star' => $this->see_spouse($bazi),   	//!< 配偶星
-				'spouse_juemap' => $this->see_jue($bazi,array(
-					'fuqigong_chong',   //!< 夫妻宫被冲
-					'tiangan',			//!< 看天干
-				)),
-//				'hunlian_liunian' => $this->see_hunlian_liunian($bazi), //!< 看婚恋流年
-			);
+		$hunlian = array(
+			'spouse_name' => $bazi['gender']=='男' ? '妻星' : '夫星',
+			'spouse_star' => $this->see_spouse($bazi),	//!< 配偶星
+		);
+		// 婚恋诀
+		$funs = array (
+			'fuqigong',   //!< 看夫妻宫
+			'tiangan',	  //!< 看天干
+			'shensha',	  //!< 看神煞
+		);
+		$juemap = array();
+		foreach ($funs as $f) {
+			$fun = "jue_$f";
+			$res = $this->$fun($bazi);
+			if (!empty($res)) {
+				foreach ($res as $im) {
+					$jx = $im['jixiong'];	//!< ji, zhong, xiong
+					if (!isset($juemap[$jx])) $juemap[$jx] = array();
+					unset($im['jixiong']);
+					$juemap[$jx][] = $im;
+				}
+			}
 		}
-
+		$hunlian['spouse_juemap'] = &$juemap;
+		// 返回
 		$bazi['hunlian'] = &$hunlian;
 	}
 
@@ -57,33 +56,19 @@ class analyze_hunlian_base
 			$spouse_star['正'] = $shenmap['正财'];
 			$spouse_star['偏'] = $shenmap['偏财'];
 		}
+
+		$gan = $spouse_star['正'];
+		$ganinfo = C::m('#bazi#bazi_theory')->gan_map[$gan];
+		$spouse_star['wuxing'] = $ganinfo['wuxing'];
 		return $spouse_star;
 	}/*}}}*/
 
-	// 婚恋诀
-	private function see_jue(&$bazi,$funs)
-	{/*{{{*/
-		$juemap = array();
-		foreach ($funs as $f) {
-			$fun = "jue_$f";
-			$res = $this->$fun($bazi);
-			if (!empty($res)) {
-				foreach ($res as $im) {
-					$jx = $im['jixiong'];	//!< ji, zhong, xiong
-					if (!isset($juemap[$jx])) $juemap[$jx] = array();
-					unset($im['jixiong']);
-					$juemap[$jx][] = $im;
-				}
-			}
-		}
-		return $juemap;
-	}/*}}}*/
-
-	// 夫妻宫被冲
-	private function jue_fuqigong_chong(&$bazi)
+	// 夫妻宫刑冲
+	private function jue_fuqigong(&$bazi)
 	{/*{{{*/
 		$res = array();
 		$links = &$bazi['wuxing_graph']['links'];
+		// 冲
 		foreach ($links['zhi_chong'] as $lk) {
 			if ($lk[0]=='日支' || $lk[1]=='日支') {
 				$res[] = array(
@@ -93,13 +78,31 @@ class analyze_hunlian_base
 				);
 			}
 		}
-		//die(json_encode($links));
+		// 刑
+		foreach ($links['zhi_xing'] as $lk) {
+			if ($lk[0]=='日支' || $lk[1]=='日支') {
+				$res[] = array(
+					'jixiong' => 'xiong',
+					'name' => '夫妻宫被刑',
+					'jue' => '夫妻宫被刑（'.$lk[2].'），婚姻动荡不顺。',
+				);
+			}
+		}
+		// 羊刃
+		if ($bazi['ri_zhi_info']['dishi']=='帝旺') {
+			$res[] = array(
+				'jixiong' => 'xiong',
+				'name' => '日坐羊刃',
+				'jue' => '日坐羊刃，婚姻波折，早婚易离。',
+			);
+		}
+		//die(json_encode($bazi));
 		return $res;
 	}/*}}}*/
 
 	// 看天干
 	private function jue_tiangan(&$bazi)
-	{
+	{/*{{{*/
 		$res = array();
 		$nummap = array('零','一','两','三','四');
 		// 统计各十神个数
@@ -133,6 +136,13 @@ class analyze_hunlian_base
 					'jue' => '男命正偏财透天干，多作两度新郎。为人风流好色，容易出轨。',
 				);
 			}
+			if ($shenmap['比肩']>0 && $shenmap['劫财']>0) {
+				$res[] = array(
+					'jixiong' => 'xiong',
+					'name' => '比劫重重',
+					'jue' => '男命比劫重重易克妻。',
+				);
+			}
 		}
 		// 女命
 		else {
@@ -143,23 +153,46 @@ class analyze_hunlian_base
 					'jue' => '女命官杀混杂，风流好色，婚姻不顺。',
 				);
 			}
+			/*
+			if ($shenmap['正官']>0 && $shenmap['伤官']>0) {
+				$res[] = array(
+					'jixiong' => 'xiong',
+					'name' => '伤官见官',
+					'jue' => '女命伤官见官必克夫。',
+				);
+			}*/
 		}
 		//die(json_encode($shenmap));
 		return $res;
-	}
+	}/*}}}*/
 
-	// 婚恋流年
-	private function see_hunlian_liunian(&$bazi)
-	{
-		$hunlian_liunian = array();
-		$sheng_nian = $bazi[sheng_nian];
-		foreach ($bazi['liunian'] as &$rows) {
-			foreach ($rows as &$item) {
-				//$age = $item['nian'] - $
+	// 看神煞
+	private function jue_shensha(&$bazi)
+	{/*{{{*/
+		$res = array();
+		$shaarr = array('阴阳差错煞','红艳煞','孤鸾煞','桃花','孤辰','寡宿');
+		foreach ($bazi['shensha'] as $type => &$list) {
+			$jixiong = trim($type,'sha');
+			foreach ($list as &$item) {
+				$sha_name = $item['name'];
+
+				if (mb_strpos($sha_name,'桃花',0,'utf-8')!==false) {
+					$sha_name = '桃花';
+					$type = 'ji';
+				}
+
+				if (in_array($sha_name,$shaarr)) {
+					$res[] = array(
+						'jixiong' => $jixiong,
+						'name' => $item['name'],
+						'jue' => $item['jue'],
+					);
+				}
 			}
 		}
-		die(json_encode($bazi));
-	}
+		return $res;
+	}/*}}}*/
+
 }
 // vim600: sw=4 ts=4 fdm=marker syn=php
 ?>

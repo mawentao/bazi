@@ -16,6 +16,9 @@ if (empty($bazi)) {
 
 // 命盘分析(装十神,排大运等)
 bazi_env::c('analyze_mingpan')->analyze($bazi);
+
+
+
 // 总论(日元论)
 bazi_env::c('analyze_outline')->analyze($bazi);
 // 八字提要（摘自《千里命稿》）
@@ -28,6 +31,9 @@ bazi_env::c('analyze_shensha')->analyze($bazi);
 ///////////////////////////////////////////////////
 // 论婚恋
 bazi_env::c('analyze_hunlian_base')->analyze($bazi);
+// 论婚恋流年
+bazi_env::c('analyze_hunlian_liunian')->analyze($bazi);
+
 
 ///////////////////////////////////////////////////
 

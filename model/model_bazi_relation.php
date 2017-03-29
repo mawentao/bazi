@@ -22,7 +22,7 @@ array (
 class model_bazi_relation
 {
 	// 天干五合
-	private $gan_he_map = array (
+	public $gan_he_map = array (
 		'甲己' => array('wuxing'=>'土'),
 		'乙庚' => array('wuxing'=>'金'),
 		'丙辛' => array('wuxing'=>'水'),
@@ -32,9 +32,9 @@ class model_bazi_relation
 	// 天干相冲
 	private $gan_chong_map = array ('庚甲'=>1,'辛乙'=>1,'壬丙'=>1,'丁癸'=>1);
 	// 五行相生
-	private $wuxing_sheng = array ('木火'=>1,'火土'=>1,'土金'=>1,'金水'=>1,'水木'=>1);
+	public $wuxing_sheng = array ('木火'=>1,'火土'=>1,'土金'=>1,'金水'=>1,'水木'=>1);
 	// 五行相克
-	private $wuxing_ke = array ('木土'=>1,'土水'=>1,'水火'=>1,'火金'=>1,'金木'=>1);
+	public $wuxing_ke = array ('木土'=>1,'土水'=>1,'水火'=>1,'火金'=>1,'金木'=>1);
 	// 地支三会
 	private $zhi_hui_map = array(
 		'寅卯辰' => array('wuxing'=>'木'),
@@ -52,17 +52,17 @@ class model_bazi_relation
 		//'申午卯' => array('wuxing'=>'金'),   //!< 我的测试
 	);
 	// 地支半合
-	private $zhi_banhe_map = array('亥卯'=>'木','卯未'=>'木','寅午'=>'火','午戌'=>'火','巳酉'=>'金','酉丑'=>'金','申子'=>'水','子辰'=>'水');
+	public $zhi_banhe_map = array('亥卯'=>'木','卯未'=>'木','寅午'=>'火','午戌'=>'火','巳酉'=>'金','酉丑'=>'金','申子'=>'水','子辰'=>'水');
 	// 地支六合
-	private $zhi_liuhe_map = array('子丑'=>'土','寅亥'=>'木','卯戌'=>'火','辰酉'=>'金','巳申'=>'水','午未'=>'火土');
+	public $zhi_liuhe_map = array('子丑'=>'土','寅亥'=>'木','卯戌'=>'火','辰酉'=>'金','巳申'=>'水','午未'=>'火土');
 	// 地支暗合
-	private $zhi_anhe_map = array('申卯'=>'金','寅丑'=>'土','午亥'=>'木');
+	public $zhi_anhe_map = array('申卯'=>'金','寅丑'=>'土','午亥'=>'木');
 	// 同柱自合
 	private $gan_zhi_he_map = array('戊子'=>1,'辛巳'=>1,'壬午'=>1,'丁亥'=>1);
 	// 地支相冲
-	private $zhi_chong_map = array ('子午'=>1,'丑未'=>1,'寅申'=>1,'卯酉'=>1,'辰戌'=>1,'巳亥'=>1);
+	public $zhi_chong_map = array ('子午'=>1,'丑未'=>1,'寅申'=>1,'卯酉'=>1,'辰戌'=>1,'巳亥'=>1);
 	// 地支相害
-	private $zhi_hai_map = array ('子未'=>1,'丑午'=>1,'寅巳'=>1,'卯辰'=>1,'申亥'=>1,'酉戌'=>1);
+	public $zhi_hai_map = array ('子未'=>1,'丑午'=>1,'寅巳'=>1,'卯辰'=>1,'申亥'=>1,'酉戌'=>1);
 	// 地支相破
 	private $zhi_po_map = array ('子酉'=>1,'午卯'=>1); //,'寅亥'=>1,'辰丑'=>1,'戌未'=>1,'申巳'=>1);  
 	// 地支相刑

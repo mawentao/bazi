@@ -1,5 +1,6 @@
 /* page.js, (c) 2017 mawentao */
 define(function(require){
+	var graph_outline = require('./graph_outline');  //!< 先天命盘
 
 	function select_nav(idx) {
 		var idx = parseInt(idx);
@@ -12,44 +13,45 @@ define(function(require){
 				require('common/bazi_graph').show('hunlian-mingpan-div',bazi_graph);
 				break;
 			default: // 先天命盘
-				require('common/bazi_graph').show('outline-char-div',bazi_graph);
+				graph_outline.show();
+				//require('common/bazi_graph').show('outline-char-div',bazi_graph);
 				break;
 		}
 	}
 
-	/*
-	function show_bazi_graph(domid)
-	{
-		var data = { 
-			nodes: [
-				{name:'丁',wuxing:'火',role:'年干'},
-				{name:'卯',wuxing:'木',role:'年支'},
-				{name:'丙',wuxing:'火',role:'月干'},
-				{name:'午',wuxing:'火',role:'月支'},
-				{name:'戊',wuxing:'土',role:'日干'},
-				{name:'申',wuxing:'金',role:'日支'},
-				{name:'戊',wuxing:'土',role:'时干'},
-				{name:'午',wuxing:'火',role:'时支'},
-			],
-			links: {
-				'gan_he': [
-					['年干','日干','木'],
-					['时干','日干','木']
-				]
-			}
-		};
-		//require('common/bazi_graph').show('outline-char-div',data);
-		require('common/bazi_graph').show('outline-char-div',bazi_graph);
-	}*/
-
     var o={};
 
 	o.execute=function(){
+		// 初始化先天命盘图
+		graph_outline.init();
+
+		// 导航菜单点击事件
 		jQuery('[name=navim]').unbind('click').click(function(){
 			var idx = jQuery(this).index("[name=navim]");
 			select_nav(idx);
 		});
 		select_nav(nav_idx);
+
+		// 婚恋流年按钮事件
+		jQuery('[name=a-hunlian-liunian]')
+			.mouseover(function(){
+				var year = jQuery(this).data('year');
+				jQuery('[name=a-liunian][data-year='+year+']').css({'border-color':'#94936A'});
+			})
+			.mouseout(function(){
+				var year = jQuery(this).data('year');
+				var jd = jQuery('[name=a-liunian][data-year='+year+']');
+				if (!jd.hasClass('jinnian')) {
+					jd.css({'border-color':'rgba(255,255,255,0)'});
+				}
+			})
+			.click(function(){
+				var year = jQuery(this).data('year');
+				jQuery('[name=a-hunlian-liunian]').removeClass('jinnian');
+				jQuery(this).addClass('jinnian');
+				//alert(year);
+				require("./hunlian_liunian_graph").show();
+			});
 	};
 
 	return o;

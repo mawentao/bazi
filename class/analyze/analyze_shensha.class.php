@@ -12,8 +12,7 @@ class analyze_shensha
     {
 		$shaall = array (
 			'tianyiguiren',		//天乙贵人
-			'tiandeguiren',     //天德贵人
-			'yuedeguiren',      //月德贵人
+			'tianyuedeguiren',  //天月二德贵人
 			'taijiguiren',      //太极贵人
 			'sanqiguiren',      //三奇贵人
 			'lushen',           //禄神
@@ -27,6 +26,8 @@ class analyze_shensha
 			'muyutaohua',		//沐浴桃花
 			'taohua',			//桃花
 			'yinyangchacuo',	//阴阳差错煞
+			'guluan',			//孤鸾煞
+			'hongyan',			//红艳煞
 			'jiesha',			//劫煞
 			'zaisha',			//灾煞(白虎煞)
 			'tianluodiwang',    //天罗地网
@@ -83,63 +84,46 @@ class analyze_shensha
 		return $res;
 	}/*}}}*/
 
-	// 天德贵人
-	public function check_tiandeguiren(&$bazi)
+	// 天月二德贵人（以月令看干支）
+	public function check_tianyuedeguiren(&$bazi)
 	{/*{{{*/
-		$map = array (
+		$tiande_map = array (
 			'寅'=>'丁', '巳'=>'辛', '申'=>'癸', '亥'=>'乙',
 			'卯'=>'申', '午'=>'亥', '酉'=>'寅', '子'=>'巳',
 			'辰'=>'壬', '未'=>'甲', '戌'=>'丙', '丑'=>'庚',
 		);
-		$yuezhi = $bazi['yue_zhi'];  //!< 月令
-		$hitgan = $map[$yuezhi];	 //!< 月令对应的天德贵人天干
-		// 日干对四柱地支
-		$arr = array(
-			array('nian_gan','年干'),
-			array('yue_gan','月干'),
-			array('ri_gan','日干'),
-			array('hour_gan','时干'),
-		);
-		foreach ($arr as $im) {
-			$zhi = $bazi[$im[0]];
-			if ($hitgan==$zhi) {
-				$jue = '凡有天德扶持，能解众凶，主贵显，仁慈，敏惠，大慈善，逢凶化吉，性情温顺，修养高深，重视贞节，福利荣厚。——《三车一览》';
-				$res[] = array (
-					'name' => '天德贵人（仁慈祥和）',
-					'position' => $im[1],
-					'jue' => $jue,
-					'jixiong' => 'jisha',
-				);
-			}
-		}
-		return $res;
-	}/*}}}*/
-
-	// 月德贵人
-	public function check_yuedeguiren(&$bazi)
-	{/*{{{*/
-		$map = array (
+		$yuede_map = array (
 			'寅'=>'丙', '巳'=>'庚', '申'=>'壬', '亥'=>'甲',
 			'卯'=>'甲', '午'=>'丙', '酉'=>'庚', '子'=>'壬',
 			'辰'=>'壬', '未'=>'甲', '戌'=>'丙', '丑'=>'庚',
 		);
 		$yuezhi = $bazi['yue_zhi'];  //!< 月令
-		$hitgan = $map[$yuezhi];	 //!< 月令对应的月德贵人天干
-		// 日干对四柱地支
-		$arr = array(
+		$hit_tiande = $tiande_map[$yuezhi]; //!< 天德干支
+		$hit_yuede = $yuede_map[$yuezhi];   //!< 月德天干
+		$arr = array (
 			array('nian_gan','年干'),
+			array('nian_zhi','年支'),
 			array('yue_gan','月干'),
 			array('ri_gan','日干'),
+			array('ri_zhi','日支'),
 			array('hour_gan','时干'),
+			array('hout_zhi','时支'),
 		);
 		foreach ($arr as $im) {
-			$zhi = $bazi[$im[0]];
-			if ($hitgan==$zhi) {
-				$jue = '月德贵人所临之地，主福寿，女性逢此，性情温顺贤良，且为有贞操之人，亦有逢凶化吉之妙用。人命值天月二德所临，必福祉长寿。';
+			$gz = $bazi[$im[0]];
+			if ($gz == $hit_tiande) {
+				$res[] = array (
+					'name' => '天德贵人（仁慈祥和）',
+					'position' => $im[1],
+					'jue' => '凡有天德扶持，能解众凶，主贵显，仁慈，敏惠，大慈善，逢凶化吉，性情温顺，修养高深，重视贞节，福利荣厚。——《三车一览》',
+					'jixiong' => 'jisha',
+				);
+			}
+			if ($gz == $hit_yuede) {
 				$res[] = array (
 					'name' => '月德贵人（善良勤朴）',
 					'position' => $im[1],
-					'jue' => $jue,
+					'jue' => '月德贵人所临之地，主福寿，女性逢此，性情温顺贤良，且为有贞操之人，亦有逢凶化吉之妙用。人命值天月二德所临，必福祉长寿。',
 					'jixiong' => 'jisha',
 				);
 			}
@@ -425,6 +409,24 @@ class analyze_shensha
 		return false;
 	}/*}}}*/
 
+	// 孤鸾煞(不吉)
+	public function check_guluan(&$bazi)
+	{/*{{{*/
+		$arr = array('乙巳','丁巳','辛亥','戊申','甲寅','丙午','戊午','壬子');
+		$rigz = $bazi['ri_gan'].$bazi['ri_zhi'];
+		$shigz = $bazi['hour_gan'].$bazi['hour_zhi'];
+		if (in_array($rigz,$arr) && in_array($shigz,$arr)) {
+			$item = array (
+				'name' => '孤鸾煞',
+				'position' => '日柱',
+				'jue' => '命犯孤鸾煞，主婚姻不顺。男命叫天煞孤星，女命叫孤鸾煞星（民间俗称“扫帚星”）。',
+				'jixiong' => 'xiongsha',
+			);
+			return array($item);
+		}
+		return false;
+	}/*}}}*/
+
 	// 文昌贵人(吉)
 	public function check_wenchangguiren(&$bazi)
 	{/*{{{*/
@@ -546,6 +548,36 @@ class analyze_shensha
 					'position' => $im[1],
 					'jue' => $th['jue'],
 					'jixiong' => $th['jixiong'],
+				);
+			}
+		}
+		return $res;
+	}/*}}}*/
+
+	// 红艳煞
+	public function check_hongyan(&$bazi)
+	{/*{{{*/
+		$map = array (
+			'甲'=>'午','乙'=>'申','丙'=>'寅','丁'=>'未','戊'=>'辰',
+			'己'=>'辰','庚'=>'申','辛'=>'酉','壬'=>'子','癸'=>'戌'
+		);
+		// 日干对地支
+		$rigan = $bazi['ri_gan'];
+		$arr = array(
+			//array('nian_zhi','年支'),
+			array('yue_zhi','月支'),
+			array('ri_zhi','日支'),
+			//array('hour_zhi','时支'),
+		);
+		$res = array();
+		foreach ($arr as $im) {
+			$zhi = $bazi[$im[0]];
+			if ($map[$rigan]==$zhi) {
+				$res[] = array (
+					'name' => '红艳煞',
+					'position' => $im[1],
+					'jue' => '红艳主人风流多情，好色，人命犯之，多数有外遇桃花。女命见之，难免私情，婚前失贞，一谈恋爱恐怕就要同居，如果地支有日干的禄，又带驿马，为放荡之人，或者是娼妓。',
+					'jixiong' => 'xiongsha',
 				);
 			}
 		}

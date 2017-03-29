@@ -1,17 +1,25 @@
 /**
- * 八字生克图
- * 使用: require("common/bazi_graph").show(domid,data,title);
- * 其中data的数据结构如下:
-{ 
+ * 八字生克制化关系图
+ **/
+define(function(require){
+var graph  = require("common/chart/graph");
+var gzlink = require("common/chart/gzlink");
+/**
+ * data数据结构
+{
 	nodes: [
-		{name:'丁',wuxing:'火',role:'年干'},
-		{name:'卯',wuxing:'木',role:'年支'},
-		{name:'丙',wuxing:'火',role:'月干'},
-		{name:'午',wuxing:'火',role:'月支'},
-		{name:'戊',wuxing:'土',role:'日干'},
-		{name:'申',wuxing:'金',role:'日支'},
-		{name:'戊',wuxing:'土',role:'时干'},
-		{name:'午',wuxing:'火',role:'时支'},
+		{role:'年干',name:'丁',wuxing:'火',shishen:'印'},
+		{role:'年支',name:'卯',wuxing:'木',shishen:'官'},
+		{role:'月干',name:'丙',wuxing:'火',shishen:'枭'},
+		{role:'月支',name:'午',wuxing:'火',shishen:'印'},
+		{role:'日干',name:'戊',wuxing:'土',shishen:'日元'},
+		{role:'日支',name:'申',wuxing:'金',shishen:'食'},
+		{role:'时干',name:'戊',wuxing:'土',shishen:'比'},
+		{role:'时支',name:'午',wuxing:'火',shishen:'印'},
+		{role:'运干',name:'丁',wuxing:'火',shishen:'印'},
+		{role:'运支',name:'午',wuxing:'火',shishen:'印'},
+		{role:'岁干',name:'丁',wuxing:'火',shishen:'印'},
+		{role:'岁支',name:'午',wuxing:'火',shishen:'印'}
 	],
 	links: {
 		'gan_he': [
@@ -21,74 +29,83 @@
 	}
 }
  **/
-define(function(require){
-    var o={};
-    //require("echarts");
-    var echarts = require("echarts");
-    var echarts_theme = require("echarts/theme/dark");
-    var chart,echarts_theme;
 
-	// 节点分类
-	var categories = [{name:'木'},{name:'火'},{name:'土'},{name:'金'},{name:'水'},{name:''}];
-	var wuxingmap = {'木':0,'火':1,'土':2,'金':3,'水':4};
+// 类
+function BaziGraph(conf)
+{
+	var thiso=this;
+	var render;
+	var chartid;
+	var barid;
+	var radioid;
+	var mode=1;
+	var data;
 
-	// 宫位坐标
-	var x1=70,x2=140,x3=210,x4=280,x5=350,x6=420;
-	var y1=50,y2=100,y3=150,y4=200;
-	var gongwei = {
-		'nian_zhu':[x1,y1], 'yue_zhu':[x2,y1], 'ri_zhu':[x3,y1], 'shi_zhu':[x4,y1], 'yun_zhu':[x5,y1], 'liunian_zhu':[x6,y1],
-		'年干':[x1,y2], '月干':[x2,y2], '日干':[x3,y2], '时干':[x4,y2], '大运天干':[x5,y2], '流年天干':[x6,y2],
-		'年支':[x1,y3], '月支':[x2,y3], '日支':[x3,y3], '时支':[x4,y3], '大运地支':[x5,y3], '流年地支':[x6,y3],
-		'年底':[x1,y4], '月底':[x2,y4], '日底':[x3,y4], '时底':[x4,y4], '大运地底':[x5,y4], '流年地底':[x6,y4],
+	if (conf) {
+		if(conf.render)render=conf.render;
+		chartid = render+'chart';
+		barid = render+'bar';
+		radioid = render+'radio';
+		init();
+	}
 
-		'无恩之刑':[x1+34,y4], '恃势之刑':[x2+35,y4], '无礼之刑':[x3+35,y4], '自刑':[x4+35,y4]
-	};
+	function init() {
+		var code = '<div id="'+chartid+'" style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:1;"></div>'+
+			'<div id="'+barid+'" class="mwt-btn-group" style="position:absolute;right:10px;top:10px;z-index:2;">'+
+				'<button name="'+radioid+'" class="mwt-btn mwt-btn-primary mwt-btn-xs active" data-mode="1">干支</button>'+
+				'<button name="'+radioid+'" class="mwt-btn mwt-btn-primary mwt-btn-xs" data-mode="2">十神</button>'+
+			'</div>';
+		jQuery('#'+render).html(code);
+		jQuery('[name='+radioid+']').unbind('click').click(function(){
+			jQuery('[name='+radioid+']').removeClass('active');
+			jQuery(this).addClass('active');
+			var v = jQuery(this).data('mode');
+			mode=v;
+			refresh();
+		});
+	}
 
-    o.show = function(domid,data,title,clickfun,color) {
-		var dom = document.getElementById(domid);
-        chart = echarts.init(dom, 'dark');
-		//chart._theme.graph.color = ['#005d00','#900','orange','lightslategray','#444','#999'];
-		chart._theme.graph.color = ['#73a373','#ea7e53','#aa9967','#7289ab','#333','#999'];
-
-		// 节点
-		var nodes = [];
-		var nodemap = {};
-		var symbolStyle = {normal:{color:'rgba(128, 128, 128, 0)'}};
-		var textStyle = {normal:{textStyle:{fontSize:18}}}
+	function refresh() {
+		// 节点分类
+		var categories = [{name:'木'},{name:'火'},{name:'土'},{name:'金'},{name:'水'},{name:''}];
+		var wuxingmap = {'木':0,'火':1,'土':2,'金':3,'水':4};
+		// 宫位坐标
+		var xgap=70,ygap=50;
+		var x1=70,x2=x1+xgap,x3=x2+xgap,x4=x3+xgap,x5=x4+xgap,x6=x5+xgap;
+		var y1=50,y2=y1+ygap,y3=y2+ygap,y4=y3+ygap;
+		var gongwei = {
+			'年柱':[x1,y1],'月柱':[x2,y1],'日柱':[x3,y1],'时柱':[x4,y1],'大运':[x5,y1],'流年':[x6,y1],
+			'年干':[x1,y2],'月干':[x2,y2],'日干':[x3,y2],'时干':[x4,y2],'运干':[x5,y2],'岁干':[x6,y2],
+			'年支':[x1,y3],'月支':[x2,y3],'日支':[x3,y3],'时支':[x4,y3],'运支':[x5,y3],'岁支':[x6,y3],
+			'年底':[x1,y4],'月底':[x2,y4],'日底':[x3,y4],'时底':[x4,y4],'运底':[x5,y4],'岁底':[x6,y4],
+			'无恩之刑':[x1+35,y4], '恃势之刑':[x2+35,y4], '无礼之刑':[x3+35,y4], '自刑':[x4+35,y4]
+		};
+		// 封装graph节点
+		var nodes=[];
+		var symbolStyle = {normal:{color:'rgba(128, 128, 128, 0)'}};   			//!< 柱名节点样式
+		var textStyle = {normal:{textStyle:{fontSize:18}}};						//!< 节点名称样式
 		var textStyleR = {normal:{textStyle:{fontSize:18,color:'#FF5722'}}}
+		var namekey = mode==1 ? 'name' : 'shishen';    //!< 显示干支或十神
+		var zhumap = {'年支':'年柱','月支':'月柱','日支':'日柱','时支':'时柱','运支':'大运','岁支':'流年'};
 		for (var i=0;i<data.nodes.length;++i) {
 			var im = data.nodes[i];
 			if (!gongwei[im.role]) continue;
-			var gw = gongwei[im.role];
-			nodes.push({name:im.role,value:im.name,x: gw[0], y: gw[1], category:wuxingmap[im.wuxing], 
-				label: {normal:{formatter:'{c}'}}
-			});
-			if (im.role=='年支') {
-				var gw = gongwei['nian_zhu'];
-				nodes.push({ name:'年柱',value:'',category:5,symbol:'roundRect',itemStyle:symbolStyle,x:gw[0],y:gw[1],label:textStyle});
-			}
-			if (im.role=='月支') {
-				var gw = gongwei['yue_zhu'];
-				nodes.push({ name:'月柱',value:'',category:5,symbol:'roundRect',itemStyle:symbolStyle,x:gw[0],y:gw[1],label:textStyle});
-			}
-			if (im.role=='日支') {
-				var gw = gongwei['ri_zhu'];
-				nodes.push({ name:'日柱',value:'',category:5,symbol:'roundRect',itemStyle:symbolStyle,x:gw[0],y:gw[1],label:textStyleR});
-			}
-			if (im.role=='时支') {
-				var gw = gongwei['shi_zhu'];
-				nodes.push({ name:'时柱',value:'',category:5,symbol:'roundRect',itemStyle:symbolStyle,x:gw[0],y:gw[1],label:textStyle});
-			}
-			if (im.role=='大运地支') {
-				var gw = gongwei['yun_zhu'];
-				nodes.push({ name:'大运',value:'',category:5,symbol:'roundRect',itemStyle:symbolStyle,x:gw[0],y:gw[1],label:textStyle});
-			}
-			if (im.role=='流年地支') {
-				var gw = gongwei['liunian_zhu'];
-				nodes.push({ name:'流年',value:'',category:5,symbol:'roundRect',itemStyle:symbolStyle,x:gw[0],y:gw[1],label:textStyle});
+			var gw = gongwei[im.role];   //!< 宫位
+			var v = im[namekey];		 //!< 显示值
+			/////////////////////////////////////////////////////////////////
+			if (namekey=='shishen') v=(im.role=='日干') ? '日元' : v.name;   //!< 显示十神全名还是短名
+			/////////////////////////////////////////////////////////////////
+			nodes.push({name:im.role,value:v,x:gw[0],y:gw[1],category:wuxingmap[im.wuxing],label:{normal:{formatter:'{c}'}}});
+			// 添加柱节点
+			if (zhumap[im.role]) {
+				var zhu = zhumap[im.role];
+				var gw = gongwei[zhu];
+				var st = im.role=='日支' ? textStyleR : textStyle;
+				nodes.push({ name:zhu,value:'',category:5,itemStyle:symbolStyle,x:gw[0],y:gw[1],label:st});
 			}
 		}
-		// 边
+		// 封装graph边
+		var nodemap = {};
 		var links = [];
 		{
 			// 天干五合
@@ -179,64 +196,15 @@ define(function(require){
 				}
 			}
 		}
-		// 绘图
-		var option = {
-			tooltip: {},
-			legend: [{
-				//orient: 'vertical',
-				//left: 5,
-				itemWidth:20, itemHeight:13,
-				textStyle : {fontSize:12},
-                data: categories.map(function (a) {
-                    return a.name;
-                })  
-            }],
-			textStyle: {
-				fontFamily: "KaiTi,SimSun,'microsoft yahei'",
-				fontSize: 16
-			},
-			animationDurationUpdate: 1500,
-			animationEasingUpdate: 'quinticInOut',
-			series : [{
-				type: 'graph',
-				categories: categories,
-				layout: 'none',
-				symbolSize: 40,
-				roam: true,
-				label: {
-					normal: { show:true }
-            	},
-				edgeSymbol: ['circle', 'arrow'],
-				edgeSymbolSize: [6, 6],
-				edgeLabel: {
-                	normal: {
-                    	textStyle: {fontSize: 14}
-                	}
-            	},
-            	data: nodes, 
-				links: links,
-				lineStyle: {
-                	normal: {
-                    	opacity: 0.9,
-                    	width: 1,
-                    	curveness: 0.2
-                	}
-            	}
-        	}]
-		};
-		
-        chart.setOption(option);
+		// 渲染图形
+		//print_r(nodes);
+		graph.show(chartid,nodes,links,categories);
+	}
 
-/*
-		// 节点点击事件
-		if (clickfun) {
-			chart.on('click', function (param) {  
-				clickfun(param);
-			});
-		}
-*/
-    };
-
+	this.show=function(_data) {
+		data = _data;
+		refresh();
+	};
 
 	// 天干相合边
 	var seq = {'年干':0,'月干':1,'日干':2,'时干':3,'大运天干':4,'流年天干':5};
@@ -360,5 +328,7 @@ define(function(require){
 		return dis<=adjacent_distance;
 	}
 
-    return o;
+}
+
+return BaziGraph;
 });

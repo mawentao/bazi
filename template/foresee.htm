@@ -33,7 +33,7 @@
 	  <tr><td>公历生日：{$bazi[solar_calendar]} </td></tr>
 	  <tr><td>农历生日：{$bazi[lunar_calendar]} {$bazi[hour_zhi]}时</td></tr>
     </table>
-	<!--{subtemplate bazi:foresee/mingpan}-->
+	<!--{template bazi:foresee/mingpan}-->
   </div>
   <div id="frame-center">
     <div id="frame-bar">
@@ -55,6 +55,8 @@
   </div>
 <script>
 var bazi_graph = <!--{echo json_encode($bazi[wuxing_graph]);}-->;
+var bazi_liunian = <!--{echo json_encode($bazi[liunian]);}-->;
+var bazi_hunlian_liunian = <!--{echo json_encode($bazi[hunlian][liunian]);}-->;
 var nav_idx = '{$nav}';
 var dz={
 	siteurl  : '$_G['siteurl']',

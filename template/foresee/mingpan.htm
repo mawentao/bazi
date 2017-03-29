@@ -130,26 +130,26 @@
 		<td>{$v[nian]}年</td>
 	  <!--{/loop}-->
     </tr>
-	<!--{loop $bazi[liunian] $i $cols}-->
+
+	<!--{loop array(0,1,2,3,4,5,6,7,8,9) $i}--> 
 	<tr>
 	  {if $i==0}
 		<td class="title">流年</td>
 	  {else}
 		<td class="title"></td>
 	  {/if}
-	  <!--{loop $cols $k $v}-->
+	  <!--{loop $bazi[dayun] $k $dayun}-->
+		<!--{eval $year=$dayun[liunian][$i];}-->
+		<!--{eval $v=$bazi[liunian][$year];}-->
 		<td class="yunsui">
-		  <a class="liunian {if $v[nian]==$current_year}jinnian{/if}" href="javascript:;" 
-             title="$v[nian]年 ({echo $v[nian]-$bazi[sheng_nian]}岁)">
+		  <a name="a-liunian" data-year='{$year}' class="liunian {if $year==$current_year}jinnian{/if}" href="javascript:;" 
+             title="{$year}年 ({echo $year-$bazi[sheng_nian]}岁)">
 		    <span class="{if $v[gan_info][yy]=='阴'}yin{else}yang{/if}">{$v[gan]}</span><span class="sub gray">{$v[gan_info][wuxing]}</span><span class="sub">{$v[gan_info][shishen][short_name]}</span><br>
 		    <span class="{if $v[gan_info][yy]=='阴'}yin{else}yang{/if}">{$v[zhi]}</span><span class="sub gray">{$v[zhi_info][wuxing]}</span><span class="sub">{$v[zhi_info][canggan][0][shishen][short_name]}</span>
 		  </a>
 		</td>
-	  <!--{/loop}-->
-	</tr>
+	  <!--{/loop}-->	
+    </tr>
 	<!--{/loop}-->
-	
-
-
   </table>
 </div>
