@@ -17,7 +17,15 @@ if (empty($bazi)) {
 // 命盘分析(装十神,排大运等)
 bazi_env::c('analyze_mingpan')->analyze($bazi);
 
+// 取纳音
+bazi_env::c('analyze_nayin')->analyze($bazi);
 
+// 五行力量分析
+bazi_env::c('analyze_wuxing')->analyze($bazi);
+
+
+// 八字格局分析
+bazi_env::c('analyze_geju')->analyze($bazi);
 
 // 总论(日元论)
 bazi_env::c('analyze_outline')->analyze($bazi);

@@ -52,6 +52,7 @@ class analyze_shensha
     }   
 
 	// 天乙贵人
+	// 年日干查地支，共20种，有6种是花甲子
 	public function check_tianyiguiren(&$bazi)
 	{/*{{{*/
 		$map = array (
@@ -132,6 +133,7 @@ class analyze_shensha
 	}/*}}}*/
 
 	// 太极贵人
+	// 年日干查地支,共24种，有12种是花甲子
 	public function check_taijiguiren(&$bazi)
 	{/*{{{*/
 		$map = array (
@@ -194,6 +196,7 @@ class analyze_shensha
 	}/*}}}*/
 
 	// 禄神
+	// 日干在地支为临官，共10个，4个是花甲子
 	public function check_lushen(&$bazi)
 	{/*{{{*/
 		$map = array (
@@ -230,6 +233,7 @@ class analyze_shensha
 	}/*}}}*/
 
 	// 金舆
+	// 日干查地支，（阳干在地支的衰，阴干在地支的沐浴）共10个，4个是花甲子
 	public function check_jinyu(&$bazi)
 	{/*{{{*/
 		$map = array (
@@ -261,6 +265,7 @@ class analyze_shensha
 	}/*}}}*/
 
 	// 羊刃
+	// 日干在地支为帝旺，共10个，6个是花甲子
 	public function check_yangren(&$bazi)
 	{/*{{{*/
 		$map = array (
@@ -293,7 +298,7 @@ class analyze_shensha
 		return $res;
 	}/*}}}*/
 
-	// 驿马
+	// 驿马（日支查支）
 	public function check_yima(&$bazi)
 	{/*{{{*/
 		$map = array(
@@ -325,7 +330,7 @@ class analyze_shensha
 		return $res;
 	}/*}}}*/
 
-	// 华盖
+	// 华盖（日支查支）
 	public function check_huagai(&$bazi)
 	{/*{{{*/
 		$map = array(
@@ -357,7 +362,7 @@ class analyze_shensha
 		return $res;
 	}/*}}}*/
 
-	// 将星
+	// 将星（日支查支）
 	public function check_jiangxing(&$bazi)
 	{/*{{{*/
 		$map = array(
@@ -409,7 +414,8 @@ class analyze_shensha
 		return false;
 	}/*}}}*/
 
-	// 孤鸾煞(不吉)
+	// 孤鸾煞(不吉)（查日柱与时柱）
+	// 共8种
 	public function check_guluan(&$bazi)
 	{/*{{{*/
 		$arr = array('乙巳','丁巳','辛亥','戊申','甲寅','丙午','戊午','壬子');
@@ -428,6 +434,8 @@ class analyze_shensha
 	}/*}}}*/
 
 	// 文昌贵人(吉)
+	// 以日干或年干查地支
+	// 共10种，6种是花甲子，4种是阴阳组合
 	public function check_wenchangguiren(&$bazi)
 	{/*{{{*/
 		$name = '文昌贵人（聪资博学）';

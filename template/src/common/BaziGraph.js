@@ -65,14 +65,14 @@ function BaziGraph(conf)
 		});
 	}
 
-	function refresh() {
-		// 节点分类
-		var categories = [{name:'木'},{name:'火'},{name:'土'},{name:'金'},{name:'水'},{name:''}];
-		var wuxingmap = {'木':0,'火':1,'土':2,'金':3,'水':4};
-		// 宫位坐标
-		var xgap=70,ygap=50;
-		var x1=70,x2=x1+xgap,x3=x2+xgap,x4=x3+xgap,x5=x4+xgap,x6=x5+xgap;
-		var y1=50,y2=y1+ygap,y3=y2+ygap,y4=y3+ygap;
+	// 节点分类
+	var categories = [{name:'木'},{name:'火'},{name:'土'},{name:'金'},{name:'水'},{name:''}];
+	var wuxingmap = {'木':0,'火':1,'土':2,'金':3,'水':4};
+	// 宫位坐标
+	var xgap=70,ygap=50;
+	var x1=70,x2=x1+xgap,x3=x2+xgap,x4=x3+xgap,x5=x4+xgap,x6=x5+xgap;
+	var y1=50,y2=y1+ygap,y3=y2+ygap,y4=y3+ygap;
+
 		var gongwei = {
 			'年柱':[x1,y1],'月柱':[x2,y1],'日柱':[x3,y1],'时柱':[x4,y1],'大运':[x5,y1],'流年':[x6,y1],
 			'年干':[x1,y2],'月干':[x2,y2],'日干':[x3,y2],'时干':[x4,y2],'运干':[x5,y2],'岁干':[x6,y2],
@@ -80,6 +80,8 @@ function BaziGraph(conf)
 			'年底':[x1,y4],'月底':[x2,y4],'日底':[x3,y4],'时底':[x4,y4],'运底':[x5,y4],'岁底':[x6,y4],
 			'无恩之刑':[x1+35,y4], '恃势之刑':[x2+35,y4], '无礼之刑':[x3+35,y4], '自刑':[x4+35,y4]
 		};
+
+	function refresh() {
 		// 封装graph节点
 		var nodes=[];
 		var symbolStyle = {normal:{color:'rgba(128, 128, 128, 0)'}};   			//!< 柱名节点样式

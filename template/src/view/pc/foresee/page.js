@@ -1,6 +1,7 @@
 /* page.js, (c) 2017 mawentao */
 define(function(require){
 	var graph_outline = require('./graph_outline');  //!< 先天命盘
+	var graph_hunlian = require('./graph_hunlian');  //!< 婚恋命盘
 
 	function select_nav(idx) {
 		var idx = parseInt(idx);
@@ -10,7 +11,8 @@ define(function(require){
 		jQuery('[name=navim]:eq('+idx+')').addClass("active");
 		switch (idx) {
 			case 2: // 婚恋命盘
-				require('common/bazi_graph').show('hunlian-mingpan-div',bazi_graph);
+				//require('common/bazi_graph').show('hunlian-mingpan-div',bazi_graph);
+				graph_hunlian.show();
 				break;
 			default: // 先天命盘
 				graph_outline.show();
@@ -22,8 +24,9 @@ define(function(require){
     var o={};
 
 	o.execute=function(){
-		// 初始化先天命盘图
+		// 初始化图
 		graph_outline.init();
+		graph_hunlian.init();
 
 		// 导航菜单点击事件
 		jQuery('[name=navim]').unbind('click').click(function(){
@@ -50,7 +53,8 @@ define(function(require){
 				jQuery('[name=a-hunlian-liunian]').removeClass('jinnian');
 				jQuery(this).addClass('jinnian');
 				//alert(year);
-				require("./hunlian_liunian_graph").show();
+				//require("./hunlian_liunian_graph").show();
+				graph_hunlian.show();
 			});
 	};
 
