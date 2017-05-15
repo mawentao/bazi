@@ -6,19 +6,25 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>四柱八字命理预测</title>
   <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/jquery-ui/jquery-ui.min.css">
-  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.5/mwt.min.css">
-  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/style/pc.css">
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/mwt/3.5/mwt.min.css">
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/frame/main.css">
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/base.css">
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/frame/star/frame.css">
   <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwtcalendar.js"></script>
   <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/jquery/1.11.2/jquery.min.js"></script>
   <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/requirejs/2.1.9/require.js"></script>
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/src/japp.js" charset="utf-8"></script>
 </head>
 <body>
-
-  <div class="frame-container">
-      <div id="frame-body"></div>
+  <div id="frame-head">
+    <a id="frame-logo" href="#/"><img src="{$plugin_path}/template/static/logo2.png" style="width:40px;"><span>掐指一算</span></a>
+	<div id="frame-title">— 专为八字命理师设计！</div>
+	<div id="frame-menu"></div>
+	<div id="frame-right"></div>
   </div>
-
+  <div id="frame-body"></div>
 <script>
+var navlist = {$navlist};
 var dz = {
 	// 基础信息
 	controller: '{$controller}',
@@ -37,29 +43,8 @@ var dz = {
 	is_mobile: false
 };
 console.log(dz); 
-
-var ajax,log;
-var conf = {
-	// 日志级别 0:关闭;>=1:WARN;>=2:INFO;>=3DEBUG;
-	loglevel: 3
-};
-jQuery(document).ready(function($) {
-	require.config({
-		baseUrl: "{$_G['siteurl']}/source/plugin/bazi/template/src/",
-    	packages: [
-			{name:'jquery', location:'../libs/jquery/1.11.2', main:'jquery.min'},
-			{name:'jquery-ui', location:'../libs/jquery-ui', main:'jquery-ui.min'},
-			{name:'mwt', location:'../libs/mwt/3.5', main:'mwt.min'},
-			{name:'echarts', location:'../libs/echarts/3.1.6', main:'echarts.min'},
-			{name:'er', location:'../libs/er/3.0.3', main:'main'}
-    	]
-	});
-	require(['jappengine','core/log','core/ajax','mwt'],function(jappengine,corelog,coreajax,mwt){
-		log = corelog;
-		ajax = coreajax;
-		jappengine.start();
-	});
-});
+var japp=new JApp('{$plugin_path}/template/src/');
+japp.init();
 </script>
 </body>
 </html>

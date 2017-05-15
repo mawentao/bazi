@@ -16,7 +16,6 @@ if(!$_G['uid']){
 }
 */
 
-/*
 // 设置
 $setting = C::m('#bazi#bazi_setting')->get();
 $page_style = $setting['page_style'];
@@ -24,6 +23,7 @@ $page_style = $setting['page_style'];
 $navlist = C::m('#bazi#bazi_nav_setting')->getenablelist();
 $navlist = json_encode($navlist);
 
+/*
 $filename = basename(__FILE__);
 list($controller) = explode('.',$filename);
 include template("bazi:".strtolower($controller));

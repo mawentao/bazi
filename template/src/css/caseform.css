@@ -1,0 +1,41 @@
+
+.caseform {
+	margin:70px auto 20px;width:550px;border: solid 5px RGBA(222,222,222,0.3);border-radius:8px;padding:30px 40px;
+}
+.caseform h1 {font-family: 'KaiTi';text-align:center;font-size:22px;font-weight:normal;
+	letter-spacing: 3px;
+}
+.caseform select,.caseform option,.caseform span {font-family:'KaiTi';}
+
+.caseform table {width:100%;}
+.caseform table td {
+	padding: 10px; font-family: 'KaiTi';
+}
+
+/* 生辰选择器 */
+select.shengchen {
+	margin-right: 5px;
+	display: inline-block;
+    height: 26px;
+    padding: 0;
+    font-size: 13px;
+    line-height: 26px;
+    color: #000;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+	border-radius: 4px;
+}
+select.shengchen option {color:#000;}
+
+
