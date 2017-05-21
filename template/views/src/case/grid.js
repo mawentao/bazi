@@ -62,7 +62,7 @@ define(function(require){
                   return v;
               }},
               {head:"操作", dataIndex:"caseid",width:130,align:'center',render:function(v,item){
-				  var foresee = '<a href="plugin.php?id=bazi:foresee&caseid='+v+'" target="_blank">命理预测</a>';
+				  var foresee = '<a href="'+item.foresee_url+'" target="_blank">命理预测</a>';
 				  var editbtn = '<a href="javascript:;" name="editbtn" data-id="'+v+'">编辑</a>';
 				  var delbtn = '<a href="javascript:;" name="delbtn" data-id="'+v+'">删除</a>';
                   var btns = [foresee,editbtn,delbtn];

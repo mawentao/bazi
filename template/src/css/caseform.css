@@ -1,16 +1,39 @@
 
-.caseform {
-	margin:70px auto 20px;width:550px;border: solid 5px RGBA(222,222,222,0.3);border-radius:8px;padding:30px 40px;
-}
-.caseform h1 {font-family: 'KaiTi';text-align:center;font-size:22px;font-weight:normal;
-	letter-spacing: 3px;
-}
-.caseform select,.caseform option,.caseform span {font-family:'KaiTi';}
+.caseform {margin:20px auto 20px;width:650px;/*border: solid 5px RGBA(222,222,222,0.3);border-radius:8px;padding:20px 40px;*/}
+.caseform h1 {font-family: 'KaiTi';text-align:center;font-size:22px;font-weight:normal;letter-spacing:3px;}
+.caseform select,.caseform option,.caseform span,.caseform input {font-family:'KaiTi';}
+
+.caseform .nametxt {font-size:18px;padding:15px 5px;}
+
 
 .caseform table {width:100%;}
-.caseform table td {
-	padding: 10px; font-family: 'KaiTi';
+.caseform table td,.caseform table th {font-weight:normal;padding:10px;font-family:'KaiTi';}
+.caseform table th {padding:0;}
+
+
+/* 日历选择器table */
+.caltb {width:100%;border:solid 1px #fff;border-radius:2px;}
+.caltb th,.caltb td {border:solid 1px #3C5C6B;padding:6px 0 !important;text-align:center;}
+.caltb th {background:#091F37;}
+.caltb td {padding:10px 0 !important;cursor:pointer;color:#555;}
+.caltb td.curmonth {color:#eee;}
+.caltb td:hover {background:rgba(0,0,0,0.5);}
+.caltb td.active {background:#0F5075;}
+.caltb .weekend {color:#E6886B;}
+.caltb .date{font-size:18px;font-family:Serif,Arial;}
+.caltb .date-yinli {font-size:12px;display:block;}
+
+.caltb button,.caltb select {margin-right:5px;background:none;color:#fff;border-color:#3C5C6B;width:auto;}
+.caltb button {height:23px;line-height:22px;padding:0 8px;border-radius:4px;}
+.caltb button:hover {background:none;color:inherit;}
+.form-control:hover {
+    border-color: #66afe9;outline: 0;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
 }
+
+.caltb .labtxt {float:right;font-size:13px;line-height:26px;color:#EFE9B5;font-family:'KaiTi';}
+
 
 /* 生辰选择器 */
 select.shengchen {

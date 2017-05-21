@@ -4,7 +4,15 @@ if (!defined('IN_DISCUZ')) {
 }
 require_once dirname(__FILE__)."/class/env.class.php";
 
-$caseid = $_GET['caseid'];
+$idstr = $_GET['caseid'];
+///////////////////////////////////////////////
+// ID加密后的密文中会有+字符,
+// 此特殊字符在url参数传递中会被解码成空格,
+// 故作此兼容处理
+$idstr = preg_replace("/ /i",'+',$idstr);
+///////////////////////////////////////////////
+$caseid = C::m('#bazi#bazi_authcode')->decode_id($idstr);
+
 $nav = !isset($_GET['nav']) ? 0 : intval($_GET['nav']);
 
 // 获取命例信息

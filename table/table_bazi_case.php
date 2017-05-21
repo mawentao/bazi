@@ -75,6 +75,7 @@ EOF;
         $start  = bazi_validate::getOPParameter('start','start','integer',1024,0);
         $limit  = bazi_validate::getOPParameter('limit','limit','integer',1024,10);
         $where  = "isdel=0";
+		if ($uid!=1) $where.=" AND uid='$uid'";
         if ($gender!='0') $where.=" AND b.gender='$gender'";
         if ($key != '') {
             $where .= " AND (a.name like '%$key%' OR a.bid like '%$key%' OR a.desc like '%$key%')";
@@ -84,7 +85,7 @@ EOF;
         $table_bazi_birth = DB::table('bazi_birth');
         $table_bazi_calendar = DB::table('bazi_calendar');
         $sql = <<<EOF
-SELECT SQL_CALC_FOUND_ROWS a.caseid,a.name,a.bid,a.desc,
+SELECT SQL_CALC_FOUND_ROWS a.caseid,a.name,a.bid,a.desc,a.ctime,
 b.gender,b.hour_gan,b.hour_zhi,b.hour,year(now())-year(b.solar_calendar) as age,
 c.*
 FROM $table_bazi_case as a LEFT JOIN $table_bazi_birth as b ON a.bid=b.bid
@@ -96,6 +97,12 @@ EOF;
         $return["root"] = DB::fetch_all($sql);
         $res = DB::fetch_first("SELECT FOUND_ROWS() AS total");
         $return["totalProperty"] = intval($res['total']);
+		//////////////////////////
+		$mau = C::m('#bazi#bazi_authcode');
+		foreach ($return['root'] as &$im) {
+			$im['foresee_url'] = 'plugin.php?id=bazi:foresee&caseid='.$mau->encode_id($im['caseid']);
+		}
+		//////////////////////////
         return $return;
     }/*}}}*/
 }

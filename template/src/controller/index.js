@@ -13,7 +13,7 @@ define(function(require){
 		],
 		// 左部菜单
 		menu: [
-			{name:'批命',icon:'icon icon-log',action:'index'},
+			{name:'批命',icon:'fa fa-hand-paper-o',action:'index'},
 			{name:'命例库',icon:'fa fa-database',action:'cases'}
 		]
 	};

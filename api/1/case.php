@@ -13,6 +13,8 @@ require_once BAZI_PLUGIN_PATH."/class/env.class.php";
 ////////////////////////////////////
 // action的用户组列表（空表示全部用户组）
 $actionlist = array(
+	'submit' => array(),		//!< 用户提交命例
+
 	'query_all' => array(1),   //!< 命例管理
 	'save' => array(),   //!< 保存命例
 	'del' => array(),    //!< 删除命例
@@ -35,6 +37,30 @@ try {
     bazi_env::result(array("data"=>$res));
 } catch (Exception $e) {
     bazi_env::result(array('retcode'=>100010,'retmsg'=>$e->getMessage()));
+}
+
+// 用户提交命例
+function submit()
+{
+	global $_G;
+	$name   = bazi_validate::getNCParameter('name','name','string');
+	$gender = bazi_validate::getNCParameter('gender','gender','string');
+	if ($gender!='x') $gender='y';
+	$date   = bazi_validate::getNCParameter('date','date','string');
+	$hour   = bazi_validate::getNCParameter('hour','hour','integer');
+    $tm = strtotime($date);
+	$solar_calendar = date('Y-m-d',$tm);
+	$bid = C::t('#bazi#bazi_birth')->get_bid($solar_calendar,$gender,$hour);
+	$data = array (
+		'bid' => $bid,
+        'name' => $name,
+        'desc' => $desc,
+		'uid'  => $_G['uid'],
+    );
+	$data['ctime'] = date("Y-m-d H:i:s");
+	$caseid = C::t('#bazi#bazi_case')->insert($data,true);
+	if ($caseid==0) throw new Exception("服务器忙，请稍候再试。");
+	return C::m('#bazi#bazi_authcode')->encode_id($caseid);
 }
 
 // 命例管理

@@ -16,6 +16,7 @@ body {background-color:#172a3d;color:#fff;}
 
 
 #mwt-notify-container {top:60px;}
+/*.mwt-notify {background:#fff !important;}*/
 
 /* 页面整体框架 */
 #frame-head {position:relative;height:60px;width:100%;}
