@@ -20,6 +20,7 @@ define(function(require){
 
 	function action_before() {
 		require('./login').check();
+		require('common/posnav').set_default();
 	}
 
 

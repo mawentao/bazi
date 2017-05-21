@@ -9,7 +9,7 @@ define(function(require){
 		var yp = nowy>starty ? starty+'-'+nowy : starty;
 
         var code = '<div style="text-align:center;font-size:12px;padding:15px 0;font-family:\'microsoft yahe\';">'+
-              '<p style="color:#ddd;">&copy; '+yp+' shawsen.com | 沪ICP备17014477号</p>'+
+              '<p style="color:#999;">&copy; '+yp+' shawsen.com | 沪ICP备17014477号</p>'+
             '</div>';
         return code;
     };

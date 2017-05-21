@@ -144,11 +144,10 @@ define(function(require){
 		var msg = date("Y年m月d日",tm);
 		var h = o.getHour();
 		msg+=' '+h+'点';
-
-		msg+='（'+get_lunar_date(date("Y-m-d",tm));
+/*		msg+='（'+get_lunar_date(date("Y-m-d",tm));
 		var zhiarr = ['子','丑','丑','寅','寅','卯','卯','辰','辰','巳','巳','午','午',
 			'未','未','申','申','酉','酉','戌','戌','亥','亥','子'];
-		msg+= ' '+zhiarr[h]+'时）';
+		msg+= ' '+zhiarr[h]+'时）';*/
 		jQuery('#calendarmsg').html(msg);
 	};/*}}}*/
 	
@@ -192,15 +191,18 @@ define(function(require){
 		hour_sel_id = domid+'hour';
 		
 		var code = '<table class="caltb">'+
-			'<tr><th colspan="7" style="text-align:left;padding:5px 10px !important;">生辰：'+
-			  '<button id="prebtn-'+domid+'" class="form-control">'+
-				'<i class="fa fa-angle-left"></i></button>'+
+			'<tr><th colspan="7">'+
+              '<div class="bar">'+
+			    '<span style="font-size:14px;">生辰：</span>'+
+			    '<button id="prebtn-'+domid+'" class="form-control">'+
+				  '<i class="fa fa-angle-left"></i></button>'+
 			  get_year_sel()+
 			  get_month_sel()+
 			  '<button id="nextbtn-'+domid+'" class="form-control">'+
 				'<i class="fa fa-angle-right"></i></button>'+
 			  get_hour_sel()+
 			  '<div id="calendarmsg" class="labtxt"></div>'+
+			  '</div>'+
 			'</th></tr>'+
 		  '<tr>';
 		var weeks = ['一','二','三','四','五','六','日'];

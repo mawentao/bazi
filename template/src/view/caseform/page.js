@@ -39,21 +39,25 @@ define(function(require){
     var o = {};
 	o.execute = function(domid) {
 		var code = '<div class="caseform">'+
-		  '<h1>生辰八字</h1>'+
+          '<div id="scbzdiv" style="display:inline-block;width:500px;background:rgba(0,0,0,0.1);border-radius:4px;padding:10px;"></div>'+
+          '<div style="display:inline-block;vertical-align:top;margin-left:20px;">'+
 		  '<table>'+
 			'<tr><th width="70" style="padding-left:20px;">姓名：</th>'+
 			  '<td width="200"><input type="text" id="name-divtxt" class="form-control nametxt" placeholder="输入命主姓名"></td>'+
+			'</tr><tr>'+
 			  '<th width="70" align="right">性别：</th>'+
 			  '<td>'+
 				'<label class="mwt-radio"><input name="gender" type="radio" value="y" checked><i></i><span>男</span></label>'+
 				'<label class="mwt-radio" style="margin-left:40px;"><input name="gender" type="radio" value="x"><i></i><span>女</span></label>'+
 			  '</td></tr>'+
-			'<tr><td id="scbzdiv" colspan="4"></td></tr>'+
+		//	'<tr><td id="scbzdiv" colspan="4"></td></tr>'+
 			'<tr><td colspan="4">'+
-			  '<button id="subbtn" class="mwt-btn-block mwt-btn mwt-btn-primary">'+
+			  '<button id="subbtn" class="mwt-btn-block mwt-btn mwt-btn-primary radius mwt-btn-lg" style="font-size:13px;">'+
 				'<i class="fa fa-hand-paper-o"></i>&nbsp;&nbsp;掐 指 一 算</button>'+
 			'</td></tr>'+
-		  '</table></div>'+
+		  '</table>'+
+		  '</div>'+
+		'</div>'+
 		require('common/copyright').get();
 		jQuery('#'+domid).html(code);
 		

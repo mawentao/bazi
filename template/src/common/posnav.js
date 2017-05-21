@@ -1,6 +1,12 @@
 /* 位置面包屑导航 */
 define(function(require){
 	var o={};
+
+	o.set_default=function(){
+		var msg = '掐指一算<span style="font-family:KaiTi;"> —— 专为八字命理师设计！</span>';
+		jQuery('#frame-pos').html(msg);
+	};
+
 	// string or [{name:'aaa',href:'#/'}]
 	o.get=function(str) {
 		var code = '<ul class="posul">';

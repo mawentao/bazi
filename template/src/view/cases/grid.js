@@ -12,9 +12,8 @@ define(function(require){
 			{type:"select",id:"gender-"+gridid,value:0,label:'性别',options:dict.get_gender_options({text:'全部',value:'0'}),handler:o.query},
             {type:'search',id:'so-key-'+gridid,width:300,placeholder:"查询姓名和备注",handler:o.query},
 			'->',
-			{label:'<i class="fa fa-plus"></i> Add Production Line',handler:function(){
-				var item = {pid:0};
-				dialog.open(item);
+			{label:'<i class="fa fa-plus"></i> 添加命例',handler:function(){
+				window.location = "#/index/index";
 			}}
         ];
 		store = new MWT.Store({
@@ -32,7 +31,7 @@ define(function(require){
 			multiSelect:false, 
 			striped: true,
 			tbar: bar,
-			tbarStyle: 'margin-bottom:-1px;border-color:#ebebeb;background:#fff;',
+			tbarStyle: 'margin-bottom:-1px;border:none;background:#fff;',
 			bodyStyle: 'top:78px;bottom:37px;background:#fff;',
 			cm: new MWT.Grid.ColumnModel([
                 {head:"性别", dataIndex:"gender", width:40, align:'center', render:function(v,item){
@@ -43,7 +42,7 @@ define(function(require){
                 {head:"姓名", dataIndex:"name", width:100, align:'left', sort:true, render:function(v,item){
 				    var color = item.gender=='x' ? 'red' : 'darkgreen';
 				    return '<a style="color:'+color+'" class="grida" '+
-						'href="plugin.php?id=bazi:foresee&caseid='+item.caseid+'" target="_blank">'+v+'</a>';
+						'href="'+item.foresee_url+'" target="_blank">'+v+'</a>';
 			    }},
                 {head:"备注", dataIndex:"desc", align:'left', render:function(v,item){
 				    return '<span style="color:gray;font-size:12px;">'+v+'</span>';
@@ -86,7 +85,7 @@ define(function(require){
 					var btncls = 'mwt-btn mwt-btn-xs mwt-btn-default';
 					var popcls = 'mwt-popover-primary';
 
-				  var foresee = '<a href="plugin.php?id=bazi:foresee&caseid='+v+'" target="_blank" '+
+				  var foresee = '<a href="'+item.foresee_url+'" target="_blank" '+
 						'class="'+btncls+'" pop-title="查看批命" pop-cls="'+popcls+'">'+
 						'<i class="fa fa-eye"></i></a>';
 				  var editbtn = '<a href="javascript:;" name="editbtn" data-id="'+v+'">编辑</a>';

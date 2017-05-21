@@ -12,17 +12,20 @@
     font-smoothing: antialiased;
 	font-family:'KaiTi','Arial','microsoft yahei';
 }
-body {background-color:#172a3d;color:#fff;}
+body {background-color:#172a3d;}
 
 
-#mwt-notify-container {top:60px;}
+/*#mwt-notify-container {top:60px;}
 /*.mwt-notify {background:#fff !important;}*/
 
 /* 页面整体框架 */
-#frame-head {position:relative;height:60px;width:100%;}
-#frame-body {position:absolute;top:60px;left:0;right:0;bottom:0;}
-#frame-west {position:absolute;left:0;top:0;bottom:0;width:180px;overflow:auto;}
-#frame-center {position:absolute;left:180px;right:0;top:0;bottom:0;overflow:auto;padding:5px 10px;border-top:solid 1px #3b566f;border-left:solid 1px #3b566f;}
+#frame-head {position:relative;height:50px;width:100%;}
+#frame-pos {line-height:50px;float:left;padding-left:20px;font-size:13px;color:#666;}
+#frame-body {position:absolute;top:50px;left:0;right:0;bottom:0;}
+#frame-west {position:absolute;left:0;top:0;bottom:0;width:180px;overflow:auto;padding-top:20px;}
+#frame-center {position:absolute;left:180px;right:0;top:0;bottom:0;overflow:auto;padding:5px 10px;
+    border-top:solid 1px #ddd;background:#fff;
+}
 
 /* 页头-Logo区 */
 #frame-logo {display:block;position:absolute;top:0;left:0;bottom:0;text-decoration:none;padding:8px 5px;color:#fff;}
@@ -30,7 +33,7 @@ body {background-color:#172a3d;color:#fff;}
 #frame-logo span {float:right;padding:0px 10px;font-family:'黑体';font-size:16px;}
 #frame-title {position:absolute;left:128px;top:10px;font-size:12px;font-family:'KaiTi';color:#ccc;}
 /* 页头-导航菜单 */
-#frame-menu {position:absolute;top:0;left:50px;bottom:0;right:0;}
+#frame-menu {position:absolute;top:0;left:50px;bottom:0;right:0;background:#f2f2f2;}
 .menuul {display:inline-block;margin:0;padding:0;position:absolute;left:0;bottom: 0;}
 .menuul li {list-style-type:none;margin:0;padding:0;float:left;line-height:31px;}
 .menuul li a {
@@ -43,18 +46,21 @@ body {background-color:#172a3d;color:#fff;}
 .menuul li a:hover,.menuul li a.active {text-decoration:none;color:#FFF;background:#255C82;}
 .menuul li a i {margin-right:3px;}
 
+
 /* 页头-用户菜单 */
-.comdiv {float:right;color:#fff;font-size:14px;padding:5px 10px;}
-.comdiv a {text-decoration:none;color:#fff;padding:5px;}
-.userdiv {position:relative;display:inline-block;}
+.comdiv {float:right;padding:0 15px 0 0;}
+.comdiv a {text-decoration:none;padding:5px;color:#888;font-size:14px;line-height:50px;}
+.userdiv {position:relative;display:inline-block;border-left:solid 1px #ddd;}
+.userdiv .menui{color:#66AFE9;font-size:20px;vertical-align:sub;margin-right:3px;}
 .userdiv div {
-    display:none;z-index:999;position:absolute;top:17px;right:0px;
-    border:solid 1px #33577B;background-color:#0F2644;border-radius: 4px;
+    display:none;z-index:999;position:absolute;top:40px;right:0px;
+    background-color:rgba(0,0,0,0.8);border-radius: 4px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
     padding: 5px 0;line-height:30px;
 }
+.userdiv div a {line-height:20px;color:#888;}
 .userdiv:hover div {display:block;}
-.userdiv:hover div a:hover {color:#FF8907;}
+.userdiv:hover div a:hover {color:#FFF;}
 
 
 /* 左部导航区 */

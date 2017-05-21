@@ -91,7 +91,7 @@ define(function(require){
 			var licode = '<li><a class="menu-item" id="'+id+'" href="'+im.href+'" '+target+'>'+icon+im.text+'</a></li>';	
 			navs.push(licode);
 		}
-		var code = '<ul class="menuul">'+navs.join('')+'</ul>';
+		var code = '<div id="frame-pos"></div><ul class="menuul">'+navs.join('')+'</ul>';
 		//2. 帐号菜单
 		var usermenu = [
 			{icon:'icon icon-log',text:'Profile',href:'#/uc/profile'},
@@ -111,7 +111,7 @@ define(function(require){
 
         code += '<div class="comdiv">'+
           '<div class="userdiv">'+
-            '<a href="javascript:;"><i class="icon icon-contact"></i> '+dz.username+'</a>'+
+            '<a href="javascript:;"><i class="icon icon-contact menui"></i>'+dz.username+'</a>'+
             '<div>'+sims.join('<br>')+'</div>'+
           '</div>'+
         '</div>';
