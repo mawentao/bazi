@@ -1,0 +1,90 @@
+/* home.css, (c) 2017 mawentao */
+* {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -icab-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smoothing: antialiased;
+}
+body {padding:0;margin:0;background:#172a3d;}
+
+#header {position:absolute;left:0;right:0;top:0;height:50px;background:rgba(0,0,0,0.2);color:#fff;border-bottom:solid 1px #3C4E56;}
+
+.subtitle {font-family:'KaiTi';font-size:14px;}
+
+
+.logo {float:left;display:inline-block;height:50px;line-height:50px;padding-left:20px;color:#fff;text-decoration:none;}
+.logo img {height:32px;float:left;margin:8px 10px 0 0;}
+
+.nav {float:right;display:inline-block;height:50px;padding-right:20px;}
+
+.menu {margin:0 20px 0 0;padding:0;display:inline-block;height:50px;vertical-align:middle;}
+.menu li {
+	list-style-type: none;
+    margin: 0 5px;
+    padding: 0;
+    float: left;
+    line-height: 50px;
+    position: relative;
+}
+.menu li a {
+	text-decoration:none; color:#fff;
+	font-size:13px;
+	display: block;
+	line-height:49px;
+	padding: 0 10px;
+	color: #fff;
+}
+.menu li a::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: transparent;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transition: all .2s ease-in-out;
+}
+.menu li.active a,.menu li:hover a {color:#fff;}
+.menu li.active a::before,.menu li:hover a::before {
+    transform: scaleX(1);
+    background: rgba(255,255,255,1);
+    transition: all .2s ease-in-out;
+}
+
+
+.btn {display:inline-block;text-decoration:none;font-size:13px;padding:5px 20px 6px;background:#1E7BD2;cursor:pointer;color:#fff;}
+.btn:hover {color:#1E7BD2;background-color:#fff;    
+	-webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.btn-primary {
+	background:rgba(30, 123, 210, 0.5);
+	padding: 10px 40px;
+}
+.btn-primary:hover {background:rgba(30, 123, 210, 0.9);color:#fff;}
+
+
+.main-title {
+	font-family:'PingFang SC','Helvetica Neue',Helvetica,STHeitiSC-Light,WOL_SB,'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,'Microsoft Yahei',sans-serif;
+	letter-spacing:2px;
+}
+
+.userbtn {text-decoration:none;color:#fff;font-size:14px;}
+.userbtn i {font-size:18px;vertical-align: text-bottom;margin-right:3px;}
+.userbtn:hover {color:#fff;}
+
+.footer {
+	position:absolute;bottom:0;left:0;right:0;height:30px;line-height:30px;
+	color:#7393B1;font-size:12px;text-align:center;
+}
+
+

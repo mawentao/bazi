@@ -39,7 +39,7 @@ define(function(require){
     var o = {};
 	o.execute = function(domid) {
 		var code = '<div class="caseform">'+
-          '<div id="scbzdiv" style="display:inline-block;width:500px;background:rgba(0,0,0,0.1);border-radius:4px;padding:10px;"></div>'+
+          '<div id="scbzdiv" style="display:inline-block;width:520px;background:rgba(0,0,0,0.1);border-radius:4px;padding:10px;"></div>'+
           '<div style="display:inline-block;vertical-align:top;margin-left:20px;">'+
 		  '<table>'+
 			'<tr><th width="70" style="padding-left:20px;">姓名：</th>'+

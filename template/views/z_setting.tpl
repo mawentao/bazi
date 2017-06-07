@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title></title>
-  <link rel="stylesheet" href="<%plugin_path%>/template/libs/mwt/3.3/mwt.min.css" type="text/css">
-  <style>.floattop {z-index:0;}</style>
+  <link rel="stylesheet" href="<%plugin_path%>/template/libs/mwt/3.5/mwt.min.css" type="text/css">
+  <link rel="stylesheet" href="<%plugin_path%>/template/static/admin.css" type="text/css">
   <%js_script%>
   <script src="<%plugin_path%>/template/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="<%plugin_path%>/template/libs/requirejs/2.1.9/require.js"></script>
@@ -14,7 +14,7 @@
 		require.config({
             baseUrl: "<%plugin_path%>/template/views/src/",
             packages: [
-                {name:'mwt', location:'<%plugin_path%>/template/libs/mwt/3.3', main:'mwt.min'}
+                {name:'mwt', location:'<%plugin_path%>/template/libs/mwt/3.5', main:'mwt.min'}
             ]
         });
 		require(["setting/page","mwt"],function(mainpage){
@@ -38,8 +38,8 @@
   <table class="tb tb2">
     <tr><th colspan="15" class="partition">全局设置</th></tr>
     <tr>
-      <td width='90'>屏蔽discuz：</td>
-      <td width='200'>
+      <td width='80'>屏蔽discuz：</td>
+      <td width='300'>
 	    <label><input name="disable_discuz" type="radio" value="1"> 是</label>
         &nbsp;&nbsp;
 	    <label><input name="disable_discuz" type="radio" value="0"> 否</label>
@@ -53,6 +53,11 @@
           <option value="aliyun">（蓝色）阿里云风格</option>
       </select></td>
 	  <td class='tips2'>设置默认前端页面风格，风格文件位于template/src/frame/目录下</td>
+	</tr>
+	<tr>
+	  <td>版权信息：</td>
+      <td><input name="page_copyright" id="page_copyright" class="form-control" style="padding:0 5px;"></td>
+	  <td class='tips2'></td>
 	</tr>
     <tr>
       <td colspan="3">

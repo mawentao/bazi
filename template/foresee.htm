@@ -8,12 +8,13 @@
   <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/jquery-ui/jquery-ui.min.css">
   <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.5/mwt.min.css">
   <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/style/pc.css">
+  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/css/foresee.css">
   <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwtcalendar.js"></script>
   <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/jquery/1.11.2/jquery.min.js"></script>
   <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/requirejs/2.1.9/require.js"></script>
 </head>
-<body style="background:url({$plugin_path}/template/static/bg.png);">
-  <div id="frame-left">
+<body style="background-color:#172a3d;background-image:url({$plugin_path}/template/static/bg.png);">
+  <div id="frame-left" class="myscroll">
     <table class="mz-tab">
 	  <tr>
 		<td>
@@ -35,7 +36,7 @@
     </table>
 	<!--{template bazi:foresee/mingpan}-->
   </div>
-  <div id="frame-center">
+  <div id="frame-center" class="myscroll">
     <div id="frame-bar">
       <ul class="typeul">
 	    <li><span name="navim"><i class="fa fa-connectdevelop"></i>总论</span></li>
@@ -45,7 +46,7 @@
 		<li><span name="navim"><i class="fa fa-heartbeat"></i>健康</span></li>
 	  </ul>
     </div>
-    <div id="frame-main">
+    <div id="frame-main" class="myscroll">
 	  <div id="panel-0" class="panel-div"><!--{subtemplate bazi:foresee/outline}--></div>
 	  <div id="panel-1" class="panel-div">心性</div>
 	  <div id="panel-2" class="panel-div"><!--{subtemplate bazi:foresee/hunlian}--></div>

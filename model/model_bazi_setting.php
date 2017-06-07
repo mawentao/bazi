@@ -15,7 +15,9 @@ class model_bazi_setting
 			// 屏蔽所有discuz页面
 			'disable_discuz' => 0,
 			// 页面风格
-			'page_style' => 'didi',
+			'page_style' => 'default',
+			// 版权信息
+			'page_copyright' => '掐指一算 | 沪ICP备17014477号',
 		);
 		return $setting;
     }
