@@ -18,6 +18,8 @@ $actionlist = array(
 	'changepass' => array(),   //!< 修改密码
     'profile' => array(),      //!< 我的资料
     'profile_set' => array(),  //!< 设置个人资料
+
+	'get_login_conf' => array(),	//!< 获取登录配置信息
 );
 ////////////////////////////////////
 $uid = $_G['uid'];
@@ -126,6 +128,19 @@ function profile_set()
     );  
     return C::t('common_member_profile')->update($uid,$data);
 }/*}}}*/
+
+
+// 获取登录配置信息
+function get_login_conf()
+{
+	$siteurl=bazi_env::get_siteurl();
+	$qrid = C::t('#wxconnect#wxconnect_login_qrcode')->genQrCodeId();
+	$qrurl=$siteurl."/plugin.php?id=wxconnect:wxlogin&qrid=".$qrid;
+	return array (
+		'qrid'  => $qrid,
+		'qrurl' => $qrurl,
+	);
+}
 
 // vim600: sw=4 ts=4 fdm=marker syn=php
 ?>

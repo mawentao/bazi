@@ -78,7 +78,7 @@ body {padding:0;margin:0;background:#172a3d;}
 	letter-spacing:2px;
 }
 
-.userbtn {text-decoration:none;color:#fff;font-size:14px;}
+.userbtn {text-decoration:none;color:#fff;font-size:14px;position:relative;line-height:50px;display:inline-block;}
 .userbtn i {font-size:18px;vertical-align: text-bottom;margin-right:3px;}
 .userbtn:hover {color:#fff;}
 
@@ -86,5 +86,15 @@ body {padding:0;margin:0;background:#172a3d;}
 	position:absolute;bottom:0;left:0;right:0;height:30px;line-height:30px;
 	color:#7393B1;font-size:12px;text-align:center;
 }
+
+.submenudiv {display:none;position:absolute;top:45px;right:5px;border:solid 1px #333;
+	width:150px;
+	background:rgba(0,0,0,0.5);
+}
+.userbtn:hover+.submenudiv {display:block;}
+.submenudiv:hover {display:block;}
+.submenudiv a {text-decoration:none;color:#ccc;font-size:14px;}
+.submenudiv a:hover {color:#fff;}
+
 
 

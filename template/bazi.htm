@@ -10,6 +10,7 @@
   <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/home.css">
   <script type="text/javascript" src="{$plugin_path}/template/libs/jquery/1.11.2/jquery.min.js"></script>
   <script type="text/javascript" src="{$plugin_path}/template/libs/mwt/3.5/mwt.min.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/qrcode.js"></script>
 </head>
 <body>
   <div id="particles-js" style="position:absolute;top:0;left:0;right:0;bottom:30px;background:none;z-index:-1;"></div>
@@ -28,6 +29,11 @@
       </ul>
       <!--{if $_G[uid]!=0}-->
 		<a href="plugin.php?id=bazi:console#/uc" class="userbtn"><i class="icon icon-contact"></i><!--{$_G[username]}--></a>
+		<div class="submenudiv">
+		  <ul>
+			<li><a href="$_G['siteurl']source/plugin/bazi/index.php?version=4&module=uc&action=logout">退出登录</a></li>
+		  </ul>
+		</div>
       <!--{else}-->
 	    <a href="javascript:;" id="login-btn" class="btn">登录</a>
       <!--{/if}-->
