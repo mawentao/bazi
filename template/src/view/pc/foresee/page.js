@@ -1,7 +1,8 @@
 /* page.js, (c) 2017 mawentao */
 define(function(require){
-	var graph_outline = require('./graph_outline');  //!< 先天命盘
-	var graph_hunlian = require('./graph_hunlian');  //!< 婚恋命盘
+	var shensha_matrix = require('./shensha_matrix'); //!< 神煞矩阵
+	var graph_outline = require('./graph_outline');   //!< 先天命盘
+	var graph_hunlian = require('./graph_hunlian');   //!< 婚恋命盘
 
 	function select_nav(idx) {
 		var idx = parseInt(idx);
@@ -25,6 +26,8 @@ define(function(require){
 
 	o.execute=function(){
 		// 初始化图
+		shensha_matrix.init('shensha_matrix_div');
+
 		graph_outline.init();
 		graph_hunlian.init();
 

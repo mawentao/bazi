@@ -136,10 +136,33 @@ class analyze_shensha
 	// 年日干查地支,共24种，有12种是花甲子
 	public function check_taijiguiren(&$bazi)
 	{/*{{{*/
+		$shensha = array (
+			'name' => '太极贵人（异质聪慧）',
+			'jue'  => '太极贵人又名科名星，命带太极贵人者，聪明好学，喜神秘学术，文史宗教，为人公正禀直，做事善始善终，有契而不舍的执着精神。日坐太极贵人，灵性最强。',
+			'jixiong' => 'jisha',
+		);
 		$map = array (
 			'甲'=>'子,午', '丙'=>'卯,酉', '戊'=>'辰,戌,丑,未', '庚'=>'寅,亥', '壬'=>'巳,申',
 			'乙'=>'子,午', '丁'=>'卯,酉', '己'=>'辰,戌,丑,未', '辛'=>'寅,亥', '癸'=>'巳,申',
 		);
+
+		$list = array(
+			array('nian_gan','年干'),
+			array('ri_gan','日干'),
+		);
+		$sizhu = array('nian','yue','ri','hour');
+		foreach ($list as $im) {
+			$gan = $bazi[$im[0]];
+			$hitzhiarr = explode(',',$map[$gan]);
+			foreach ($sizhu as $zhu) {
+				$zhi = $bazi[$zhu."_zhi"];
+				if (in_array($zhi,$hitzhiarr)) {
+					$shensha['position'] = $im[1];
+					$res[] = $shensha;
+				}
+			}
+		}
+/*
 		$niangan = $bazi['nian_gan']; //!< 年干
 		$rigan = $bazi['ri_gan'];     //!< 日干
 		//$str = $map[$niangan].','.$map[$rigan];   //!< 以年干或日干对照地支
@@ -166,6 +189,7 @@ class analyze_shensha
 				);
 			}
 		}
+*/
 		return $res;
 	}/*}}}*/
 

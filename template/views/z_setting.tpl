@@ -46,7 +46,7 @@
       </td>
       <td class='tips2'>选'是'所有discuz页面都将跳转到插件页面</td>
     </tr>
-	<tr>
+	<tr style="display:none;">
 	  <td>页面风格：</td>
       <td><select name="page_style" id="page_style">
           <option value="didi">（橙色）滴滴MIS风格</option>

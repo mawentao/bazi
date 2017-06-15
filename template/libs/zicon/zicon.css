@@ -1,0 +1,19 @@
+
+@font-face {font-family: "zicon";
+  src: url('zicon.eot?t=1497273589761'); /* IE9*/
+  src: url('zicon.eot?t=1497273589761#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('zicon.woff?t=1497273589761') format('woff'), /* chrome, firefox */
+  url('zicon.ttf?t=1497273589761') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('zicon.svg?t=1497273589761#zicon') format('svg'); /* iOS 4.1- */
+}
+
+.zicon {
+  font-family:"zicon" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.zicon-taiji:before { content: "\f0001"; }
+
