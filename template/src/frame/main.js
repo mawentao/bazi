@@ -94,13 +94,9 @@ define(function(require){
 		var code = '<div id="frame-pos"></div><ul class="menuul">'+navs.join('')+'</ul>';
 		//2. 帐号菜单
 		var usermenu = [
-			{icon:'icon icon-log',text:'Profile',href:'#/uc/profile'},
-			{icon:'icon icon-lock',text:'Password',href:'#/uc/changepass'}
+//			{icon:'icon icon-log',text:'我的资料',href:'#/uc/profile'}
 		];
-		if (dz.role!=0) {
-			usermenu.push({icon:'icon icon-log',text:'Control Center',href:'#/admin'});
-		}
-		usermenu.push({icon:'icon icon-logout',text:'Exit',href:dz.logouturl});
+		usermenu.push({icon:'icon icon-logout',text:'退出',href:dz.logouturl});
 
 		var sims = [];
 		for (var i=0;i<usermenu.length;++i) {

@@ -5,3 +5,4 @@ a,b,body,button,div,input,label,option,p,select,span,td,th {
 .floattop {z-index:0;}
 .tb2 i {font-size:16px;padding:5px;cursor:pointer;border:solid 1px #ddd;color:#333;width:16px;height:16px;text-align:center;}
 th {text-align: initial;}
+.partition {text-align:left;}

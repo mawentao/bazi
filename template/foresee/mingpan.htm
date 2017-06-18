@@ -47,7 +47,13 @@
 		<td colspan='2'>
 			<span class="ganzhi {if $bazi[hour_zhi_info][yy]=='阴'}yin{else}yang{/if}">{$bazi[hour_zhi]}</span>
 			<span class="wuxing">{$bazi[hour_zhi_info][wuxing]}</span>
-		</td><td></td>
+		</td>
+		<td class="shishen" style="font-size:12px;">
+			(<!--{loop $bazi[kongwang] $k $v}-->
+				{$v}
+			<!--{/loop}-->
+			空)
+		</td>
     </tr>
 	<tr><td class="title">藏干</td>
 		<td colspan='2'>
@@ -114,7 +120,7 @@
 		</td>
 		<td colspan='5'>
 			日元身<span style="color:gold;">{$bazi[wang_shuai][riyuan]}</span>
-			（{$bazi[wang_shuai][score]}）
+			<span style="display:none;">（{$bazi[wang_shuai][score]}）</span>
 		</td>
 	</tr>
 

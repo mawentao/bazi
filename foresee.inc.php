@@ -24,6 +24,7 @@ if (empty($bazi)) {
 
 // 命盘分析(装十神,排大运等)
 bazi_env::c('analyze_mingpan')->analyze($bazi);
+//die(json_encode($bazi));
 
 // 取纳音
 bazi_env::c('analyze_nayin')->analyze($bazi);

@@ -18,9 +18,11 @@ class plugin_bazi
 		}
 		// 只允许打开以下插件页面
 		$enable_pluginids = array(
-			'bazi',
+			'bazi','wxconnect',
 		);
-		if (strpos($_SERVER['PHP_SELF'],"plugin.php")!==false && isset($_GET['id']) && in_array($_GET['id'],$enable_pluginids)) {
+		$pluginid = '';
+		if (isset($_GET['id'])) {list($pluginid) = explode(':',$_GET['id']);}
+		if (strpos($_SERVER['PHP_SELF'],"plugin.php")!==false && in_array($pluginid,$enable_pluginids)) {
 			return;
 		}
 		// 启用SEO设置的处理

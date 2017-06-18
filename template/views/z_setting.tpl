@@ -46,11 +46,10 @@
       </td>
       <td class='tips2'>选'是'所有discuz页面都将跳转到插件页面</td>
     </tr>
-	<tr style="display:none;">
+	<tr>
 	  <td>页面风格：</td>
       <td><select name="page_style" id="page_style">
-          <option value="didi">（橙色）滴滴MIS风格</option>
-          <option value="aliyun">（蓝色）阿里云风格</option>
+          <option value="star">蓝色星空</option>
       </select></td>
 	  <td class='tips2'>设置默认前端页面风格，风格文件位于template/src/frame/目录下</td>
 	</tr>

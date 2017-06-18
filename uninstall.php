@@ -10,7 +10,7 @@ if(!defined('IN_DISCUZ')) {
 }
 
 $tables = array (
-	'bazi_tiyao'
+//	'bazi_tiyao'
 );
 foreach ($tables as $tb) {
     $sql = "DROP TABLE IF EXISTS `".DB::table($tb)."`";

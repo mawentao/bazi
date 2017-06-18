@@ -10,8 +10,9 @@
 pluginversion="1.0"
 pluginname="bazi"
 outdir="output/$pluginname"
-tarname="$pluginname-$pluginversion.zip"
-src="src-"`date +%Y%m%d%H%M%S`
+buildtime=`date +%Y%m%d%H%M%S`
+tarname="$pluginname-$pluginversion-$buildtime.zip"
+src="dist-$buildtime"
 
 function cpfiles()
 {
@@ -24,11 +25,16 @@ function cpfiles()
 rm -rf output
 mkdir -p $outdir
 ################################
-cpfiles api conf *.php *.xml class table model template data
+# 压缩混淆js代码
+node r.js -o build.js
+#rm -rf static/dist/build.txt
+################################
+cpfiles api *.php *.xml class table model template data
 ################################
 mv $outdir/template/src $outdir/template/$src
-sed -i "s/src\//$src\//g" $outdir/template/foresee.htm
 sed -i "s/src\//$src\//g" $outdir/template/bazi.htm
+sed -i "s/src\//$src\//g" $outdir/template/console.htm
+sed -i "s/src\//$src\//g" $outdir/template/foresee.htm
 sed -i "s/mwt3.2utf8 (http:\/\/10.3.70.15:8008\/discuz\/)/dz3.2utf8 (http:\/\/192.168.0.1\/dz)/g" $outdir/discuz_plugin_bazi.xml
 sed -i "s/X3.2/X2.5,X3,X3.1,X3.2/g" $outdir/discuz_plugin_bazi.xml
 ################################

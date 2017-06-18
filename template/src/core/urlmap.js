@@ -3,7 +3,7 @@ define(function(require){
     var urlmapping={},o={};
     // 启动ER
 	o.start=function(){
-		require("er").start();
+		require("er/main").start();
 		this.addmap("/index/index");
 	};
 	// 添加路由path

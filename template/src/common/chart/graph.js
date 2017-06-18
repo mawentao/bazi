@@ -3,16 +3,12 @@
  **/
 define(function(require){
     var o={};
-    //require("echarts");
-    var echarts = require("echarts");
-    var echarts_theme = require("echarts/theme/dark");
-    var chart,echarts_theme;
+    var chart;
 
 	// 显示有向图
     o.show = function(domid,nodes,links,categories) {
 		var dom = document.getElementById(domid);
         chart = echarts.init(dom, 'dark');
-		chart._theme.graph.color = ['#73a373','#ea7e53','#aa9967','#7289ab','#333','#999']
 		// 绘图
 		var option = {
 			tooltip: {},
@@ -33,6 +29,7 @@ define(function(require){
 			animationEasingUpdate: 'quinticInOut',
 			series : [{
 				type: 'graph',
+				color: ['#73a373','#ea7e53','#aa9967','#7289ab','#333','#999'],
 				categories: categories,
 				layout: 'none',
 				symbolSize: 40,

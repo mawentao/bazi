@@ -1,6 +1,6 @@
 /* jappengine.js, (c) 2016 mawentao */
 define(function(require){
-	require('mwt');
+	//require('mwt');
 	var urlmap=require('core/urlmap');
 
 	// 注册controller配置(所有controller必须在此配置)

@@ -24,8 +24,7 @@ var JApp=function(baseUrl)
 				{name:'jquery-ui', location:'../libs/jquery-ui', main:'jquery-ui.min'},
 				{name:'qrcode', location:'../libs/qrcode', main:'qrcode'},
 				{name:'mwt', location:'../libs/mwt/3.5', main:'mwt.min'},
-				{name:'echarts', location:'../libs/echarts/3.1.6', main:'echarts.min'},
-				{name:'er', location:'../libs/er/3.0.3', main:'main'}
+				{name:'echarts', location:'../libs/echarts/3.1.6', main:'echarts.min'}
     		]
 		});
         require(['jappengine','core/log','core/ajax','mwt'], function(jappengine,corelog,coreajax,mwt){

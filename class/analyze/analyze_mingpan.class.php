@@ -37,6 +37,10 @@ class analyze_mingpan
 			// 计算地势(日干在地支的十二长生状态)
 			$bazi[$z."_zhi_info"]['dishi'] = $theory->get_dishi($rigan,$zhi);   //!< 地势(生旺衰)
 		}
+		// 空亡信息
+		$ri_jiazi = $rigan.$bazi['ri_zhi'];
+		$bazi['kongwang'] = $theory->get_kongwang($ri_jiazi);
+
 		// 时令信息(旺相休囚死)
 		$yue_zhi = $bazi['yue_zhi_info'];
 		$yue_zhi_wuxing = $yue_zhi['wuxing'];
@@ -254,6 +258,7 @@ class analyze_mingpan
 		}
 		$bazi['shi_shen_map'] = &$shenmap;
 	}/*}}}*/
+
 
 }
 // vim600: sw=4 ts=4 fdm=marker syn=php
