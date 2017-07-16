@@ -61,4 +61,18 @@ select.shengchen {
 }
 select.shengchen option {color:#000;}
 
+.name-y,.name-x {font-size:14px;font-family:'KaiTi';}
+.name-y:before, .name-x:before {
+	font: normal normal normal 14px/1 FontAwesome;
+    font-size: 12px;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+	margin-right: 4px;
+
+}
+.name-x {color:#f00;}
+.name-x:before {content: "\f221";}
+.name-y {color:#0766b7;}
+.name-y:before {content: "\f222";}
 

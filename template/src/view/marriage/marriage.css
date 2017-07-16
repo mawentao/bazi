@@ -1,0 +1,41 @@
+
+.marriage-tip {font-family:'KaiTi';font-size:14px;width:880px;margin:30px auto 30px;}
+
+.marriage-tab {width:100%;margin:0 auto 20px;}
+.marriage-tab td {vertical-align:middle;}
+.marriage-card {
+	padding-top:20px;
+	display: inline-block;
+	height:320px;
+	width:350px;
+	border:solid 1px #ccc;
+	border-radius: 8px;
+	color: #fff;font-size:16px;
+}
+.marriage-card-y {background-color:#4FC3F7;border-color:#03A9F4;}
+.marriage-card-y:hover {background-color:#81D4FA;color:#fff;border-color:#03A9F4;box-shadow:0 0 20px #03A9F4;}
+.marriage-card-x {background-color:#F99CCE;border-color:#F37CBC;}
+.marriage-card-x:hover {background-color:#F9B1D8;color:#fff;border-color:#F37CBC;box-shadow:0 0 20px #F37CBC;}
+
+.marriage-card>i.fa {font-size:50px;margin-top:30%;}
+
+
+.marriage-card .formtab,.marriage-card .bazitab {width:80%;margin:10px auto;}
+.marriage-card .formtab th,td {padding:2px 0;font-size:16px;}
+.marriage-card .formtab th {font-weight:normal;text-align:left;}
+.marriage-card .formtab td {font-weight:normal;text-align:right;}
+
+.marriage-card .bazihr {
+	width: 80%;
+    margin: 15px auto 5px;
+    color: #8A6D3B;
+    background: #FCF8E3;
+    border-radius: 2px;font-size:14px;
+}
+.marriage-card .bazitab th {font-size:14px;color:#eee;font-weight:normal;}
+.marriage-card .bazitab td {
+	padding-top:10px ;
+	font-weight:bold;
+}
+
+.marriage-tab button {font-size:28px;}

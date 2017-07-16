@@ -1,3 +1,5 @@
 /* base.css (c) mawentao */
+@import url(css/global.css);
 @import url(css/caseform.css);
+@import url(view/marriage/marriage.css);
 

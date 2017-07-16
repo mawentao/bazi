@@ -70,6 +70,7 @@ EOF;
         );
         $key    = bazi_validate::getNCParameter('key','key','string');
         $gender = bazi_validate::getNCParameter('gender','gender','string');
+        $formarry  = bazi_validate::getOPParameter('formarry','formarry','integer',1024,0);
         $sort   = bazi_validate::getOPParameter('sort','sort','string',64,'bid');
         $dir    = bazi_validate::getOPParameter('dir','dir','string',64,'DESC');
         $start  = bazi_validate::getOPParameter('start','start','integer',1024,0);
@@ -77,6 +78,14 @@ EOF;
         $where  = "isdel=0";
 		if ($uid!=1) $where.=" AND uid='$uid'";
         if ($gender!='0') $where.=" AND b.gender='$gender'";
+		///////////////////////////////////////////////////////
+		// 年满18岁以上才可看婚配分析
+		if ($formarry==1) {
+			$ny = intval(date('Y'));
+			$sy = $ny-18;
+			$where .= " AND year(b.solar_calendar)<=$sy";
+		}
+		///////////////////////////////////////////////////////
         if ($key != '') {
             $where .= " AND (a.name like '%$key%' OR a.bid like '%$key%' OR a.desc like '%$key%')";
         }

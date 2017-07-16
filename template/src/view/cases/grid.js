@@ -47,14 +47,14 @@ define(function(require){
                 {head:"备注", dataIndex:"desc", align:'left', render:function(v,item){
 				    return '<span style="color:gray;font-size:12px;">'+v+'</span>';
 			    }},
-              {head:"年龄", dataIndex:"age", width:40, align:'center'},
+              {head:"年龄", dataIndex:"age", width:40, align:'center',render:function(v){return v+'岁';}},
               {head:"生肖", dataIndex:"nian_zhi", width:40, align:'center', render:function(v){
                   return mwtcalendar.zhi[v].animal;
               }}, 
 			  {head:"公历生日", dataIndex:"solar_calendar", width:150, align:'left', sort:true, render:function(v,item){
 				  var week = mwtcalendar.week[item.week];
 				  var tm = strtotime(v);
-				  return date('Y年m月d日',tm)+" (周"+week+")";
+				  return date('Y年m月d日',tm)+"(周"+week+")";
 			  }},
 			  {head:"农历生日", dataIndex:"lunar_calendar", width:120, sort:true, align:'left', render:function(v){
 				  return mwtcalendar.parse_lunar_calendar(v);

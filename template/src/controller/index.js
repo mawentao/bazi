@@ -9,12 +9,14 @@ define(function(require){
 		controller: control,
 		path: [
 			'/'+control+'/cases',
+			'/'+control+'/marriage',
 			'/'+control+'/index'
 		],
 		// 左部菜单
 		menu: [
 			{name:'批命',icon:'fa fa-hand-paper-o',action:'index'},
-			{name:'命例库',icon:'fa fa-database',action:'cases'}
+			{name:'命例库',icon:'fa fa-database',action:'cases'},
+			{name:'合婚',icon:'fa fa-venus-mars',action:'marriage'}
 		]
 	};
 
@@ -38,6 +40,14 @@ define(function(require){
 		var code='<div id="cases-div" class="fill"></div>';
 		frame.showpage(code);
 		require('view/cases/page').execute('cases-div');
+	};
+
+	// 合婚
+	o.marriageAction=function(erurl){
+		action_before();
+		var code='<div id="marriage-div" class="fill" style="background:#eee;"></div>';
+		frame.showpage(code);
+		require('view/marriage/page').execute('marriage-div');
 	};
 
 	return o;

@@ -1,0 +1,9 @@
+/* global.css, (c) 2017 mawentao */
+a, b, body, button, div, input, label, option, p, select, span, td, th {
+    font-family: Arial,Tahoma,Verdana,'KaiTi';
+}
+
+.mwt-grid td {font-family:'KaiTi';font-size:13px;}
+.mwt-grid-body tr:hover {cursor:pointer;background:#eee;}
+
+.fill {position:absolute;left:0;right:0;top:0;bottom:0;overflow:auto;}
