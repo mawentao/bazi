@@ -81,7 +81,7 @@ define(function(require){
 					var tm = strtotime(v);
 					return '<span style="color:gray;font-size:12px;">'+date('Y-m-d H:i',tm)+'</span>';
 				}},
-				{head:"操作", dataIndex:"caseid",width:80,align:'center',render:function(v,item){
+				{head:"操作", dataIndex:"caseid",width:90,align:'center',render:function(v,item){
 					var btncls = 'mwt-btn mwt-btn-xs mwt-btn-default';
 					var popcls = 'mwt-popover-primary';
 

@@ -41,7 +41,7 @@ try {
 
 // 用户提交命例
 function submit()
-{
+{/*{{{*/
 	global $_G;
 	$name   = bazi_validate::getNCParameter('name','name','string');
 	$gender = bazi_validate::getNCParameter('gender','gender','string');
@@ -51,17 +51,10 @@ function submit()
     $tm = strtotime($date);
 	$solar_calendar = date('Y-m-d',$tm);
 	$bid = C::t('#bazi#bazi_birth')->get_bid($solar_calendar,$gender,$hour);
-	$data = array (
-		'bid' => $bid,
-        'name' => $name,
-        'desc' => $desc,
-		'uid'  => $_G['uid'],
-    );
-	$data['ctime'] = date("Y-m-d H:i:s");
-	$caseid = C::t('#bazi#bazi_case')->insert($data,true);
+	$caseid = C::t('#bazi#bazi_case')->add($bid,$name,$desc);
 	if ($caseid==0) throw new Exception("服务器忙，请稍候再试。");
 	return C::m('#bazi#bazi_authcode')->encode_id($caseid);
-}
+}/*}}}*/
 
 // 命例管理
 function query_all() { return C::t('#bazi#bazi_case')->query_all(); }

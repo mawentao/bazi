@@ -2,9 +2,14 @@
 if(!defined('IN_DISCUZ')) {
     exit('Access Denied');
 }
+//error_reporting(E_ALL);
+
 require_once 'utils.class.php';
 require_once 'log.class.php';
 require_once 'validate.class.php';
+require_once 'base.class.php';
+require_once 'bazi/bazi_case.php';
+
 class bazi_env
 {
     private static $_log_obj = null;

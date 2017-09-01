@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[bazi/]]></item>
 			<item id="copyright"><![CDATA[mawentao]]></item>
-			<item id="version"><![CDATA[1.0.0]]></item>
+			<item id="version"><![CDATA[1.1]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[hook_pc]]></item>

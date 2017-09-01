@@ -30,6 +30,32 @@ EOF;
 		return DB::fetch_first($sql);
 	}
 
+
+	// (用户)提交命例,会根据命例生辰性别，姓名和uid查是否已存在，不存在才添加
+	// 返回命例ID
+	public function add($bid,$name,$desc)
+	{
+		global $_G;
+		$uid = $_G['uid'];
+		//1. 根据命例生辰性别，姓名和uid查是否已存在
+		$sql = "SELECT * FROM ".DB::table('bazi_case')." WHERE bid='$bid' AND name='$name' AND uid='$uid' AND isdel=0";
+		$case = DB::fetch_first($sql);
+		if (!empty($case)) {
+			return $case['caseid'];
+		}
+		//2. 插入数据
+		$data = array (
+            'bid'   => $bid,
+			'name'  => $name,
+			'desc'  => $desc,
+			'uid'   => $uid,
+			'ctime' => date("Y-m-d H:i:s"),
+      	);
+		$caseid = $this->insert($data,true);
+		return $caseid;
+	}
+
+
 	// 保存命例
 	public function save()
     {/*{{{*/
@@ -114,6 +140,8 @@ EOF;
 		//////////////////////////
         return $return;
     }/*}}}*/
+
+
 }
 // vim600: sw=4 ts=4 fdm=marker syn=php
 ?>

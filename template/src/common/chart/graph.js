@@ -37,6 +37,9 @@ define(function(require){
 				label: {
 					normal: { show:true }
             	},
+				tooltip: {
+                	formatter: "{b}"
+            	},
 				edgeSymbol: ['circle', 'arrow'],
 				edgeSymbolSize: [6, 6],
 				edgeLabel: {
