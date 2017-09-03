@@ -15,11 +15,17 @@ try {
 	$maleCase = new bazi_case($marriageInfo['male_case_id']);
 	$maleCase->analyzeMinpan();
 	$maleCase->analyzeNayin();
+	$maleCase->analyzeGraph();
+	$maleCase->analyzeShenSha();
+	$maleCase->analyzeHunLian();
 	$maleCase = $maleCase->toArray();
 	// 女命分析
 	$femaleCase = new bazi_case($marriageInfo['female_case_id']);
 	$femaleCase->analyzeMinpan();
 	$femaleCase->analyzeNayin();
+	$femaleCase->analyzeGraph();
+	$femaleCase->analyzeShenSha();
+	$femaleCase->analyzeHunLian();
 	$femaleCase = $femaleCase->toArray();
 	// 合婚分析
 	$marriage = bazi_marriage::analyze($maleCase,$femaleCase);

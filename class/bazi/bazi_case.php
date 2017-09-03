@@ -2,8 +2,12 @@
 if(!defined('IN_DISCUZ')) {
     exit('Access Denied');
 }
+require_once 'bazi_jue.php';
 require_once 'bazi_analyze_mingpan.php';
 require_once 'bazi_analyze_nayin.php';
+require_once 'bazi_analyze_graph.php';
+require_once 'bazi_analyze_shensha.php';
+require_once 'bazi_analyze_hunlian.php';
 require_once 'bazi_marriage.php';
 /**
  * 八字分析核心类
@@ -42,19 +46,36 @@ class bazi_case
 
 	// 命盘分析(装十神,排大运等)
 	public function analyzeMinpan()
-	{
+	{/*{{{*/
 		bazi_analyze_mingpan::analyze($this);
-	}
+	}/*}}}*/
 
 	// 纳音分析
 	public function analyzeNayin()
-	{
+	{/*{{{*/
 		bazi_analyze_nayin::analyze($this);
-	}
+	}/*}}}*/
+
+    // 八字(冲克关系)图分析
+    public function analyzeGraph()
+	{/*{{{*/
+		bazi_analyze_graph::analyze($this);
+	}/*}}}*/
+
+    // 神煞分析
+    public function analyzeShenSha()
+	{/*{{{*/
+		bazi_analyze_shensha::analyze($this);
+	}/*}}}*/
+
+    // 婚恋分析
+    public function analyzeHunLian()
+    {/*{{{*/
+        bazi_analyze_hunlian::analyze($this);
+    }/*}}}*/
 
 	// 转成Array
 	public function toArray() {return $this->data;}
-
 }
 // vim600: sw=4 ts=4 fdm=marker syn=php
 ?>

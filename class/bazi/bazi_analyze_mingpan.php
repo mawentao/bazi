@@ -71,20 +71,10 @@ class bazi_analyze_mingpan
 		self::paiDaYun($bazi);
 		// 排流年
 		self::paiLiuNian($bazi);
-
+        // 获取日干十神对应的干
+        self::getShiShenMap($bazi);
 
 		return;
-		
-		// 排大运
-		$this->pai_dayun($bazi);
-		// 排流年
-		$this->pai_liunian($bazi);
-
-		///////////////////////////////////////////
-		// 获取日干十神对应的干
-		$this->get_shishenmap($bazi);
-		///////////////////////////////////////////
-
     }   
 
 	// 日元旺衰强弱判断
@@ -221,6 +211,38 @@ class bazi_analyze_mingpan
 		$bazi['liunian'] = $liunian;
 	}/*}}}*/
 
+	// 获取十神信息(包括统计信息)
+	public function getShiShenMap(&$bazi)
+	{/*{{{*/
+        //1. 获取日干十神对应的干
+		$ri_gan = $bazi['riYuan'];
+		$gan_arr = array_keys(bazi_base::$GAN_MAP);
+        $shiShenTable = bazi_base::$SHI_SHEN_TABLE_MAP;
+		$shenmap = array();
+		foreach ($gan_arr as $gan) {
+			$k = $ri_gan.$gan;
+			$shishen = $shiShenTable[$k];
+			$shenmap[$shishen] = array(
+                'gan'       => $gan,    //!< 对应的天干
+                'statInGan' => 0,       //!< 在四柱天干中出现次数
+                'statInZhi' => 0,       //!< 在四柱地支中出现次数(包括藏干)
+            );
+		}
+        //2. 统计天干中各十神出现次数
+        foreach ($bazi['gan'] as $k => &$gan) {
+            if (!isset($gan['shishen']['name'])) continue;
+            $ss = $gan['shishen']['name'];
+            ++$shenmap[$ss]['statInGan'];
+        }
+        //3. 统计地支中各十神出现次数(只看主气)
+        foreach ($bazi['zhi'] as &$zhi) {
+            $ss = $zhi['shishen']['name'];
+            ++$shenmap[$ss]['statInZhi'];
+        }
+		$bazi['myShiShenMap'] = &$shenmap;
+	}/*}}}*/
+
+
 
 	// 获取天干的详细信息(包括十神)
 	private function get_gan_info($gan,$rigan)
@@ -248,20 +270,6 @@ class bazi_analyze_mingpan
 		return $zhi_info;
 	}/*}}}*/
 
-	// 获取日干十神对应的干
-	private function get_shishenmap(&$bazi)
-	{/*{{{*/
-		$theory = C::m('#bazi#bazi_theory');
-		$ri_gan = $bazi['ri_gan'];
-		$gan_arr = array_keys($theory->gan_map);
-		$shenmap = array();
-		foreach ($gan_arr as $gan) {
-			$k = $ri_gan.$gan;
-			$shishen = $theory->shishen_table[$k];
-			$shenmap[$shishen] = $gan;
-		}
-		$bazi['shi_shen_map'] = &$shenmap;
-	}/*}}}*/
 
 
 }

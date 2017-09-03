@@ -2,15 +2,15 @@
 <root>
 	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
 	<item id="Version"><![CDATA[X3.2]]></item>
-	<item id="Time"><![CDATA[2017-03-11 10:24]]></item>
-	<item id="From"><![CDATA[我的测试Discuz站点（X3.2UTF-8）自家用 (http://139.196.29.35:8008/discuz/)]]></item>
+	<item id="Time"><![CDATA[2017-09-02 08:19]]></item>
+	<item id="From"><![CDATA[MAC测试站点 (http://localhost:8888/discuz/)]]></item>
 	<item id="Data">
 		<item id="plugin">
 			<item id="available"><![CDATA[1]]></item>
 			<item id="adminid"><![CDATA[1]]></item>
-			<item id="name"><![CDATA[四柱八字命理预测]]></item>
+			<item id="name"><![CDATA[掐指一算]]></item>
 			<item id="identifier"><![CDATA[bazi]]></item>
-			<item id="description"><![CDATA[the bazi's description]]></item>
+			<item id="description"><![CDATA[掐指一算，专为四柱八字命理师设计的八字分析预测系统。]]></item>
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[bazi/]]></item>
 			<item id="copyright"><![CDATA[mawentao]]></item>

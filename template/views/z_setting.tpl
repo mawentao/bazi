@@ -7,19 +7,14 @@
   <link rel="stylesheet" href="<%plugin_path%>/template/static/admin.css" type="text/css">
   <%js_script%>
   <script src="<%plugin_path%>/template/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="<%plugin_path%>/template/libs/requirejs/2.1.9/require.js"></script>
+  <script src="<%plugin_path%>/template/libs/mwt/3.5/mwt.min.js"></script>
   <script>
     var jq=jQuery.noConflict();
     jq(document).ready(function($) {
-		require.config({
-            baseUrl: "<%plugin_path%>/template/views/src/",
-            packages: [
-                {name:'mwt', location:'<%plugin_path%>/template/libs/mwt/3.5', main:'mwt.min'}
-            ]
-        });
-		require(["setting/page","mwt"],function(mainpage){
-            mainpage.execute(); 
-        });
+        jQuery("input[name=disable_discuz][value="+v.disable_discuz+"]").attr("checked",true);
+		set_select_value('page_style',v.page_style);
+		set_value('page_title',v.page_title);
+		set_value('page_copyright',v.page_copyright);
     });
   </script>
 </head>
@@ -52,6 +47,11 @@
           <option value="star">蓝色星空</option>
       </select></td>
 	  <td class='tips2'>设置默认前端页面风格，风格文件位于template/src/frame/目录下</td>
+	</tr>
+    <tr>
+	  <td>页面标题：</td>
+      <td><input type="text" id="page_title" name="page_title" class="txt" style="width:96%"></td>
+	  <td class='tips2'>系统名称</td>
 	</tr>
 	<tr>
 	  <td>版权信息：</td>

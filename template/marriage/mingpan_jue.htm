@@ -1,0 +1,46 @@
+<div style="font-size:14px;">
+  <label style="color:#FF5D94">配偶星：</label>{$bazi[spouse][正]}({$bazi[spouse][zhengStat]}), {$bazi[spouse][偏]}({$bazi[spouse][pianStat]})
+  <ul class="jueul">
+    <!--{loop $bazi[spouse][jue] $k $v}-->
+    <li class="nature_{$v[nature]}">{$v[desc]}</li>
+    <!--{/loop}--> 
+  </ul>
+
+
+<!--{if count($bazi[hunLian][gong][jue])}-->
+  <label style="color:#FDF6BD;">配偶宫</label>
+  <ul class="jueul">
+    <!--{loop $bazi[hunLian][gong][jue] $k $v}-->
+    <li class="nature_{$v[nature]}">{$v[desc]}</li>
+    <!--{/loop}--> 
+  </ul>
+<!--{/if}-->
+
+
+<!--{if count($bazi[hunLian][taohua][jue])}-->
+  <label style="color:pink;">桃花</label>
+  <ul class="jueul">
+    <!--{loop $bazi[hunLian][taohua][jue] $k $v}-->
+    <li class="nature_{$v[nature]}" style="color:pink;">{$v[desc]}</li>
+    <!--{/loop}--> 
+  </ul>
+<!--{/if}-->
+
+<!--{if count($bazi[hunLian][shangguan][jue])}-->
+  <label style="color:#FDF6BD;">伤官星</label>
+  <ul class="jueul">
+    <!--{loop $bazi[hunLian][shangguan][jue] $k $v}-->
+    <li class="nature_{$v[nature]}">{$v[desc]}</li>
+    <!--{/loop}--> 
+  </ul>
+<!--{/if}-->
+
+<!--{if count($bazi[hunLian][shensha][jue])}-->
+  <label style="color:#FDF6BD;">神煞</label>
+  <ul class="jueul">
+    <!--{loop $bazi[hunLian][shensha][jue] $k $v}-->
+    <li class="nature_{$v[nature]}">{$v[desc]}</li>
+    <!--{/loop}--> 
+  </ul>
+<!--{/if}-->
+</div>
