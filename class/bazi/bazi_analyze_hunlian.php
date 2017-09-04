@@ -22,6 +22,7 @@ class bazi_analyze_hunlian
         self::see_taohua($bazi);        //!< 桃花
         self::see_shangguan($bazi);     //!< 伤官星
         self::see_shensha($bazi);       //!< 日柱神煞
+        self::see_he($bazi);            //!< 看合
 	}
 
     // 配偶星
@@ -128,6 +129,18 @@ class bazi_analyze_hunlian
         }
         if ($rizhiStat['合']>1) {
             $bazi['hunLian']['gong']['jue'][] = bazi_jue::getByJueId(200102);
+        }
+        //die(json_encode($bazi['hunLian']['gong']['jue']));
+    }/*}}}*/
+
+    // 看合
+    private static function see_he(&$bazi)
+    {/*{{{*/
+        $bazi['hunLian']['he']['jue'] = array();
+        $heGanNum = count($bazi['graph']['links']['gan_he']);
+        $heZhiNum = count($bazi['graph']['links']['zhi_he']);
+        if ($heGanNum+$heZhiNum>=2) {
+            $bazi['hunLian']['he']['jue'][] = bazi_jue::getByJueId(200601);
         }
         //die(json_encode($bazi['hunLian']['gong']['jue']));
     }/*}}}*/

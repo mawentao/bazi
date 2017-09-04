@@ -17,6 +17,15 @@
 <!--{/if}-->
 
 
+<!--{if count($bazi[hunLian][he][jue])}-->
+  <label style="color:#FDF6BD;">合</label>
+  <ul class="jueul">
+    <!--{loop $bazi[hunLian][he][jue] $k $v}-->
+    <li class="nature_{$v[nature]}">{$v[desc]}</li>
+    <!--{/loop}--> 
+  </ul>
+<!--{/if}-->
+
 <!--{if count($bazi[hunLian][taohua][jue])}-->
   <label style="color:pink;">桃花</label>
   <ul class="jueul">

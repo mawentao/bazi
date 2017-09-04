@@ -20,8 +20,10 @@ class bazi_case
 	{/*{{{*/
 		$d = &$this->data;
 		$d = C::m('#bazi#bazi_case')->getinfo($caseid);
+        if (empty($d)) {
+            throw new Exception('此命例不存在或已删除');
+        }
 		$d['caseid'] = C::m('#bazi#bazi_authcode')->encode_id($d['caseid']);
-
 		unset($d['bid']);
 		unset($d['week']);
 		

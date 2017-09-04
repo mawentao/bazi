@@ -14,6 +14,24 @@ $addtime = $modtime = date('Y-m-d H:i:s');
 $nowtm = time();
 
 // install db
+// 用户访问日志表
+$table = DB::table('bazi_log');
+/*{{{*/
+$sql = "CREATE TABLE IF NOT EXISTS $table ". <<<EOF
+(
+`logid` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '日志ID(自增主键)',
+`logtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '日志时间',
+`uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+`client_ip` varchar(32) NOT NULL DEFAULT '' COMMENT '来访IP',
+`log_content` varchar(4096) NOT NULL DEFAULT '' COMMENT '日志内容',
+PRIMARY KEY (`logid`),
+KEY `idx_logtime_uid` (`logtime`,`uid`)
+) ENGINE=InnoDB
+EOF;
+runquery($sql);
+runquery("ALTER TABLE `$table` ENGINE=INNODB");
+/*}}}*/
+
 // 万年历
 $table = DB::table('bazi_calendar');
 /*{{{*/
@@ -93,7 +111,6 @@ EOF;
 runquery($sql);
 /*}}}*/
 include_once($curpath."/data/bazi_jue_data.php");
-
 
 // 八字表
 $table = DB::table('bazi_birth');

@@ -12,7 +12,8 @@ try {
 		throw new Exception("此链接已过期");
 	}
 	// 男命分析
-	$maleCase = new bazi_case($marriageInfo['male_case_id']);
+    $male_case_id = $marriageInfo['male_case_id'];
+	$maleCase = new bazi_case($male_case_id);
 	$maleCase->analyzeMinpan();
 	$maleCase->analyzeNayin();
 	$maleCase->analyzeGraph();
@@ -20,7 +21,8 @@ try {
 	$maleCase->analyzeHunLian();
 	$maleCase = $maleCase->toArray();
 	// 女命分析
-	$femaleCase = new bazi_case($marriageInfo['female_case_id']);
+    $female_case_id = $marriageInfo['female_case_id'];
+	$femaleCase = new bazi_case($female_case_id);
 	$femaleCase->analyzeMinpan();
 	$femaleCase->analyzeNayin();
 	$femaleCase->analyzeGraph();
@@ -39,3 +41,4 @@ include template("bazi:marriage");
 $uid=$_G['uid'];
 $username=$_G['username'];
 bazi_env::getlog()->trace("bazi:marriage $uid|$username|$idstr");
+C::t('#bazi#bazi_log')->write("bazi:marriage&m=$idstr|maleCaseId:$male_case_id|femaleCaseId:$female_case_id");
