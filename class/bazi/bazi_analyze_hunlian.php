@@ -29,7 +29,7 @@ class bazi_analyze_hunlian
     private static function see_spouse(&$bazi)
     {/*{{{*/
         //1. 获取命主的配偶星(正,偏)
-        $shenmap = $bazi['myShiShenMap'];
+        $shenmap = $bazi['dict']['shishen'];
         $spouse_star = array (
             '正' => array(),
             '偏' => array(),
@@ -55,13 +55,13 @@ class bazi_analyze_hunlian
     private static function analyze_spouse(&$bazi)
     {/*{{{*/
         $bazi['spouse']['jue'] = array();
-        $myShiShenMap = &$bazi['myShiShenMap'];
+        $myShiShenMap = &$bazi['dict']['shishen'];
         $zhengStar = $bazi['gender']=='男' ? '正财' : '正官';
         $pianStar = $bazi['gender']=='男' ? '偏财' : '七杀';
         $zhengStatInGan = $myShiShenMap[$zhengStar]['statInGan'];  //!< 天干中正配偶星次数
-        $zhengStatInZhi = $myShiShenMap[$zhengStar]['statInZhi'];  //!< 地支中正配偶星次数
+        $zhengStatInZhi = $myShiShenMap[$zhengStar]['statInZhiCang'];  //!< 地支中正配偶星次数
         $pianStatInGan = $myShiShenMap[$pianStar]['statInGan'];  //!< 天干中正配偶星次数
-        $pianStatInZhi = $myShiShenMap[$pianStar]['statInZhi'];  //!< 地支中正配偶星次数
+        $pianStatInZhi = $myShiShenMap[$pianStar]['statInZhiCang'];  //!< 地支中正配偶星次数
         $all = $zhengStatInGan+$zhengStatInZhi+$pianStatInGan+$pianStatInZhi;
         $allZheng = $zhengStatInGan + $zhengStatInZhi;
         $allPian = $pianStatInGan + $pianStatInZhi;

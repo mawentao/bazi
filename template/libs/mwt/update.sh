@@ -8,8 +8,7 @@
 # @brief:  update.sh
 ####################################################
 
-cp /home/work/www/mwtjs/output/mwtjs/3.5/*.js ./3.5
-cp /home/work/www/mwtjs/output/mwtjs/3.5/*.css ./3.5
+cp /Users/mawentao/web/localhost:8888/mwtjs/dist/mwt.min.* ./4.0
 
 
 exit 0

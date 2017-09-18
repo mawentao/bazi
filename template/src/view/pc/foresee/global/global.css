@@ -1,0 +1,13 @@
+
+.logo {display: inline-block;padding: 4px 10px 0;}
+.logo img {height:40px;}
+
+.navul {padding:0;margin:0;display:block;text-align:right;width:450px;}
+.navul li {padding:0;margin:0;display:inline-block;}
+.navul li a {text-decoration:none;padding:8px 12px;margin-right:5px;color:#ccc;border-radius:3px}
+.navul li a.active,.navul li a:hover {background:rgba(33,150,243,0.2);}
+.navul li a.active {color:#E2C569;}
+
+.xingming {font-size:22px !important;border-radius:20px;padding:5px 15px;color:#fff !important;}
+
+.wall {border:solid 1px #065679;position:relative;}

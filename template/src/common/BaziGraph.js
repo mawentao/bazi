@@ -78,15 +78,15 @@ function BaziGraph(conf)
 			'年干':[x1,y2],'月干':[x2,y2],'日干':[x3,y2],'时干':[x4,y2],'运干':[x5,y2],'岁干':[x6,y2],
 			'年支':[x1,y3],'月支':[x2,y3],'日支':[x3,y3],'时支':[x4,y3],'运支':[x5,y3],'岁支':[x6,y3],
 			'年底':[x1,y4],'月底':[x2,y4],'日底':[x3,y4],'时底':[x4,y4],'运底':[x5,y4],'岁底':[x6,y4],
-			'无恩之刑':[x1+35,y4], '恃势之刑':[x2+35,y4], '无礼之刑':[x3+35,y4], '自刑':[x4+35,y4]
+			'刑':[x2+35,y4], '自刑':[x4+35,y4]
 		};
 
 	function refresh() {
 		// 封装graph节点
 		var nodes=[];
 		var symbolStyle = {normal:{color:'rgba(128, 128, 128, 0)'}};   			//!< 柱名节点样式
-		var textStyle = {normal:{textStyle:{fontSize:18}}};						//!< 节点名称样式
-		var textStyleR = {normal:{textStyle:{fontSize:18,color:'#FF5722'}}}
+		var textStyle = {normal:{textStyle:{fontSize:16}}};						//!< 节点名称样式
+		var textStyleR = {normal:{textStyle:{fontSize:16,color:'#FF5722'}}}
 		var namekey = mode==1 ? 'name' : 'shishen';    //!< 显示干支或十神
 		var zhumap = {'年支':'年柱','月支':'月柱','日支':'日柱','时支':'时柱','运支':'大运','岁支':'流年'};
 		for (var i=0;i<data.nodes.length;++i) {
@@ -106,6 +106,9 @@ function BaziGraph(conf)
 				nodes.push({ name:zhu,value:'',category:5,itemStyle:symbolStyle,x:gw[0],y:gw[1],label:st});
 			}
 		}
+        // 虚拟节点
+        nodes.push({name:'v',value:'',category:6,itemStyle:symbolStyle,x:50,y:y4,label:''});
+
 		// 封装graph边
 		var nodemap = {};
 		var links = [];
@@ -159,13 +162,13 @@ function BaziGraph(conf)
 				}
 			}
 			// 地支六合、半合、暗合
-			var ks = ['zhi_liuhe','zhi_banhe','zhi_anhe'];
+			var ks = ['zhi_he','zhi_banhe','zhi_anhe'];
 			for (var m=0; m<ks.length; ++m) {
 				var k = ks[m];
 				if (data.links[k] && data.links[k].length>0) {
 					for (var i=0;i<data.links[k].length;++i) {
 						var im = data.links[k][i];
-						var h = k=='zhi_liuhe' ? '合'+im[2] : '半合'+im[2];
+						var h = k=='zhi_he' ? '合' : '半合'+im[2];
 						if (k=='zhi_anhe') h = '暗合';
 						links.push(get_zhi_he_link(im[0],im[1],h));
 					}
@@ -179,14 +182,15 @@ function BaziGraph(conf)
 					if (name=='自刑') continue;     //!< 自刑不显示
 					if (!isset(nodemap[name])) {
 						var gw = gongwei[name];
-						nodes.push({ name:name,value:name,category:5,x:gw[0],y:gw[1],symbolSize:[70,30],symbol:'roundRect'});
+						//nodes.push({ name:name,value:name,category:5,x:gw[0],y:gw[1],symbolSize:[70,30],symbol:'roundRect'});
+						nodes.push({ name:name,value:name,category:5,x:gw[0],y:gw[1],symbolSize:[25,25]});
 						nodemap[name] = 1;
 					}
 					links.push(get_zhi_xing_link(im[0],name));
 					links.push(get_zhi_xing_link(im[1],name));
 				}
 			}
-			// 地支相冲、害、破
+			// 地支相冲、害、破、刑
 			var ks = ['zhi_chong','zhi_hai','zhi_po'];
 			for (var m=0; m<ks.length; ++m) {
 				var k = ks[m];
@@ -200,7 +204,7 @@ function BaziGraph(conf)
 		}
 		// 渲染图形
 		//print_r(nodes);
-		graph.show(chartid,nodes,links,categories);
+		graph.show(chartid,nodes,links,categories,true);
 	}
 
 	this.show=function(_data) {

@@ -1,65 +1,38 @@
-/* page.js, (c) 2017 mawentao */
 define(function(require){
-	var shensha_matrix = require('./shensha_matrix'); //!< 神煞矩阵
-	var graph_outline = require('./graph_outline');   //!< 先天命盘
-	var graph_hunlian = require('./graph_hunlian');   //!< 婚恋命盘
+    /* 预测主页面 (c) 2017 mawentao */
+    var domid = 'appdiv';
+    var BaziCase = require('bazi/BaziCase');
 
-	function select_nav(idx) {
-		var idx = parseInt(idx);
-		jQuery('.panel-div').hide();
-		jQuery('#panel-'+idx).show();
-		jQuery('[name=navim]').removeClass("active");
-		jQuery('[name=navim]:eq('+idx+')').addClass("active");
-		switch (idx) {
-			case 2: // 婚恋命盘
-				//require('common/bazi_graph').show('hunlian-mingpan-div',bazi_graph);
-				graph_hunlian.show();
-				break;
-			default: // 先天命盘
-				graph_outline.show();
-				//require('common/bazi_graph').show('outline-char-div',bazi_graph);
-				break;
-		}
-	}
+    // 初始化
+    function init() {
+        new mwt.BorderLayout({
+            render : domid,
+            splitWidth: 2,
+            splitStyle: 'background:#065679',
+            items : [
+                {id:'frame-north', region:'north', height:60, style:'background:rgba(0,0,0,0.4);'},
+                {id:'frame-west',  region:'west',  width:460, split:true},
+                {id:'frame-center',region:'center',html:'center', style:'padding:10px;'}
+            ]
+        }).init();
+        var bazicase = new BaziCase(bazi);
+        require('./area_mingpan').init('frame-west',bazi);
+        require('./area_header').init('frame-north',bazicase);
+    }
 
     var o={};
+    o.execute=function() {
+        init(); return;
 
-	o.execute=function(){
-		// 初始化图
-		shensha_matrix.init('shensha_matrix_div');
-
-		graph_outline.init();
-		graph_hunlian.init();
-
-		// 导航菜单点击事件
-		jQuery('[name=navim]').unbind('click').click(function(){
-			var idx = jQuery(this).index("[name=navim]");
-			select_nav(idx);
-		});
-		select_nav(nav_idx);
-
-		// 婚恋流年按钮事件
-		jQuery('[name=a-hunlian-liunian]')
-			.mouseover(function(){
-				var year = jQuery(this).data('year');
-				jQuery('[name=a-liunian][data-year='+year+']').css({'border-color':'#94936A'});
-			})
-			.mouseout(function(){
-				var year = jQuery(this).data('year');
-				var jd = jQuery('[name=a-liunian][data-year='+year+']');
-				if (!jd.hasClass('jinnian')) {
-					jd.css({'border-color':'rgba(255,255,255,0)'});
-				}
-			})
-			.click(function(){
-				var year = jQuery(this).data('year');
-				jQuery('[name=a-hunlian-liunian]').removeClass('jinnian');
-				jQuery(this).addClass('jinnian');
-				//alert(year);
-				//require("./hunlian_liunian_graph").show();
-				graph_hunlian.show();
-			});
-	};
+        var taiji = require('./global/taiji');
+        taiji.show();
+        init();
+        jQuery('#'+domid).hide();
+        setTimeout(function(){
+            taiji.hide();
+            jQuery('#'+domid).fadeIn('slow');
+        },1500);
+    };
 
 	return o;
 });

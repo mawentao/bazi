@@ -17,15 +17,10 @@ try {
 
     // 命例分析
     $case = new bazi_case($caseid);
-	$case->analyzeMinpan();  //!< 八字命盘
-    $case->analyzeNayin();   //!< 纳音
-    $case->analyzeGraph();   //!< 八字关系图
-    $case->analyzeShenSha(); //!< 神煞
-    $case->analyzeHunLian(); //!< 婚恋
+    $case->analyzeAll();
     $bazi = $case->toArray();
-
-    //die(json_encode($bazi));
-///*
+//    die(json_encode($bazi));
+/*
     // 获取命例信息
     $bazi = C::m('#bazi#bazi_case')->getinfo($caseid);
     if (empty($bazi)) {
@@ -52,7 +47,7 @@ try {
     bazi_env::c('analyze_hunlian_base')->analyze($bazi);
     // 论婚恋流年
     bazi_env::c('analyze_hunlian_liunian')->analyze($bazi);
-    //C::m('#bazi#bazi_case')->debug($bazi);
+    C::m('#bazi#bazi_case')->debug($bazi);
 //*/
 } catch(Exception $e) {
 	die($e->getMessage());

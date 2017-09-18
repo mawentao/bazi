@@ -94,6 +94,76 @@ while (!feof($fi)) {
 }
 */
 
+// 五行表
+$table = DB::table('bazi_dict_wuxing');
+/*{{{*/
+$sql = "CREATE TABLE IF NOT EXISTS `$table` ".<<<EOF
+(
+`name` varchar(4) NOT NULL DEFAULT '' COMMENT '天干名称',
+`sheng` varchar(2) NOT NULL DEFAULT '' COMMENT '生',
+`ke` varchar(2) NOT NULL DEFAULT '' COMMENT '克',
+`siji` varchar(8) NOT NULL DEFAULT '' COMMENT '季节',
+`position` varchar(2) NOT NULL DEFAULT '' COMMENT '方位',
+PRIMARY KEY (`name`)
+) ENGINE=MyISAM COMMENT '五行表'
+EOF;
+runquery($sql);
+/*}}}*/
+include_once($curpath."/data/bazi_wuxing_data.php");
+
+// 天干表
+$table = DB::table('bazi_dict_tiangan');
+/*{{{*/
+$sql = "CREATE TABLE IF NOT EXISTS `$table` ".<<<EOF
+(
+`name` varchar(4) NOT NULL DEFAULT '' COMMENT '天干名称',
+`num` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '数字编号',
+`yy` varchar(2) NOT NULL DEFAULT '' COMMENT '阴阳属性',
+`wuxing` varchar(2) NOT NULL DEFAULT '' COMMENT '五行属性',
+`zhangsheng` varchar(2) NOT NULL DEFAULT '' COMMENT '长生地支',
+PRIMARY KEY (`name`),
+UNIQUE KEY (`num`)
+) ENGINE=MyISAM COMMENT '天干表'
+EOF;
+runquery($sql);
+/*}}}*/
+include_once($curpath."/data/bazi_tiangan_data.php");
+
+// 地支表
+$table = DB::table('bazi_dict_dizhi');
+/*{{{*/
+$sql = "CREATE TABLE IF NOT EXISTS `$table` ".<<<EOF
+(
+`name` varchar(4) NOT NULL DEFAULT '' COMMENT '天干名称',
+`num` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '数字编号',
+`yy` varchar(2) NOT NULL DEFAULT '' COMMENT '阴阳属性',
+`wuxing` varchar(2) NOT NULL DEFAULT '' COMMENT '五行属性',
+`shengxiao` varchar(2) NOT NULL DEFAULT '' COMMENT '生肖',
+`canggan` varchar(8) NOT NULL DEFAULT '' COMMENT '地支藏天干(按主中余气排序,逗号分割)',
+PRIMARY KEY (`name`),
+UNIQUE KEY (`num`)
+) ENGINE=MyISAM COMMENT '地支表'
+EOF;
+runquery($sql);
+/*}}}*/
+include_once($curpath."/data/bazi_dizhi_data.php");
+
+// 十神表
+$table = DB::table('bazi_dict_shishen');
+/*{{{*/
+$sql = "CREATE TABLE IF NOT EXISTS `$table` ".<<<EOF
+(
+`name` varchar(4) NOT NULL DEFAULT '' COMMENT '十神名称',
+`short_name` varchar(2) NOT NULL DEFAULT '' COMMENT '十神简称',
+`sameyy` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否与日主同阴阳(0:否,1:是)',
+PRIMARY KEY (`name`),
+UNIQUE KEY (`short_name`)
+) ENGINE=MyISAM COMMENT '十神表'
+EOF;
+runquery($sql);
+/*}}}*/
+include_once($curpath."/data/bazi_shishen_data.php");
+
 // 八字论断口诀
 $table = DB::table('bazi_jue');
 /*{{{*/

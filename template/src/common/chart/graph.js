@@ -6,21 +6,24 @@ define(function(require){
     var chart;
 
 	// 显示有向图
-    o.show = function(domid,nodes,links,categories) {
+    o.show = function(domid,nodes,links,categories,legendLeft) {
 		var dom = document.getElementById(domid);
         chart = echarts.init(dom, 'dark');
+        var legend = {
+            itemWidth:20, itemHeight:13,
+            textStyle : {fontSize:12},
+            data: categories.map(function (a) {
+                return a.name;
+            })
+        };
+        if (legendLeft) {
+            legend['orient'] = 'vertical';
+            legend['left'] = 5;
+        }
 		// 绘图
 		var option = {
 			tooltip: {},
-			legend: [{
-				//orient: 'vertical',
-				//left: 5,
-				itemWidth:20, itemHeight:13,
-				textStyle : {fontSize:12},
-                data: categories.map(function (a) {
-                    return a.name;
-                })  
-            }],
+			legend: [legend],
 			textStyle: {
 				fontFamily: "KaiTi,SimSun,'microsoft yahei'",
 				fontSize: 16

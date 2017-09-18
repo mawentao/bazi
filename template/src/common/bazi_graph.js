@@ -24,8 +24,8 @@
 define(function(require){
     var o={};
     //require("echarts");
-    var echarts = require("echarts");
-    var echarts_theme = require("echarts/theme/dark");
+//    var echarts = require("echarts");
+//    var echarts_theme = require("echarts/theme/dark");
     var chart,echarts_theme;
 
 	// 节点分类

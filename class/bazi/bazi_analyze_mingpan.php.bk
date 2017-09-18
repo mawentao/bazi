@@ -12,16 +12,93 @@ class bazi_analyze_mingpan
     public function analyze(&$baziCase)
     {   
 		$bazi = &$baziCase->data;
+
         //1. 分析日元: 对照日元查其他天干对应的十神,十神对应的天干
         self::analyzeRiYuan($bazi);
         //2. 分析月令: 五行旺相休囚死
         self::analyzeYueLing($bazi);
         //3. 八字干支详情&统计五行,天干,十神在干支藏干中的出现次数
         self::analyzeGanZhi($bazi);
-		//4. 排大运
+        //4. 五行&天干&十神力量旺衰分析(!!!论命核心,此环节分析错误,全盘皆错!!!)
+        self::analyzePower($bazi);
+        //5. 力量排序
+        self::analyzePowerSort($bazi);
+		//6. 排大运
 		self::paiDaYun($bazi);
-		//5. 排流年
+		//7. 排流年
 		self::paiLiuNian($bazi);
+
+
+
+        $dictGanMap = &$bazi['dict']['tiangan'];
+
+        //1. 命主的十神表
+        $myShiShenMap = $bazi['dict']['shishen'];
+        foreach ($bazi['dict']['tiangan'] as $gan => &$item) {
+            $shishen = bazi_base::$SHI_SHEN_TABLE_MAP[$rigan.$gan];
+            $myShiShenMap[$shishen]['gan'] = $gan;
+        }
+        $bazi['myShiShenMap'] = &$myShiShenMap;
+
+        //2. 干支详细信息(十神,藏干,地势)
+		$theory = C::m('#bazi#bazi_theory');
+		for ($i=0;$i<4;++$i) {
+			$gan = &$bazi['gan'][$i];	//!< 柱干
+			$zhi = &$bazi['zhi'][$i];	//!< 柱支
+			// 天干含义
+			$gan['info'] = $dictGanMap[$gan['z']];
+			// 其他三柱天干对照日元的十神信息
+			if ($i!=2) {
+                $shishen = bazi_base::$SHI_SHEN_TABLE_MAP[$rigan.$gan['z']];
+                $gan['shishen'] = $myShiShenMap[$shishen];
+			}
+			// 地支含义(包括地支藏干及藏干十神信息)
+			$zhi['info'] = self::get_zhi_info($zhi['z'],$rigan);
+			$zhi['shishen'] = $zhi['info']['canggan'][0]['shishen'];  //!< 地支十神为主气藏干十神
+			// 调整主气藏干顺序(如果是3个,把主气放在中间)
+			$zhi['info']['canggan'][0]['isZhuQi'] = 1;
+			if (count($zhi['info']['canggan'])>2) {
+				$tmp = $zhi['info']['canggan'][0];
+				$zhi['info']['canggan'][0] = $zhi['info']['canggan'][1];
+				$zhi['info']['canggan'][1] = $tmp;
+			}
+			// 计算地势(日干在地支的十二长生状态,生旺衰)
+			$zhi['dishi'] = $theory->get_dishi($rigan,$zhi['z']);
+		}
+		// 空亡信息
+		$ri_jiazi = $rigan.$bazi['zhi'][2]['z'];
+		$bazi['kongwang'] = $theory->get_kongwang($ri_jiazi);
+		// 时令信息(旺相休囚死)
+		$yueZhiInfo = &$bazi['zhi'][1]['info'];
+		$yueZhiWuXing = $yueZhiInfo['wuxing'];
+		$yueZhiWuXingInfo = $theory->wuxing_map[$yueZhiWuXing];	//!< 月支五行
+		$yueZhiInfo['wuxingInfo'] = $yueZhiWuXingInfo;
+		// 月支五行时令
+		$yueZhiWuXingShiLing = $theory->shiling_map[$yueZhiWuXingInfo['siji']];
+		$bazi['shiLing'] = array();
+		$bazi['wangShuai'] = array (  //!< 日主旺衰强弱判断
+			'deLing' => 0,	//!< 得时令
+			'deShi'  => 0,	//!< 得势
+			'deDi'   => 0,	//!< 得地
+		);
+		$wxsqx=array('旺','相','休','囚','死');
+		$riGanInfo = $bazi['gan'][2]['info'];
+		foreach ($yueZhiWuXingShiLing as $k=>$wx) {
+			$bazi['shiLing'][$wxsqx[$k]] = $wx;
+			if ($wx==$riGanInfo['wuxing']) {
+				$bazi['wangShuai']['deLing'] = $wxsqx[$k];
+				$yueZhiInfo['deLing'] = $wxsqx[$k];
+			}
+		}
+		// 日元旺衰强弱判断
+		self::calWangShuaiQiangRuo($bazi);
+		// 排大运
+		self::paiDaYun($bazi);
+		// 排流年
+		self::paiLiuNian($bazi);
+        // 统计十神对应天干出现次数
+        self::shiShenStat($bazi);
+
 		return;
     }
 
@@ -30,7 +107,6 @@ class bazi_analyze_mingpan
     {/*{{{*/
         $rigan = $bazi['gan'][2]['z'];  //!< 日元
         $bazi['riYuan'] = $rigan;
-        $dictWuXingMap = &$bazi['dict']['wuxing'];
         $dictGanMap = &$bazi['dict']['tiangan'];
         $dictShiShenMap = &$bazi['dict']['shishen'];
         $dictDiZhiMap = &$bazi['dict']['dizhi'];
@@ -40,11 +116,6 @@ class bazi_analyze_mingpan
             $shiShenInfo = $dictShiShenMap[$shishen];
             $item['shishen'] = $shishen;
             $dictShiShenMap[$shishen]['gan'] = $gan;
-            // 五行映射到十神
-            if (!isset($dictWuXingMap[$item['wuxing']]['shishens'])) {
-                $dictWuXingMap[$item['wuxing']]['shishens'] = array();
-            }
-            $dictWuXingMap[$item['wuxing']]['shishens'][] = $shishen;
         }
         // 地支藏干&地势
         foreach ($dictDiZhiMap as $zhi => &$item) {
@@ -114,8 +185,7 @@ class bazi_analyze_mingpan
 			$gan = &$bazi['gan'][$i];
             $ganz = $gan['z'];
 			$ganInfo = &$dictGanMap[$ganz];
-            $gan['wuxing'] = $ganInfo['wuxing'];    //!< 天干五行
-            $gan['yy'] = $ganInfo['yy'];            //!< 天干阴阳
+            $gan['wuxing'] = $ganInfo['wuxing'];
             ++$dictGanMap[$ganz]['statInGan'];      //!< 统计天干中五行的个数
             ++$dictWuXingMap[$ganInfo['wuxing']]['statInGan']; //!< 统计天干中个数
             if ($i!=2) {
@@ -129,7 +199,6 @@ class bazi_analyze_mingpan
             $zhi['shishen'] = $zhiInfo['shishen'];   //!< 十神
             $zhi['dishi'] = bazi_base::zhangsheng_state($bazi['riYuan'],$zhiz);  //!< 日元地势
             $zhi['wuxing'] = $zhiInfo['wuxing'];     //!< 地支五行
-            $zhi['yy'] = $zhiInfo['yy'];             //!< 地支阴阳
             ++$dictWuXingMap[$zhiInfo['wuxing']]['statInZhi'];  //!< 统计地支中五行个数
             foreach ($zhiInfo['canggan'] as $canggan) {
                 ++$dictWuXingMap[$canggan['wuxing']]['statInZhiCang']; //!< 统计地支藏干中五行个数
@@ -281,7 +350,7 @@ class bazi_analyze_mingpan
 		$yue_gan = $bazi['gan'][1]['z'];	//!< 月干
 		$yue_zhi = $bazi['zhi'][1]['z'];	//!< 月支
 		$gender  = $bazi['gender'];
-		$nian_gan_yy = $bazi['gan'][0]['yy'];    //!< 年干阴阳属性
+		$nian_gan_yy = $bazi['gan'][0]['info']['yy'];    //!< 年干阴阳属性
 		$sort = 1;                                       //!< 阳男阴女顺排
 		if (($nian_gan_yy=='阴' && $gender=='男') ||     //!< 阴男阳女逆排
 		    ($nian_gan_yy=='阳' && $gender=='女')) {
@@ -336,6 +405,115 @@ class bazi_analyze_mingpan
 			}
 		}
 		$bazi['liunian'] = $liunian;
+	}/*}}}*/
+
+
+
+	// 日元旺衰强弱判断
+	public function calWangShuaiQiangRuo(&$bazi)
+	{/*{{{*/
+		// 得令
+		$lingzhi = array('旺'=>3,'相'=>2,'休'=>-1,'囚'=>-2,'死'=>-3);
+		$de_ling = $lingzhi[$bazi['wangShuai']['deLing']];
+		// 得地&得势
+		$de_di = 0;
+		$de_shi = 0;
+		$bizhu_shishen = array('正印','偏印','比肩','劫财');  //!< 对日元有生扶比助的十神
+		$bizhu_dishi = array('长生','冠带','禄','帝旺');   //!< 对日元有利的地势
+		$haoxie_dishi = array('衰','病','死','绝');   //!< 对日元不利的地势
+		for ($i=0;$i<4;++$i) {
+			// 得地
+			$zhiDiShi = $bazi['zhi'][$i]['dishi'];
+			if (in_array($zhiDiShi,$bizhu_dishi)) ++$de_di;
+			else if (in_array($zhiDiShi,$haoxie_dishi)) --$de_di;
+			// 得势
+			if ($i!=2) {
+				$ganShiShen = $bazi['gan'][$i]['shishen']['name'];
+				if (in_array($ganShiShen,$bizhu_shishen)) ++$de_shi;
+				else --$de_shi;
+			}
+		}
+		// 判断日元旺衰
+		$weight = array(
+			'de_ling' => 0.5,  //!< 得时  3*0.5 = 1.5
+			'de_di' => 0.3,    //!< 得地  3*0.3 = 0.9
+			'de_shi' => 0.15,  //!< 得势  4*0.15= 0.6
+		);
+		$exp = $de_ling."x".$weight['de_ling']."+".
+               $de_di."x".$weight['de_di']."+".
+               $de_shi."x".$weight['de_shi'];
+		$bazi['wangShuai'] = array (
+			'deLing'  => $de_ling*$weight['de_ling'],
+			'deDi'    => $de_di*$weight['de_di'],
+			'deShi'   => $de_shi*$weight['de_shi'],
+			'formula' => $exp,
+			'score'   => $de_ling*$weight['de_ling']+$de_di*$weight['de_di']+$de_shi*$weight['de_shi'],
+		);
+		$score = $bazi['wangShuai']['score'];
+		$v = 0;
+		if ($score<=-2.5) $v = 0;
+		else if ($score<-1.5) $v = 1;
+		else if ($score<0.5) $v = 2;
+		else if ($score<1.5) $v = 3;
+		else if ($score<2.5) $v = 4;
+		else $v = 5;
+		$map = array('衰极','衰','弱','强','旺','旺极');
+		$bazi['wangShuai']['riYuan'] = $map[$v];
+	}/*}}}*/
+
+	// 获取天干的详细信息(包括十神)
+	private function get_gan_info($gan,$rigan)
+	{/*{{{*/
+		$theory = C::m('#bazi#bazi_theory');
+		$res = $theory->gan_map[$gan];
+		$res['shishen'] = $theory->get_shishen($rigan,$gan);
+		return $res;
+	}/*}}}*/
+
+	// 获取地支的详细信息(包括十神)
+	private function get_zhi_info($zhi,$rigan)
+	{/*{{{*/
+        $dictGanMap = C::t('#bazi#bazi_dict_tiangan')->getMap();
+        $dictZhiMap = C::t('#bazi#bazi_dict_dizhi')->getMap();
+        $dictShiShenMap = C::t('#bazi#bazi_dict_shishen')->getMap();
+
+		$zhi_info = $dictZhiMap[$zhi];
+		foreach ($zhi_info['canggan'] as &$canggan) {
+			$zhiganinfo = $dictGanMap[$canggan];
+            $shishen = bazi_base::$SHI_SHEN_TABLE_MAP[$rigan.$canggan];
+			$canggan = array(
+				'gan'     => $canggan,
+				'wuxing'  => $zhiganinfo['wuxing'],
+                'yy'      => $zhiganinfo['yy'],
+				'shishen' => $dictShiShenMap[$shishen],
+			);
+		}
+		return $zhi_info;
+	}/*}}}*/
+
+	// 统计十神对应天干出现次数
+	public function shiShenStat(&$bazi)
+	{/*{{{*/
+        //1. 获取日干十神对应的干
+		$ri_gan = $bazi['riYuan'];
+        $myShiShenMap = &$bazi['myShiShenMap'];
+        foreach ($myShiShenMap as $shen => &$row) {
+            $row['statInGan'] = 0;       //!< 在四柱天干中出现次数
+            $row['statInZhi'] = 0;       //!< 在四柱地支藏干中出现次数
+        }
+        //2. 统计天干中各十神出现次数
+        foreach ($bazi['gan'] as $k => &$gan) {
+            if (!isset($gan['shishen']['name'])) continue;
+            $ss = $gan['shishen']['name'];
+            ++$myShiShenMap[$ss]['statInGan'];
+        }
+        //3. 统计地支中各十神出现次数
+        foreach ($bazi['zhi'] as &$zhi) {
+            foreach ($zhi['info']['canggan'] as &$cangan) {
+                $ss = $cangan['shishen']['name'];
+                ++$myShiShenMap[$ss]['statInZhi'];
+            }
+        }
 	}/*}}}*/
 
 }

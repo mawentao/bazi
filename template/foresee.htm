@@ -5,139 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>【{$bazi[name]}】掐指一算——专为八字命理师设计</title>
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/mwt/4.0/mwt.min.css">
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/view/pc/foresee/index.css">
+  <script type="text/javascript" src="{$plugin_path}/template/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/echarts/3.3.2/echarts.min.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/echarts/3.3.2/theme/dark.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/mwt/4.0/mwt.min.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/requirejs/2.1.9/require.js"></script>
+<!--
   <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/zicon/zicon.css">
-  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.5/mwt.min.css">
   <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/style/pc.css">
-  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/css/foresee.css">
   <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwtcalendar.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.5/mwt.min.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/echarts/3.3.2/echarts.min.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/echarts/3.3.2/theme/dark.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/requirejs/2.1.9/require.js"></script>
-  <style>
-	.square{
-		width:200px;height:200px;position:relative; 
-		transform:rotate(45deg); 
-		-webkit-transform:rotate(45deg); 
-		-moz-transform:rotate(45deg); 
-		
-		animation:rotate infinite linear 5s;margin:0 auto;
-		-webkit-animation:rotate infinite linear 5s;margin:0 auto;
-		-moz-animation:rotate infinite linear 5s;margin:0 auto;
-	}
-	.rect{width:200px;height:100px;position:relative;border:none;border-bottom:none;}
-	.inner_circle{width:100px;height:100px;border-radius:100px;position:absolute;z-index:1;}
-	.dot{width:25px;height:25px;position:absolute;left:0;right:0;top:0;bottom:0;margin:auto;border-radius:50%;}
-	.rect_one{border-radius:100px 100px 0 0;background:white;}
-	.rect_one_one{bottom:-50px;left:0;background:black;}
-	.rect_one_two{background:white;}
-	.rect_two{border-radius:0 0 100px 100px;background:black;}
-	.rect_two_one{bottom:50px;right:0;background:white;}
-	.rect_two_two{background:black;}
-	@keyframes rotate{
-		from{
-		transform:rotate(0deg);
-		-webkit-transform:rotate(0deg);
-		}to{
-		transform:rotate(360deg);
-		-webkit-transform:rotate(360deg);
-	}}
-  </style>
+-->
 </head>
 <body style="background-color:#172a3d;background-image:url({$plugin_path}/template/static/bg.png);">
-  <div id="frame-loading">
-	<div style="margin:200px auto;text-align:center;">
-		<div class="square">
-			<div class="rect rect_one">
-				<div class="inner_circle rect_one_one">
-					<div class="dot rect_one_two"></div>
-				</div>
-			</div>
-			<div class="rect rect_two">
-				<div class="inner_circle rect_two_one">
-					<div class="dot rect_two_two"></div>
-				</div>
-			</div>
-		</div>
-		<p style="font-family:'KaiTi';font-size:20px;font-weight:bold;margin-top:20px;">掐指一算...<br>
-			<span style="font-size:12px;">（若长时间未出结果，请刷新页面试试）</span>
-		</p>
-	</div>
-  </div>
-  <div id="frame-left" class="myscroll" style="display:none;">
-    <table class="mz-tab">
-	  <tr>
-		<td>
-		  <!--{if $bazi[gender]=='男'}-->
-			<span class="mingzi" style="background:#065679;"><!--{$bazi[name]}--></span>
-			<span class="xingbie yang"><!--{$bazi[gender]}--></span>
-		  <!--{else}-->
-			<span class="mingzi" style="background:#730800;"><!--{$bazi[name]}--></span>
-			<span class="xingbie yin"><!--{$bazi[gender]}--></span>
-		  <!--{/if}-->
-			<span class="xingbie" style="color:#ECDAA1"><!--{$bazi[age]}-->岁</span>
-		</td>
-		<td rowspan="3" class="shengxiao">
-		  <p>生肖</p><span><!--{$bazi[shengxiao]}--></p>
-		</td>
-	  </tr>
-	  <tr><td>公历生日：{$bazi[solar_calendar]} </td></tr>
-	  <tr><td>农历生日：{$bazi[lunar_calendar]} {$bazi[hour_zhi]}时</td></tr>
-    </table>
-	<!--{template bazi:foresee/mingpan}-->
-  </div>
-  <div id="frame-center" class="myscroll" style="display:none;">
-    <div id="frame-bar">
-      <ul class="typeul">
-	    <li><span name="navim"><i class="fa fa-connectdevelop"></i>总论</span></li>
-	    <li style="display:none;"><span name="navim"><i class="fa fa-male"></i>心性</span></li>
-		<li><span name="navim"><i class="fa fa-venus-mars"></i>婚恋</span></li>
-<!--		<li><span name="navim"><i class="fa fa-cny border"></i>事业</span></li>-->
-<!--		<li><span name="navim"><i class="fa fa-heartbeat"></i>健康</span></li>-->
-	  </ul>
-    </div>
-    <div id="frame-main" class="myscroll">
-	  <div id="panel-0" class="panel-div"><!--{subtemplate bazi:foresee/outline}--></div>
-	  <div id="panel-1" class="panel-div">心性</div>
-	  <div id="panel-2" class="panel-div"><!--{subtemplate bazi:foresee/hunlian}--></div>
-	  <div id="panel-3" class="panel-div">事业</div>
-	  <div id="panel-4" class="panel-div">健康</div>
-    </div>
-  </div>
+<div id="appdiv"></div>
 <script>
-var bazi = {
-	'list': ['{$bazi[nian_gan]}','{$bazi[nian_zhi]}','{$bazi[yue_gan]}','{$bazi[yue_zhi]}','{$bazi[ri_gan]}','{$bazi[ri_zhi]}','{$bazi[hour_gan]}','{$bazi[hour_zhi]}'],
-	'kongwang': <!--{echo json_encode($bazi[kongwang])}-->
-
-};
-var bazi_graph = <!--{echo json_encode($bazi[wuxing_graph]);}-->;
-var bazi_liunian = <!--{echo json_encode($bazi[liunian]);}-->;
-var bazi_hunlian_liunian = <!--{echo json_encode($bazi[hunlian][liunian]);}-->;
-var nav_idx = '{$nav}';
 var dz={
-	siteurl  : '$_G['siteurl']',
-	pluginpath : '$_G['siteurl']/source/plugin/bazi',
-	ajaxapi : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module='
+	siteurl    : '$_G['siteurl']',
+	pluginpath : '{$plugin_path}',
+	ajaxapi    : '{$plugin_path}/index.php?version=4&module='
 };
+var bazi = <!--{echo json_encode($bazi);}-->;
 var log,ajax;
 jQuery(document).ready(function($) {
 	require.config({
-		baseUrl: "{$_G['siteurl']}/source/plugin/bazi/template/src/",
-    	packages: [
-			{name:'jquery', location:'../libs/jquery/1.11.2', main:'jquery.min'},
-			{name:'jquery-ui', location:'../libs/jquery-ui', main:'jquery-ui.min'}
-    	]
+		baseUrl: "{$plugin_path}/template/src/",
 	});
 	require(['view/pc/foresee/page','core/log','core/ajax'],function(page,corelog,coreajax){
-		log = corelog;
+		log  = corelog;
 		ajax = coreajax;
-		setTimeout(function(){
-			jQuery('#frame-loading').remove();
-			jQuery('#frame-left').fadeIn('slow');
-			jQuery('#frame-center').fadeIn('slow');
-			page.execute();
-		},1500);
+        console.log(bazi);
+        page.execute();
 	});
 });
 </script>
