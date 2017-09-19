@@ -5,6 +5,7 @@ define(function(require){
     var o={};
 
 	o.init=function(domid){
+        /*
 		var data = {
 			nodes: {
 				'男年支': {name:'辰',wuxing:'土',shengxiao:'龙'},
@@ -22,7 +23,7 @@ define(function(require){
 				'合': [['男日支','女日支']],
 				'冲': [['男时支','女日支']]
 			}
-		};
+		};*/
 		var data = marriageGraph;
 		var graph = new MarriageGraph({render:domid});
 		graph.show(data);

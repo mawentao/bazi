@@ -6,6 +6,7 @@ require_once 'bazi_jue.php';
 require_once 'bazi_analyze_mingpan.php';
 require_once 'bazi_analyze_nayin.php';
 require_once 'bazi_analyze_yongshen.php';
+require_once 'bazi_analyze_geju.php';
 
 
 require_once 'bazi_analyze_shensha.php';
@@ -77,7 +78,9 @@ class bazi_case
         $this->analyzeShenSha();  //!< 神煞
 
         // 进阶分析
+        $this->analyzeGeJu();     //!< 定格局
         $this->analyzeYongShen(); //!< 旺衰分析&找用神
+//die(json_encode($this->data));
 
         // 论断
         $this->analyzeHunLian();  //!< 婚恋
@@ -93,6 +96,12 @@ class bazi_case
     public function analyzeYongShen()
 	{/*{{{*/
 		bazi_analyze_yongshen::analyze($this);
+	}/*}}}*/
+
+    // 八字格局
+    public function analyzeGeJu()
+	{/*{{{*/
+		bazi_analyze_geju::analyze($this);
 	}/*}}}*/
 
     // 五行旺衰分析

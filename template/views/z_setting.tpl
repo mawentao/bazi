@@ -15,6 +15,7 @@
 		set_select_value('page_style',v.page_style);
 		set_value('page_title',v.page_title);
 		set_value('page_copyright',v.page_copyright);
+		set_value('loading_ms',v.loading_ms);
     });
   </script>
 </head>
@@ -57,6 +58,11 @@
 	  <td>版权信息：</td>
       <td><input name="page_copyright" id="page_copyright" class="form-control" style="padding:0 5px;"></td>
 	  <td class='tips2'></td>
+	</tr>
+	<tr>
+	  <td>加载延时：</td>
+      <td><input name="loading_ms" id="loading_ms" class="form-control" style="padding:0 5px;width:100px;"> ms</td>
+	  <td class='tips2'>预测页，合婚页Loading延时（毫秒）</td>
 	</tr>
     <tr>
       <td colspan="3">

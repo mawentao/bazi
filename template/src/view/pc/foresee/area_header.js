@@ -52,8 +52,8 @@ define(function(require){
             var id = jQuery(this).data('id');
             o.active(id);
         });
-        //o.active('summary');
-        o.active('marriage');
+        o.active('summary');
+        //o.active('marriage');
     };
 
     o.active=function(id) {

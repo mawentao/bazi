@@ -1,0 +1,60 @@
+/* 全局样式 */
+a, b, body, button, div, input, label, option, p, select, span, td, th, h1,h2,h3,li,em{
+    font-family: Arial,Tahoma,Verdana,'KaiTi';
+    color: #fff;
+}
+h1 {margin:5px 0;padding:0;font-size:18px;color:#ECDAA1;}
+h2 {margin:5px 0;padding:0;font-size:16px;color:#ECDAA1;}
+div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background: none;
+}
+div::-webkit-scrollbar {
+    width: 10px;
+    background: none;
+}
+div::-webkit-scrollbar-thumb {
+    background: none;
+    border: 1px solid #555555;
+}
+/* 阴阳不同颜色的字体*/
+.fyang {color:#6EC1E6;}
+.fyin  {color:#E6886B;}
+/* 高亮颜色 */
+.fem {color:#ECDAA1;}
+/* 弱化颜色 */
+.flm {color:#777;}
+
+.textul {margin:0;padding-left:25px;}
+.textul li {list-style:circle;padding-left:8px;margin-left:0;font-size:14px;}
+.textul li em {font-style:normal;color:#ECDAA1;}
+li.nature_0 {color:yellow;}
+li.nature_1 {color:#7DFF82;}
+li.nature_-1 {color:#FD7A71;}
+
+
+/* 八字命盘 */
+.mingpan-tab {width:100%;margin-bottom:20px;border-color:rgba(0,0,0,0);}
+.mingpan-tab th,.mingpan-tab td {text-align:center;font-size:16px;color:#fff;padding:2px;position:relative;border:none;}
+.mingpan-tab th {font-family:'microsoft yahei';font-weight:normal;font-size:13px;color:#777;white-space:nowrap;padding-left:5px;}
+.riyuan {border:solid 1px #E6D297;border-radius:300px;width:28px;height:28px;line-height:28px;display:inline-block;}
+.mingpan-tab .ganzhi {width:30px;display:inline-block;font-size:19px;}
+.mingpan-tab .wuxing {font-size:13px;position:absolute;bottom:0;color:#eee;}
+.mingpan-tab .kongwang {font-size:13px;}
+.mingpan-tab .zhuqi,.mingpan-tab .yuqi {display:inline-block;width:16px;}
+.mingpan-tab .zhuqi {font-size:16px;}
+.mingpan-tab .age {font-size:14px;}
+.mingpan-tab .yuqi {font-size:14px;color:#999;}
+.mingpan-tab .dishi {}
+.mingpan-tab .sub {font-size:12px;}
+.mingpan-tab a {text-decoration:none;}
+.mingpan-tab .liunian{padding:5px;cursor:pointer;border:solid 1px rgba(255,255,255,0);border-radius:4px;text-decoration:none;display:block;}
+.mingpan-tab .liunian:hover {border:solid 1px #94936A;}
+.mingpan-tab .jinnian {border:solid 1px #94936A;background:#000;}
+
+/* 神煞矩阵 */
+.shenshatab {width:100%}
+.shenshatab td,.shenshatab th{border:solid 1px #2E4365;font-size:12px;text-align:center;color:#666;font-weight:normal;}
+.shenshatab th {background:rgba(25,25,25,0.2);padding:5px 0;}
+
+

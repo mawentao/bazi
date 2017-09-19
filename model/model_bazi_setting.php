@@ -20,6 +20,8 @@ class model_bazi_setting
             'page_title' => '掐指一算',
 			// 版权信息
 			'page_copyright' => '掐指一算 | 沪ICP备17014477号',
+            // 预测页&合婚页loading加载延迟
+            'loading_ms' => 1500,
 		);
 		return $setting;
     }

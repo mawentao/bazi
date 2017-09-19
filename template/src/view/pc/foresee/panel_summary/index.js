@@ -3,7 +3,7 @@ define(function(require){
     var o={};
     o.show=function(domid,bazicase) {
         var divs = [
-            '<h2>【命局概述】</h2><div id="summary-'+domid+'"></div>',
+            '<div id="summary-'+domid+'"></div>',
             '<h2>【图解八字】</h2>'+
             '<div class="wall">'+
               '<table width="100%">'+

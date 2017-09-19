@@ -16,14 +16,12 @@ define(function(require){
             ]
         }).init();
         var bazicase = new BaziCase(bazi);
-        require('./area_mingpan').init('frame-west',bazi);
         require('./area_header').init('frame-north',bazicase);
+        bazicase.show_mingpan('frame-west');
     }
 
     var o={};
     o.execute=function() {
-        init(); return;
-
         var taiji = require('./global/taiji');
         taiji.show();
         init();
@@ -31,8 +29,7 @@ define(function(require){
         setTimeout(function(){
             taiji.hide();
             jQuery('#'+domid).fadeIn('slow');
-        },1500);
+        },setting.loading_ms);
     };
-
 	return o;
 });

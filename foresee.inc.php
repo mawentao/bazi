@@ -52,6 +52,7 @@ try {
 } catch(Exception $e) {
 	die($e->getMessage());
 }
+$setting = C::m('#bazi#bazi_setting')->get();
 $plugin_path = bazi_env::get_plugin_path();
 include template("bazi:foresee");
 C::t('#bazi#bazi_log')->write("bazi:foresee&caseid=$idstr|caseid:$caseid");

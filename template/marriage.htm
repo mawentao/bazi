@@ -4,43 +4,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>八字合婚-掐指一算</title>
-  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/zicon/zicon.css">
-  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.5/mwt.min.css">
-  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/style/pc.css">
-  <link type="text/css" rel="stylesheet" href="$_G['siteurl']/source/plugin/bazi/template/src/css/foresee.css">
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwtcalendar.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/mwt/3.5/mwt.min.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/echarts/3.3.2/echarts.min.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/echarts/3.3.2/theme/dark.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/requirejs/2.1.9/require.js"></script>
-  <style>
-    *,a,b,body,button,div,input,label,option,p,select,span,td,th {font-family:KaiTi,SimSun,'microsoft yahei';}
-    .sidefill {position:absolute;top:10px;width:350px;bottom:10px;overflow-y:auto;overflow-x:hidden;padding:10px;}
-    .centerfill {position:absolute;top:10px;left:370px;right:370px;overflow:auto;border:solid 1px #555;box-shadow:0 0 10px #555;}
-    .jueul {margin-top:0;}
-    .jueul li {list-style:circle;};
-    .jueul li.nature_0 {color:yellow;}
-    .jueul li.nature_1 {color:#7DFF82;}
-    .jueul li.nature_-1 {color:#FD7A71;}
-
-  </style>
+  <title>八字合婚-{$setting[page_title]}——专为八字命理师设计</title>
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/mwt/4.0/mwt.min.css">
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/view/pc/marriage/index.css">
+  <script type="text/javascript" src="{$plugin_path}/template/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/echarts/3.3.2/echarts.min.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/echarts/3.3.2/theme/dark.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/mwt/4.0/mwt.min.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/requirejs/2.1.9/require.js"></script>
 </head>
 <body style="background-color:#172a3d;background-image:url({$plugin_path}/template/static/bg.png);">
-  <!--{template bazi:loading}-->
-  <div id="frame-container" class="myscroll" style="display:none;">
-    <div class="myscroll sidefill" style="left:10px;border:solid 1px #065679;box-shadow:0 0 10px #065679;">
-      <!--{eval $bazi=&$maleCase}-->
-	  <!--{subtemplate bazi:marriage/mingpan}-->
-    </div>
-    <div class="myscroll sidefill" style="right:10px;border:solid 1px #886a6a;box-shadow:0 0 10px #886a6a;">
-	  <!--{eval $bazi=&$femaleCase}-->
-	  <!--{subtemplate bazi:marriage/mingpan}-->
-    </div>
-	<div id="merge-graph-div" class="myscroll centerfill" style="height:280px;"></div>
-	<div id="marriage-div" class="myscroll centerfill" style="top:300px;bottom:10px;"></div>
-  </div>
+  <div id="appdiv"></div>
 <script>
 var dz={
 	siteurl  : '$_G['siteurl']',
@@ -50,20 +24,21 @@ var dz={
 var conf={
 	loglevel: 3	
 };
+var setting = <!--{echo json_encode($setting)}-->;
+var maleCase = <!--{echo json_encode($maleCase)}-->;
+var femaleCase = <!--{echo json_encode($femaleCase)}-->;
 var marriageGraph = <!--{echo json_encode($marriage[graph]);}-->;
 var log,ajax;
 jQuery(document).ready(function($) {
 	require.config({
-		baseUrl: "{$_G['siteurl']}/source/plugin/bazi/template/src/",
+		baseUrl: "{$plugin_path}/template/src/",
 	});
 	require(['view/pc/marriage/page','core/log','core/ajax'],function(page,corelog,coreajax){
 		log = corelog;
 		ajax = coreajax;
-		setTimeout(function(){
-			jQuery('#frame-loading').remove();
-			jQuery('#frame-container').fadeIn('slow');
-			page.execute();
-		},1500);
+        console.log(maleCase);
+        console.log(femaleCase);
+        page.execute();
 	});
 });
 </script>

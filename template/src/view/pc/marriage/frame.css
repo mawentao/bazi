@@ -1,0 +1,42 @@
+
+.sidefill {position:absolute;top:10px;bottom:10px;left:10px;right:10px;overflow-y:auto;overflow-x:hidden;padding:10px;}
+.male {border:solid 1px #065679;box-shadow:0 0 10px #065679;}
+.female {border:solid 1px #886a6a;box-shadow:0 0 10px #886a6a;}
+
+.logo {font-size:18px;text-decoration:none;color:#eee;}
+.logo img {vertical-align:middle;height:28px;display:inline-block;}
+.logo span {display:inline-block;padding-left:8px;vertical-align:text-top;padding-top:2px;}
+
+.wall {border:solid 1px #555;box-shadow:0 0 10px #555;}
+
+.split-line {border:none;border-top:solid 1px #676157;}
+
+/* 命主信息 */
+.mz-tab {width:100%;}
+.mz-tab td {font-size:14px;}
+.mz-tab .mingzi {display:inline-block;border-radius:50%;padding: 5px 10px;font-size:16px;}
+.mz-tab .xingbie {margin-left:5px;vertical-align:text-bottom;}
+.mz-tab .age {color:#ECDAA1;margin-left:5px;}
+.mz-tab .shengxiao {text-align:center;vertical-align:middle;position:relative;width:100px;}
+.mz-tab .shengxiao p {display:block;position:absolute;top:0;left:0;font-size:13px;margin:0;font-family:KaiTi,SimSun,'microsoft yahei';}
+.mz-tab .shengxiao span {font-family:KaiTi,SimSun,'microsoft yahei';font-size:30px;font-weight:bold;}
+
+.mz-tab-male .mingzi {background:#065679;}
+.mz-tab-female .mingzi {background:darkred;}
+
+.mz-tab-male .xingbie {color:#6EC1E6;}
+.mz-tab-female .xingbie {color:#E6886B;}
+
+/* 八字命盘缩小 */
+.mingpan-tab {margin-bottom:5px;}
+.mingpan-tab th {font-size:12px;}
+.mingpan-tab td {font-size:13px;}
+.mingpan-tab .ganzhi {font-size:16px;width:25px;height:25px;}
+.mingpan-tab .wuxing {font-size:12px;}
+.mingpan-tab .kongwang {font-size:12px;}
+.mingpan-tab .zhuqi {font-size:13px;}
+.mingpan-tab .age {font-size:12px;}
+
+h2 {font-size:13px;}
+
+

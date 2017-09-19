@@ -10,10 +10,9 @@ define(function(require){
         var info = bazicase.dict[key][z];
         var cls  = getYYCls(info.yy);
         if (gz=='gan' && i==2) cls += ' riyuan';
-        return '<span class="ganzhi '+cls+'" style="font-size:19px;">'+z+'</span>'+
+        return '<span class="ganzhi '+cls+'">'+z+'</span>'+
                '<span class="wuxing">'+info.wuxing+'</span>';
     }/*}}}*/
-
 
     // 获取藏干或支神
     function getCangGan(bazicase,idx,isZhiShen) 
@@ -69,7 +68,7 @@ define(function(require){
         for (var i=0;i<arr.length;++i) {
             var wx = arr[i];
             var state = wuxingmap[wx].state;
-            var cls = wx==bazi.gan[2].wuxing ? '' : 'flm';
+            var cls = wx==bazicase.gan[2].wuxing ? '' : 'flm';
             rs.push('<span class="'+cls+'">'+wx+':'+state+'</span>');
         }
         return rs.join(" ");
@@ -96,7 +95,7 @@ define(function(require){
     // 大运
     function getDaYun(bazicase) 
     {/*{{{*/
-        var list = bazi.dayun;
+        var list = bazicase.dayun;
         var n = list.length;
         var width = 100/n+'%';
         var rs = [];
@@ -116,7 +115,7 @@ define(function(require){
         var rs = [];
         for (var i=0;i<n;++i) {
             var im = list[i];
-            var code = '<td style="font-size:14px;">'+im.age+'岁</td>';
+            var code = '<td class="age">'+im.age+'岁</td>';
             rs.push(code);
         }
         return rs.join('');
@@ -173,12 +172,11 @@ define(function(require){
         return bazicase.dict.shishen[shishen].short_name;
     }
 
-    var o={};
 
-    o.init=function(domid,bazicase) {
+    var o={};
+    o.show=function(domid,bazicase,simple) {
         var bcolor = '#88814A';
         var code = '<table class="mingpan-tab" border="1">'+
-            '<tr><td colspan="10"><h1>八字命盘</h1></td></tr>'+
             '<tr>'+
               '<th width="40"></th>'+
               '<th colspan="2">年柱</th>'+
@@ -196,19 +194,18 @@ define(function(require){
               '<td></td>'+
             '</tr>'+
             '<tr>'+
-              '<th rowspan="2">'+(bazi.gender=='男'?'乾造':'坤造')+'</th>'+
+              '<th rowspan="2">'+(bazicase.gender=='男'?'乾造':'坤造')+'</th>'+
               '<td colspan="2" style="border-top:solid 1px '+bcolor+';border-left:solid 1px '+bcolor+';">'+getZ(bazicase,'gan',0)+'</td>'+
               '<td colspan="2" style="border-top:solid 1px '+bcolor+';">'+getZ(bazicase,'gan',1)+'</td>'+
               '<td colspan="2" style="border-top:solid 1px '+bcolor+';">'+getZ(bazicase,'gan',2)+'</td>'+
               '<td colspan="2" style="border-top:solid 1px '+bcolor+';border-right:solid 1px '+bcolor+';">'+getZ(bazicase,'gan',3)+'</td>'+
-              '<td></td>'+
+              '<th rowspan="2"><span class="flm kongwang">'+bazicase.kongWang.join('')+'<br>(空)</span></th>'+
             '</tr>'+
             '<tr>'+
               '<td colspan="2" style="border-bottom:solid 1px '+bcolor+';border-left:solid 1px '+bcolor+';">'+getZ(bazicase,'zhi',0)+'</td>'+
               '<td colspan="2" style="border-bottom:solid 1px '+bcolor+';">'+getZ(bazicase,'zhi',1)+'</td>'+
               '<td colspan="2" style="border-bottom:solid 1px '+bcolor+';">'+getZ(bazicase,'zhi',2)+'</td>'+
               '<td colspan="2" style="border-bottom:solid 1px '+bcolor+';border-right:solid 1px '+bcolor+';">'+getZ(bazicase,'zhi',3)+'</td>'+
-              '<th><span class="flm" style="font-size:13px;">('+bazi.kongWang.join('')+'空)</span></th>'+
             '</tr>'+
             '<tr>'+
               '<th>藏干</th>'+
@@ -245,12 +242,12 @@ define(function(require){
             '<tr>'+
               '<th>时令</th>'+
               '<td colspan="6">'+getShiLing(bazicase)+'</td>'+
-              '<td colspan="3" style="font-size:14px;">日元身<span class="fem">'+bazi.riyuanPower.powerLevel+'</span></td>'+
+              '<td colspan="3">日元身<span class="fem">'+bazicase.riyuanPower.powerLevel+'</span></td>'+
             '</tr>'+
             '<tr><th>大运</th>'+getDaYun(bazicase)+'</tr>'+
             '<tr><th>岁数</th>'+getAgeList(bazicase)+'</tr>'+
             '<tr><th>始于</th>'+getNianList(bazicase)+'</tr>'+
-            getLiuNian(bazicase)+
+            ( simple ? '' : getLiuNian(bazicase)) +
         '</table>';
         jQuery('#'+domid).html(code);
                     

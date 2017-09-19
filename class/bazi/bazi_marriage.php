@@ -13,14 +13,14 @@ class bazi_marriage
 	{
 		$graph = array (
 			'nodes' => array(
-				'男年支' => self::getZhiNodeInfo($case1['zhi'][0]),
-				'男月支' => self::getZhiNodeInfo($case1['zhi'][1]),
-				'男日支' => self::getZhiNodeInfo($case1['zhi'][2]),
-				'男时支' => self::getZhiNodeInfo($case1['zhi'][3]),
-				'女年支' => self::getZhiNodeInfo($case2['zhi'][0]),
-				'女月支' => self::getZhiNodeInfo($case2['zhi'][1]),
-				'女日支' => self::getZhiNodeInfo($case2['zhi'][2]),
-				'女时支' => self::getZhiNodeInfo($case2['zhi'][3]),
+				'男年支' => self::getZhiNodeInfo($case1,0),
+				'男月支' => self::getZhiNodeInfo($case1,1),
+				'男日支' => self::getZhiNodeInfo($case1,2),
+				'男时支' => self::getZhiNodeInfo($case1,3),
+				'女年支' => self::getZhiNodeInfo($case2,0),
+				'女月支' => self::getZhiNodeInfo($case2,1),
+				'女日支' => self::getZhiNodeInfo($case2,2),
+				'女时支' => self::getZhiNodeInfo($case2,3),
 			),
 			'relations' => array(),
 		);
@@ -88,12 +88,14 @@ class bazi_marriage
 	}
 
 	// 返回合婚分析图中的节点信息
-	private static function getZhiNodeInfo(&$zhi)
+	private static function getZhiNodeInfo(&$case,$i)
 	{/*{{{*/
+        $zhi = $case['zhi'][$i];
+        $dictDiZhi = $case['dict']['dizhi'];
 		return array (
 			'name' => $zhi['z'],
-			'wuxing' => $zhi['info']['wuxing'],
-			'shengxiao' => $zhi['info']['shengxiao'],
+			'wuxing' => $zhi['wuxing'],
+			'shengxiao' => $dictDiZhi[$zhi['z']]['shengxiao'],
 		);
 	}/*}}}*/
 
