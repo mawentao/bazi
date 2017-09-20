@@ -24,7 +24,7 @@ class bazi_analyze_hunlian_liunian
 				'year' => $nian,
 				'gan_he' => self::see_gan_he($bazi,$nian),           //!< 流年天干是否与日干相合
 				'zhi_he' => self::see_zhi_he($bazi,$nian),             //!< 日支相合（合配偶宫）
-				'zhi_chong' => self::see_zhi_chong($bazi,$nian),       //!< 日支相冲（冲配偶宫）
+				'zhi_chong' => self::see_zhi_chong($bazi,$nian),       //!< 日支刑冲（刑冲配偶宫）
 				'gan_taohua' => self::see_zheng_taohua($bazi,$nian), 	//!< 日干桃花（正桃花）
 				'zhi_taohua' => self::see_taohua($bazi,$nian),  		//!< 日支桃花
 			);
@@ -32,6 +32,7 @@ class bazi_analyze_hunlian_liunian
 		$bazi['hunLian']['liunian'] = &$hunlian_liunian;
 		//die(json_encode($bazi['hunLian']));
 	}
+
 
 	// 看日干相合
 	private static function see_gan_he(&$bazi,$year)
@@ -41,7 +42,8 @@ class bazi_analyze_hunlian_liunian
         $arr = array($rigan,$liunian_gan);
         $arr = bazi_base::sort_gans($arr);
         $k = implode('',$arr);
-        $r = bazi_base::$GAN_RELATIONS[$k];
+        $arr = bazi_base::$GAN_RELATIONS[$k];
+        $r = implode('|',$arr);
         if ($r && strpos($r,'合')!==false) {
             return 1;
         }
@@ -56,31 +58,29 @@ class bazi_analyze_hunlian_liunian
         $arr = array($rizhi,$liunian_zhi);
         $arr = bazi_base::sort_zhis($arr);
         $k = implode('',$arr);
-        $r = bazi_base::$ZHI_RELATIONS[$k];
+        $arr = bazi_base::$ZHI_RELATIONS[$k];
+        $r = implode('|',$arr);
         if ($r && strpos($r,'合')!==false) {
             return 1;
         }
         return 0;
 	}/*}}}*/
 
-	// 看日支冲
+	// 看日支刑冲
 	private function see_zhi_chong(&$bazi,$year)
 	{
-/*
-		$rizhi = $bazi['zhi'][2]['z'];
+        $rizhi = $bazi['zhi'][2]['z'];
 		$liunian_zhi = $bazi['liunian'][$year]['zhi'];
-		$k1 = $rizhi.$liunian_zhi;
-		$k2 = $liunian_zhi.$rizhi;
-		$arr = array(
-			'zhi_chong_map' => '支冲',
-		);
-		foreach ($arr as $rt => $v) {
-			$map = &C::m('#bazi#bazi_relation')->$rt;
-			if (isset($map[$k1]) || isset($map[$k2])) {
-				return $v;
-			}
-		}
-*/
+        if ($rizhi==$liunian_zhi) return 0;
+
+        $arr = array($rizhi,$liunian_zhi);
+        $arr = bazi_base::sort_zhis($arr);
+        $k = implode('',$arr);
+        $arr = bazi_base::$ZHI_RELATIONS[$k];
+        $r = implode('|',$arr);
+        if (strpos($r,'冲')!==false || strpos($r,'刑')!==false) {
+            return 1;
+        }
 		return 0;
 	}
 

@@ -2,16 +2,22 @@ define(function(require){
     /* 合婚主页面 (c) 2017 mawentao */
     var domid = 'appdiv';
     var BaziCase = require('bazi/BaziCase');
+    var MarriageGraph=require('./MarriageGraph');
 
-    function init_center(divid) {
+    function init_center(divid,maleBazi,femaleBazi) {
         var code = /*'<a class="logo" href="'+dz.siteurl+'/plugin.php?id=bazi:console">'+
             '<img src="http://localhost:8888/discuz/source/plugin/bazi/template/static/logo2.png">'+
             '<span>八字合婚</span>'+
         '</a>'+*/
-        '<div id="marriage-graph-div" class="wall" style="height:180px;"></div>';
+        '<div id="marriage-graph-div" class="wall" style="height:220px;"></div>'+
+        '<div id="liunian-graph-div" class="wall" style="margin-top:10px;"></div>';
         jQuery('#'+divid).html(code);
 
-        require('./merge-graph').init('marriage-graph-div');
+        // 八字合婚分析图
+        var graph = new MarriageGraph({render:'marriage-graph-div'});
+        graph.show(marriageGraph);
+        // 婚恋流年合看
+        require('./marriage_liunian').show('liunian-graph-div',maleBazi,femaleBazi);
     }
 
     // 初始化
@@ -29,7 +35,7 @@ define(function(require){
         var femaleBazi = new BaziCase(femaleCase);
         require('./mingpan').show('frame-west',maleBazi);   //!< 男方命盘
         require('./mingpan').show('frame-east',femaleBazi); //!< 女方命盘
-        init_center('frame-center');   //!< 合婚分析区域
+        init_center('frame-center',maleBazi,femaleBazi);   //!< 合婚分析区域
     }
 
     var o={};

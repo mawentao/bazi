@@ -97,7 +97,7 @@ EOF;
         $key    = bazi_validate::getNCParameter('key','key','string');
         $gender = bazi_validate::getNCParameter('gender','gender','string');
         $formarry  = bazi_validate::getOPParameter('formarry','formarry','integer',1024,0);
-        $sort   = bazi_validate::getOPParameter('sort','sort','string',64,'bid');
+        $sort   = bazi_validate::getOPParameter('sort','sort','string',64,'ctime');
         $dir    = bazi_validate::getOPParameter('dir','dir','string',64,'DESC');
         $start  = bazi_validate::getOPParameter('start','start','integer',1024,0);
         $limit  = bazi_validate::getOPParameter('limit','limit','integer',1024,10);
@@ -115,16 +115,19 @@ EOF;
         if ($key != '') {
             $where .= " AND (a.name like '%$key%' OR a.bid like '%$key%' OR a.desc like '%$key%')";
         }
-        if ($sort=='ctime' || $sort=='bid') $sort='a.'.$sort;
+        if ($sort=='ctime' || $sort=='bid' || $sort=='uid') $sort='a.'.$sort;
         $table_bazi_case = DB::table('bazi_case');
         $table_bazi_birth = DB::table('bazi_birth');
         $table_bazi_calendar = DB::table('bazi_calendar');
+        $table_common_member = DB::table('common_member');
         $sql = <<<EOF
 SELECT SQL_CALC_FOUND_ROWS a.caseid,a.name,a.bid,a.desc,a.ctime,
 b.gender,b.hour_gan,b.hour_zhi,b.hour,year(now())-year(b.solar_calendar) as age,
-c.*
+c.*,
+d.username
 FROM $table_bazi_case as a LEFT JOIN $table_bazi_birth as b ON a.bid=b.bid
 LEFT JOIN $table_bazi_calendar as c ON b.solar_calendar=c.solar_calendar
+LEFT JOIN $table_common_member as d ON a.uid=d.uid
 WHERE $where
 ORDER BY $sort $dir
 LIMIT $start,$limit

@@ -57,4 +57,18 @@ li.nature_-1 {color:#FD7A71;}
 .shenshatab td,.shenshatab th{border:solid 1px #2E4365;font-size:12px;text-align:center;color:#666;font-weight:normal;}
 .shenshatab th {background:rgba(25,25,25,0.2);padding:5px 0;}
 
+/* 婚恋流年表格 */
+.hunlian-liunian-tab {width:100%}
+.hunlian-liunian-tab tr:nth-child(2n+2) {background:rgba(3, 95, 169, 0.2);}
+.hunlian-liunian-tab tr.nowyear {background:rgba(255,152,0,0.2);}
+.hunlian-liunian-tab th, .hunlian-liunian-tab td {font-size:14px;text-align:left;padding:3px 4px;color:#ccc;}
+.hunlian-liunian-tab th {border-bottom:solid 1px #999;font-weight:normal;}
+
+.hunlian-liunian-tab span {display:inline-block;padding:1px 4px;color:#fff;font-size:13px;background: rgba(245,124,124,0.8);
+    margin-right: 10px;
+    border-radius: 1px; cursor:pointer;
+}
+.hunlian-liunian-tab span.danger {background: rgba(255,0,0,0.7);}
+
+
 

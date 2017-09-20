@@ -35,38 +35,38 @@ define(function(require){
               {head:"生肖", dataIndex:"nian_zhi", width:30, align:'center', render:function(v){
                   return mwtcalendar.zhi[v].animal;
               }}, 
-			  {head:"公历生日", dataIndex:"solar_calendar", width:150, align:'left', sort:true, render:function(v,item){
+			  {head:"公历生日", dataIndex:"solar_calendar", width:140, align:'left', sort:true, render:function(v,item){
 				  var week = mwtcalendar.week[item.week];
 				  var tm = strtotime(v);
 				  return date('Y年m月d日',tm)+" (周"+week+")";
 			  }},
-			  {head:"农历生日", dataIndex:"lunar_calendar", width:120, sort:true, align:'left', render:function(v){
+			  {head:"农历生日", dataIndex:"lunar_calendar", width:100, align:'left', render:function(v){
 				  return mwtcalendar.parse_lunar_calendar(v);
 			  }},
-              {head:"年柱", dataIndex:"bid", width:30, align:'center', render:function(v,item){
-				  return item.nian_gan+item.nian_zhi;
-              }}, 
-              {head:"月柱", dataIndex:"bid", width:30, align:'center', render:function(v,item){
-				  return item.yue_gan+item.yue_zhi;
-              }}, 
-              {head:"日柱", dataIndex:"bid", width:30, align:'center', render:function(v,item){
-				  return item.ri_gan+item.ri_zhi;
-              }}, 
-              {head:"时柱", dataIndex:"bid", width:30, align:'center', render:function(v,item){
-				  return item.hour_gan+item.hour_zhi;
+              {head:"八字", dataIndex:"bid", width:110, align:'center', render:function(v,item){
+                  return item.nian_gan+item.nian_zhi+' '+
+                         item.yue_gan+item.yue_zhi+' '+
+                         item.ri_gan+item.ri_zhi+' '+
+                         item.hour_gan+item.hour_zhi;
               }}, 
               {head:"节气", dataIndex:"term", width:40, align:'center', render:function(v){
                   return v;
               }},
-              {head:"节日", dataIndex:"festival", width:100, align:'center', render:function(v){
+              {head:"节日", dataIndex:"festival", width:80, align:'center', render:function(v){
                   return v;
               }},
-              {head:"操作", dataIndex:"caseid",width:130,align:'center',render:function(v,item){
+              {head:"创建者", dataIndex:"uid", width:80, align:'center', sort:true, render:function(v,item){
+                  return item.username;
+              }},
+              {head:"创建时间", dataIndex:"ctime", width:80, align:'center', sort:true, render:function(v){
+                  return '<span style="color:gray;font-size:12px;">'+v+'</span>';
+              }},
+              {head:"操作", dataIndex:"caseid",width:110,align:'center',render:function(v,item){
 				  var foresee = '<a href="'+item.foresee_url+'" target="_blank">命理预测</a>';
 				  var editbtn = '<a href="javascript:;" name="editbtn" data-id="'+v+'">编辑</a>';
 				  var delbtn = '<a href="javascript:;" name="delbtn" data-id="'+v+'">删除</a>';
                   var btns = [foresee,editbtn,delbtn];
-                  return btns.join("&nbsp;&nbsp;");
+                  return btns.join("&nbsp;");
               }}
             ]),
 			tbar: [
