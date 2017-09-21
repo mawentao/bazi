@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>掐指一算——专为八字命理师设计</title>
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/mwt/3.5/mwt.min.css">
+  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/home.css">
+  <script type="text/javascript" src="{$plugin_path}/template/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/mwt/3.5/mwt.min.js"></script>
+</head>
+<body>
+
+  <div id="header">
+    <a class="logo" href="javascript:window.location.reload();">
+      <img src="$_G['siteurl']/source/plugin/bazi/template/static/logo2.png">
+      <span class="title">掐指一算</span>
+      <span class="subtitle"> —— 专为八字命理师设计</span>
+    </a>
+    <div class="nav">
+      <ul class="menu">
+        <li><a href="plugin.php?id=bazi:bazi">首页</a></li>
+        <li><a href="plugin.php?id=bazi:console">个人版</a></li>
+        <li data-mod="about"><a href="plugin.php?id=bazi:about">关于</a></li>
+      </ul>
+      <!--{if $_G[uid]!=0}-->
+		<a href="plugin.php?id=bazi:console#/uc" class="userbtn"><i class="icon icon-contact"></i><!--{$_G[username]}--></a>
+		<div class="submenudiv">
+		  <ul>
+			<li><a href="$_G['siteurl']source/plugin/bazi/index.php?version=4&module=uc&action=logout">退出登录</a></li>
+		  </ul>
+		</div>
+      <!--{else}-->
+	    <a href="javascript:;" id="login-btn" class="btn">登录</a>
+      <!--{/if}-->
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    function active_top_nav(mod) {
+		jQuery('[data-mod="'+mod+'"]').addClass('active');
+	}	
+  </script>
+
