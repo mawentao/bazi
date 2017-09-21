@@ -1,14 +1,17 @@
 define(function(require){
     /* 流年婚恋 */
 
-    function getLiuNianJue(im)
+
+    var o={};
+
+    o.getLiuNianJue = function(im)
     {
         var badges = [];
         var kmp = {
             gan_he: ['干合','流年天干与日元相合'],
             zhi_he: ['支合','流年地支与配偶宫相合'],
-            gan_taohua: ['正桃花','日干桃花'],
-            zhi_taohua: ['桃花煞','日支桃花'],
+            gan_taohua: ['干桃花','日干桃花'],
+            zhi_taohua: ['支桃花','日支桃花'],
             zhi_chong: ['支刑冲','流年地支与配偶宫刑冲']
         };
         for (var k in kmp) {
@@ -19,9 +22,9 @@ define(function(require){
             badges.push('<span class="'+cls+'" pop-title="'+kmp[k][1]+'" pop-cls="mwt-popover-'+cls+'">'+code+'</span>');
         }
         return badges.join('');
-    }
+    };
 
-    var o={};
+
 	o.show=function(domid,bazi) {
         var trs = [];
         var nowyear = date('Y');
@@ -32,7 +35,7 @@ define(function(require){
             var code = '<tr'+cls+'>'+
                     '<td style="text-align:center">'+year+'('+liuNian.gan+liuNian.zhi+')年</td>'+
                     '<td style="text-align:center">'+liuNian.age+'岁</td>'+
-                    '<td>'+getLiuNianJue(im)+'</td>'+
+                    '<td>'+o.getLiuNianJue(im)+'</td>'+
                 '</tr>';
             trs.push(code);
         }
@@ -47,6 +50,7 @@ define(function(require){
               trs.join('')+
             '</table>';
         jQuery('#'+domid).html(code);
+        mwt.popinit();
 	};
 	return o;
 });

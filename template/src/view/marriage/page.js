@@ -14,8 +14,8 @@ define(function(require){
 
     var o = {};
 	o.execute = function(domid) {
-		var code = '<p align="center" class="marriage-tip mwt-alert mwt-alert-warning">'+
-			'<i class="fa fa-info-circle"></i> 从命例库中选择一男一女，然后点击合婚按钮，进行合婚分析'+
+		var code = '<p align="center" class="marriage-tip mwt-alert mwt-alert-success" style="font-size:18px;">'+
+			'<i class="fa fa-info-circle"></i> 从命例库中选择一男一女（满20周岁），然后点击合婚按钮，进行合婚分析'+
 		'</p>'+
 		'<table class="marriage-tab"><tr>'+
 			'<td width="50%" align="right">'+get_case_card('y')+'</td>'+

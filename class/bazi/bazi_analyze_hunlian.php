@@ -96,7 +96,7 @@ class bazi_analyze_hunlian
         //99. 女命
         else {
             // 女命官杀混杂
-            if ($allZheng>0 && $allPian>0) {
+            if ($allZheng>0 && $allPian>0 && $all>2) {
                 $bazi['spouse']['jue'][] = bazi_jue::getByJueId(200003);
             }
         }

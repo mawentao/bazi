@@ -8,7 +8,7 @@ chdir("../../../");
 
 $modules = array (
     'seccode','uc','calendar',
-	'caldb','case','marriage',
+	'caldb','case','marriage','casegroup',
 );
 
 if(!in_array($_GET['module'], $modules)) {

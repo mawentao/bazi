@@ -229,5 +229,30 @@ $sql="INSERT IGNORE INTO ".DB::table('bazi_case')." VALUES ".
 runquery($sql);
 /*}}}*/
 
+// 命例分组表
+$table = DB::table('bazi_case_group');
+/*{{{*/
+$sql = "CREATE TABLE IF NOT EXISTS `$table` ".<<<EOF
+(
+`cgid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '分组ID(自增主键)',
+`cgname` varchar(64) NOT NULL DEFAULT '' comment '分组名称',
+`uid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0' COMMENT '所属用户(0:表示系统分组)',
+`ctime` datetime NOT NULL DEFAULT "0000-00-00 00:00:00" comment '创建日期',
+`mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+`isdel` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '删除标志(0:未删,1:已删)',
+PRIMARY KEY (`cgid`),
+UNIQUE KEY `uk_name_uid` (`cgname`,`uid`),
+KEY `idx_uid_isdel` (`uid`,`isdel`)
+) ENGINE=MyISAM COMMENT '命例分组表'
+EOF;
+runquery($sql);
+$sql="INSERT IGNORE INTO ".DB::table('bazi_case_group')." (cgid,cgname,uid,ctime) VALUES ".
+     "('1','家人',0,'$addtime')".
+     ",('2','同学',0,'$addtime')".
+     ",('3','同事',0,'$addtime')".
+     ",('4','朋友',0,'$addtime')";
+runquery($sql);
+/*}}}*/
+
 $finish = TRUE;
 ?>

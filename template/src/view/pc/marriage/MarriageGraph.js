@@ -70,17 +70,17 @@ function MarriageGraph(conf)
 		// 宫格
 		var w=5,h=3;
 		log.debug("MarriageGraph size: "+w+'x'+h);
-		var symbolStyle = {normal:{color:'rgba(128, 128, 128, 0)'}};   			//!< 柱名节点样式
 		var gongGrid = [
 			['',{name:'年'},{name:'月'},{name:'日'},{name:'时'}],
 			[{name:'男'},'男年支','男月支','男日支','男时支'],
 			[{name:'女'},'女年支','女月支','女日支','女时支']
 		];
 		// 节点
-		var xgap = 70;  //!< 水平间隔
-		var ygap = 70;	 //!< 垂直间隔
+		var xgap = 60;  //!< 水平间隔
+		var ygap = 60;	 //!< 垂直间隔
 		var nodes = [];
 		var namekey = mode==1 ? 'name' : 'shengxiao';    //!< 显示地支或生肖
+		var symbolStyle = {normal:{color:'rgba(128, 128, 128, 0)'}};    //!< 柱名节点样式
 		for (var yi=0;yi<gongGrid.length;++yi) {
 			var row = gongGrid[yi];
 			for (var xi=0;xi<row.length;++xi) {
@@ -101,7 +101,8 @@ function MarriageGraph(conf)
 						nodeItem.value = dn[namekey];
 						nodeItem.category = wuxingmap[dn.wuxing];
 						nodeItem.label = {normal:{formatter:'{c}'}};
-						delete nodeItem.itemStyle;
+                        nodeItem.symbolSize = 30;
+                        delete nodeItem.itemStyle;
 					}
 				}
 				nodes.push(nodeItem);
@@ -119,7 +120,7 @@ function MarriageGraph(conf)
 				value: '',
 				category: 6+i,
 				symbol: 'rect',
-				symbolSize: [40,20],
+				symbolSize: [40,17]
 			};
 			nodes.push(nodeItem);
 		}
@@ -127,9 +128,17 @@ function MarriageGraph(conf)
 		// 边
 		var links = [];
 		var symbol = ['circle','circle'];
+        var linkColor = {
+            '合'   : '#0f0',
+            '三合' : '#0f0',
+            '冲'   : '#f00',
+            '刑'   : '#f00',
+            '破'   : '#aaa',
+            '害'   : '#aaa'
+        };
 		for (var relation in data.relations) {
 			if (relation=='remove') break;
-			var color = (relation=='合'||relation=='三合') ? '#0f0' : '#f00';
+			var color = linkColor[relation] ? linkColor[relation] : '#aaa';
 			for (var k=0; k<data.relations[relation].length; ++k) {
 				var ns = data.relations[relation][k];
 				for (var n=0;n<ns.length;++n) {

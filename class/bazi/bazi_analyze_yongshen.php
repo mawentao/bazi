@@ -225,11 +225,13 @@ class bazi_analyze_yongshen
             $yongshen['type'] = '专旺';
             return;
         }
+
+
         //2. 两行比较旺
-        if ($power0+$power1>=50 && $power0-$power1<10) {
-            $wuxing0 = $wuxingsort[0]['wuxing'];
+        $wuxing0 = $wuxingsort[0]['wuxing'];    //!< 力量最强的五行
+        $wuxing1 = $wuxingsort[1]['wuxing'];    //!< 力量次强的五行
+        if ($power0+$power1>=50 && $power0-$power1<5) {
             $wuxingInfo0 = $dictWuXingMap[$wuxing0];
-            $wuxing1 = $wuxingsort[1]['wuxing'];
             $wuxingInfo1 = $dictWuXingMap[$wuxing1];
             // 通关用神(两行相克,取主克五行所生五行)
             if ($wuxingInfo0['ke'] == $wuxing1) {
@@ -263,10 +265,44 @@ class bazi_analyze_yongshen
             }
             $yongshen['type'] = '扶抑';
         }
-        //3. 扶抑用神,取力量最弱的五行为用神
-        $yongshen['wuxing'][] = $wuxingsort[4]['wuxing'];
+
+        //3. 扶抑用神
         $yongshen['type'] = '扶抑';
-        $jishen['wuxing'][] = $wuxingsort[0]['wuxing'];
+        //3-1. 日元身旺,需克泄耗
+        $riyuan = $bazi['riYuan'];
+        $riyuanWuxing = $dictGanMap[$riyuan]['wuxing'];
+        $riyuanPowerSort = $bazi['riyuanPower']['powerSort'];
+        $wxasc = array_reverse($wuxingsort);  // 五行力量从弱到强查看
+        if ($riyuanPowerSort<=1) {
+            foreach ($wxasc as $im) {
+                $wx = $im['wuxing'];
+                $wxInfo = $dictWuXingMap[$wx];
+                $ws = $wxInfo['sheng'];
+                // 不能是生助自己的五行
+                if ($wx==$riyuanWuxing || $wxInfo['sheng']==$riyuanWuxing) { continue; }
+                // 不能是最强或次强的五行
+                if ($wx==$wuxing0 || $wx==$wuxing1) continue;
+                // 不能是生助最强次强的五行
+                if ($ws==$wuxing0 || $ws==$wuxing1) continue;
+                $yongshen['wuxing'][] = $wx;
+            }
+        }
+        //3-2. 日元身弱,需生助
+        else {
+            foreach ($wxasc as $im) {
+                $wx = $im['wuxing'];
+                $wxInfo = $dictWuXingMap[$wx];
+                $ws = $wxInfo['sheng'];
+                if ($wx==$riyuanWuxing || $ws==$riyuanWuxing) { //!< 只要生助自己
+                    // 且该五行不是最强次强的五行
+                    // 且该五行不是生助最强次强的五行
+                    if ($wx==$wuxing0 || $wx==$wuxing1 || $ws==$wuxing0 || $ws==$wuxing1) {
+                        continue;
+                    }
+                    $yongshen['wuxing'][] = $wx;
+                }
+            }
+        }
     }/*}}}*/
 
     // 忌神

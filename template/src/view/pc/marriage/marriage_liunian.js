@@ -1,31 +1,12 @@
 define(function(require){
     // 适婚流年合看
+    var bazi_marriage_liunian = require('bazi/marriage_liunian');
 
-    function getLiuNianJue(im)
-    {
-        var badges = [];
-        if (im.gan_he) {
-            badges.push('<span>干合</span>');
-        }
-        if (im.zhi_he) {
-            badges.push('<span>支合</span>');
-        }
-        if (im.gan_taohua) {
-            badges.push('<span>干桃花</span>');
-        }
-        if (im.zhi_taohua) {
-            badges.push('<span>支桃花</span>');
-        }
-        if (im.zhi_chong) {
-            badges.push('<span>支冲</span>');
-        }
-        return badges.join('');
-    }
 
     function getLiunianInfo(bazi,year) {
         var hunlianLiunian = bazi.hunLian.liunian[year];
         var liunianInfo = bazi.liunian[year];
-        return liunianInfo.age+'岁'+getLiuNianJue(hunlianLiunian);
+        return liunianInfo.age+'岁'+bazi_marriage_liunian.getLiuNianJue(hunlianLiunian);
     }
 
     var o={};
@@ -37,12 +18,16 @@ define(function(require){
         var femaleHunlianLiunian = femaleBazi.hunLian.liunian;
 
         var trs = [];
+        var nowyear = date('Y');
         for (var year in maleHunlianLiunian) {
             if (!isset(femaleHunlianLiunian[year])) {
                 continue;
             }
             var liunianInfo = maleBazi.liunian[year];
-            var code = '<tr><td>'+year+'('+liunianInfo.gan+liunianInfo.zhi+')年</td>'+
+            var cls = nowyear==year ? ' class="nowyear"' : '';
+
+            var code = '<tr'+cls+'>'+
+                '<td style="text-align:center">'+year+'('+liunianInfo.gan+liunianInfo.zhi+')年</td>'+
                 '<td>'+getLiunianInfo(maleBazi,year)+'</td>'+
                 '<td>'+getLiunianInfo(femaleBazi,year)+'</td>';
             trs.push(code);
@@ -52,13 +37,14 @@ define(function(require){
             trscode = '二者年龄悬殊，无适婚流年重合';
         }
 
-        var code = '<table>'+
-            '<tr><th>流年</th>'+
-                '<th>'+maleBazi.name+'</th>'+
-                '<th>'+femaleBazi.name+'</th>'+
+        var code = '<table class="hunlian-liunian-tab">'+
+            '<tr><th width="150" style="text-align:center">流年</th>'+
+                '<th><label class="fyang">'+maleBazi.name+'</label></th>'+
+                '<th><label class="fyin">'+femaleBazi.name+'</label></th>'+
             '</tr>'+trscode+
         '</table>';
         jQuery('#'+domid).html(code);
+        mwt.popinit();
     };
     return o;
 });
