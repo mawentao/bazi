@@ -6,7 +6,8 @@ require_once dirname(__FILE__)."/class/env.class.php";
 
 // 登录检查
 if(!$_G['uid']){
-	include template("bazi:login");
+	$login = bazi_env::get_siteurl()."/member.php?mod=logging&action=login";
+    header("Location: $login");
     exit();
 }
 

@@ -294,9 +294,9 @@ class bazi_analyze_yongshen
                 $wxInfo = $dictWuXingMap[$wx];
                 $ws = $wxInfo['sheng'];
                 if ($wx==$riyuanWuxing || $ws==$riyuanWuxing) { //!< 只要生助自己
-                    // 且该五行不是最强次强的五行
+                    // 且该五行不是最强的五行
                     // 且该五行不是生助最强次强的五行
-                    if ($wx==$wuxing0 || $wx==$wuxing1 || $ws==$wuxing0 || $ws==$wuxing1) {
+                    if ($wx==$wuxing0 || $ws==$wuxing0 || $ws==$wuxing1) {
                         continue;
                     }
                     $yongshen['wuxing'][] = $wx;

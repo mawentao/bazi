@@ -9,6 +9,7 @@
   <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/home.css">
   <script type="text/javascript" src="{$plugin_path}/template/libs/jquery/1.11.2/jquery.min.js"></script>
   <script type="text/javascript" src="{$plugin_path}/template/libs/mwt/3.5/mwt.min.js"></script>
+  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/src/home.js" charset="utf-8"></script>
 </head>
 <body>
 
@@ -20,7 +21,7 @@
     </a>
     <div class="nav">
       <ul class="menu">
-        <li><a href="plugin.php?id=bazi:bazi">首页</a></li>
+        <li data-mod="home"><a href="plugin.php?id=bazi:bazi">首页</a></li>
         <li><a href="plugin.php?id=bazi:console">个人版</a></li>
         <li data-mod="about"><a href="plugin.php?id=bazi:about">关于</a></li>
       </ul>
@@ -37,9 +38,30 @@
     </div>
   </div>
 
+  <div id="login-div"></div>
+
   <script type="text/javascript">
+    var dz = {
+	    // 基础信息
+	    controller: '{$controller}',
+        siteurl  : '$_G['siteurl']',
+        pluginpath : '$_G['siteurl']/source/plugin/bazi',
+        ajaxapi : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=',
+        seccodeurl : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=seccode',
+        logouturl : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=uc&action=logout',
+        // 配置信息
+        page_copyright: "{$setting['page_copyright']}",
+        // 用户信息
+        uid : $_G[uid],
+        groupid : $_G[groupid],
+        username : '$_G['username']',
+        avatar : '{avatar($_G['uid'],'',true)}'
+    };
+
     function active_top_nav(mod) {
 		jQuery('[data-mod="'+mod+'"]').addClass('active');
-	}	
+	}
+
+    jQuery('#login-btn').unbind('click').click(login);
   </script>
 

@@ -1,73 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>{$setting[page_title]}——专为八字命理师设计</title>
-  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/jquery-ui/jquery-ui.min.css">
-  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/libs/mwt/3.5/mwt.min.css">
-  <link type="text/css" rel="stylesheet" href="{$plugin_path}/template/src/home.css">
-  <script type="text/javascript" src="{$plugin_path}/template/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script type="text/javascript" src="{$plugin_path}/template/libs/mwt/3.5/mwt.min.js"></script>
-  <script type="text/javascript" src="{$plugin_path}/template/libs/qrcode.js"></script>
-</head>
-<body>
+<!--{template bazi:common/header}-->
+<style>.footer{position:absolute;bottom:10px;left:0;right:0;}</style>
   <div id="particles-js" style="position:absolute;top:0;left:0;right:0;bottom:30px;background:none;z-index:-1;"></div>
-  <script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/libs/particles/particles.bazi.js"></script>
-
-  <div id="header">
-    <a class="logo" href="javascript:window.location.reload();">
-      <img src="$_G['siteurl']/source/plugin/bazi/template/static/logo2.png">
-      <span class="title">{$setting[page_title]}</span>
-      <span class="subtitle"> —— 专为八字命理师设计</span>
-    </a>
-    <div class="nav">
-      <ul class="menu">
-        <li><a href="#">首页</a></li>
-        <li><a href="plugin.php?id=bazi:console">个人版</a></li>
-      </ul>
-      <!--{if $_G[uid]!=0}-->
-		<a href="plugin.php?id=bazi:console#/uc" class="userbtn"><i class="icon icon-contact"></i><!--{$_G[username]}--></a>
-		<div class="submenudiv">
-		  <ul>
-			<li><a href="$_G['siteurl']source/plugin/bazi/index.php?version=4&module=uc&action=logout">退出登录</a></li>
-		  </ul>
-		</div>
-      <!--{else}-->
-	    <a href="javascript:;" id="login-btn" class="btn">登录</a>
-      <!--{/if}-->
-    </div>
-  </div>
+  <script type="text/javascript" src="{$plugin_path}/template/libs/particles/particles.bazi.js"></script>
 
   <div style="position:absolute;top:200px;left:0;right:0;text-align:center;font-size:30px;color:#fff;">
 	<p class="main-title">专为八字命理师设计</p>
     <a class="btn btn-primary" id="enter-btn" href="javascript:;">点击进入 <i class="sicon-arrow-right" style="font-size:16px;vertical-align:text-bottom"></i></a>
   </div>
 
-  <div id="login-div"></div>
-
-  <div class="footer">&copy; 2016-{eval echo date('Y');} {$setting['page_copyright']}</div>
-<script type="text/javascript" src="$_G['siteurl']/source/plugin/bazi/template/src/home.js" charset="utf-8"></script>
 <script>
-var dz = {
-	// 基础信息
-	controller: '{$controller}',
-	siteurl  : '$_G['siteurl']',
-	pluginpath : '$_G['siteurl']/source/plugin/bazi',
-	ajaxapi : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=',
-	seccodeurl : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=seccode',
-	logouturl : '$_G['siteurl']/source/plugin/bazi/index.php?version=4&module=uc&action=logout',
-	// 配置信息
-	page_copyright: "{$setting['page_copyright']}",
-	// 用户信息
-	uid : $_G[uid],
-	groupid : $_G[groupid],
-	username : '$_G['username']',
-	avatar : '{avatar($_G['uid'],'',true)}'
-};
 (function(){
-	jQuery('#login-btn').unbind('click').click(login);
+    active_top_nav("home");
+    
 	jQuery('#enter-btn').unbind('click').click(function(){
 		if (dz.uid==0) {
 			login();
@@ -82,5 +26,5 @@ var dz = {
 	}
 })();
 </script>
-</body>
-</html>
+
+<!--{template bazi:common/footer}-->

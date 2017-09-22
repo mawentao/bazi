@@ -100,8 +100,10 @@ $table = DB::table('bazi_dict_wuxing');
 $sql = "CREATE TABLE IF NOT EXISTS `$table` ".<<<EOF
 (
 `name` varchar(4) NOT NULL DEFAULT '' COMMENT '天干名称',
-`sheng` varchar(2) NOT NULL DEFAULT '' COMMENT '生',
-`ke` varchar(2) NOT NULL DEFAULT '' COMMENT '克',
+`sheng` varchar(2) NOT NULL DEFAULT '' COMMENT '我生',
+`ke` varchar(2) NOT NULL DEFAULT '' COMMENT '我克',
+`shengwo` varchar(2) NOT NULL DEFAULT '' COMMENT '生我',
+`kewo` varchar(2) NOT NULL DEFAULT '' COMMENT '克我',
 `siji` varchar(8) NOT NULL DEFAULT '' COMMENT '季节',
 `position` varchar(2) NOT NULL DEFAULT '' COMMENT '方位',
 PRIMARY KEY (`name`)
