@@ -245,25 +245,25 @@ class bazi_analyze_yongshen
                 return;
             }
             // 两行相生,若有一行生于夏天或冬天,取调候用神
-            if ($wuxing0=='火'||$wuxing1=='火') {
+            if ($wuxing0=='火') {
                 $yongshen['wuxing'][] = '水';
                 $yongshen['type'] = '调候';
                 $jishen['wuxing'][] = '火';
                 return;
             }
-            if ($wuxing0=='水'||$wuxing1=='水') {
+            if ($wuxing0=='水') {
                 $yongshen['wuxing'][] = '火';
                 $yongshen['type'] = '调候';
                 $jishen['wuxing'][] = '水';
                 return;
             }
             // 两行相生,取克制两五行的两行为用神
-            foreach ($dictWuXingMap as $wx => &$im) {
+            /*foreach ($dictWuXingMap as $wx => &$im) {
                 if ($im['ke']==$wuxing0 || $im['ke']==$wuxing1) {
                     $yongshen['wuxing'][] = $wx;
                 }
-            }
-            $yongshen['type'] = '扶抑';
+            }*/
+            //$yongshen['type'] = '扶抑';
         }
 
         //3. 扶抑用神

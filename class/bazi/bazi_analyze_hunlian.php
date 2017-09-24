@@ -176,7 +176,7 @@ class bazi_analyze_hunlian
             if ($shangGuan['statInGan']>0 && $zhengGuan['statInGan']>0) {
                 $jue[] = bazi_jue::getByJueId(200402);
             }
-            if ($bazi['zhi'][1]['shishen']['name']=='伤官') {
+            if ($bazi['zhi'][1]['shishen']=='伤官') {
                 $jue[] = bazi_jue::getByJueId(200403);   //!< 月令伤官
                 if ($zhengGuan['statInGan']>0) {
                     $jue[] = bazi_jue::getByJueId(200402);
@@ -185,7 +185,6 @@ class bazi_analyze_hunlian
         }
 
         $bazi['hunLian']['shangguan']['jue'] = &$jue;
-//die(json_encode($bazi['hunlian']['shangguan']['jue']));
     }/*}}}*/
 
     // 看日柱神煞
