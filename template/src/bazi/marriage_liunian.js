@@ -40,7 +40,7 @@ define(function(require){
             trs.push(code);
         }
 
-        var code = '<h2 style="margin-top:10px;">【流年婚恋】</h2>'+
+        var code = '<h2 style="margin-top:10px;">【流年姻缘】</h2>'+
             '<table class="hunlian-liunian-tab">'+
               '<tr>'+
                 '<th width="120" style="text-align:center">流年</th>'+

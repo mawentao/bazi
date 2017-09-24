@@ -182,14 +182,14 @@ class bazi_analyze_yongshen
         // 定性
         $level = '';
         switch ($bazi['riyuanPower']['powerSort']) {
-            case 0: $level='极旺'; break;
-            case 1: $level='旺'; break;
+            case 0: $level='旺'; break;
+            case 1: $level='强'; break;
             case 2: $level='弱'; break;
             case 3: $level='衰'; break;
             case 4: $level='极衰'; break;
         };
         if ($bazi['riyuanPower']['power'] >=30) {
-            $level = '极旺';
+            $level = '旺';
         }
         $bazi['riyuanPower']['powerLevel'] = $level;
     }/*}}}*/
