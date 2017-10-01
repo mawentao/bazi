@@ -7,7 +7,7 @@
 # @brief:  build.sh
 ####################################################
 
-pluginversion="1.1"
+pluginversion="1.2"
 pluginname="bazi"
 outdir="output/$pluginname"
 buildtime=`date +%Y%m%d%H%M%S`

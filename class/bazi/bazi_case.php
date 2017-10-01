@@ -16,6 +16,9 @@ require_once 'bazi_analyze_wuxing.php';
 require_once 'bazi_analyze_hunlian.php';
 require_once 'bazi_analyze_hunlian_liunian.php';
 require_once 'bazi_marriage.php';
+
+require_once 'bazi_analyze_personality.php';
+
 /**
  * 八字分析核心类
  **/
@@ -83,7 +86,8 @@ class bazi_case
 //die(json_encode($this->data));
 
         // 论断
-        $this->analyzeHunLian();  //!< 婚恋
+        $this->analyzeHunLian();        //!< 婚恋
+        $this->analyzePersonality();    //!< 心性
     }
 
 	// 命盘分析(装十神,排大运等)
@@ -133,6 +137,12 @@ class bazi_case
     {/*{{{*/
         bazi_analyze_hunlian::analyze($this);
         bazi_analyze_hunlian_liunian::analyze($this);
+    }/*}}}*/
+
+    // 心性分析
+    public function analyzePersonality()
+    {/*{{{*/
+        bazi_analyze_personality::analyze($this);
     }/*}}}*/
 
 	// 转成Array

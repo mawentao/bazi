@@ -166,6 +166,9 @@ runquery($sql);
 /*}}}*/
 include_once($curpath."/data/bazi_shishen_data.php");
 
+// 性格特征表
+include_once($curpath."/data/bazi_personality.php");
+
 // 八字论断口诀
 $table = DB::table('bazi_jue');
 /*{{{*/
@@ -255,6 +258,8 @@ $sql="INSERT IGNORE INTO ".DB::table('bazi_case_group')." (cgid,cgname,uid,ctime
      ",('4','朋友',0,'$addtime')";
 runquery($sql);
 /*}}}*/
+
+
 
 $finish = TRUE;
 ?>

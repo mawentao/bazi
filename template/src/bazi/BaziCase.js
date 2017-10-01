@@ -120,6 +120,39 @@ var BaziCase = function(data)
         require('./marriage_liunian').show(domid,data); 
     };/*}}}*/
 
+    /////////////////////////////////////////
+    // 论心性
+    /////////////////////////////////////////
+    // 性格优劣词云图
+    this.show_personality_wordcloud=function(domid)
+    {/*{{{*/
+        require('./personality_wordcloud').show(domid,data); 
+    };/*}}}*/
+
+    // 性格优劣详情
+    this.show_personality_detail=function(domid)
+    {/*{{{*/
+        var map = {'positive':'性格优势','negative':'性格劣势'};
+        var codes = [];
+        for (var k in map) {
+            var lis = [];
+            var color = k=='positive' ? '#24A6AE' : '#E6886B';
+            if (data.personality[k] && data.personality[k].length) {
+                for (var i=0;i<data.personality[k].length;++i) {
+                    var pim = data.personality[k][i];
+                    var str = '<li style="color:'+color+'">'+pim.word+'：'+pim.desc+'</li>';
+                    lis.push(str);
+                }
+            }
+            if (!lis.length) {
+                lis.push('<li style="color:#999">&lt;空&gt;</li>');
+            }
+            var im = map[k];
+            var code = '<h2>【'+im+'】</h2><ul class="textul">'+lis.join('')+'</ul>';
+            codes.push(code);
+        }
+        jQuery('#'+domid).html(codes.join(''));
+    }/*}}}*/
 
     // 获取数据
     this.getData = function(){return data;}
